@@ -19,6 +19,7 @@ namespace Serialak
         {
             InitializeComponent();
             Zaladuj();
+
         }
     
         public void Zaladuj()
@@ -93,7 +94,15 @@ namespace Serialak
 
             }
             int x = rnd.Next(Losowanie.Count());
-            MessageBox.Show(Losowanie.ElementAt(x));
+            var wylosowane = Losowanie.ElementAt(x);
+            foreach (DataGridViewRow row in dane_seriale.Rows)
+            {
+                if (row.Cells[0].Value.ToString() == wylosowane)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    row.DefaultCellStyle.SelectionBackColor = Color.Yellow;
+                }
+            }
             Losowanie.Clear();
         }
 

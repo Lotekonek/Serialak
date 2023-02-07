@@ -103,7 +103,7 @@
             this.dane_seriale.DefaultCellStyle = dataGridViewCellStyle9;
             this.dane_seriale.EnableHeadersVisualStyles = false;
             this.dane_seriale.GridColor = System.Drawing.Color.Black;
-            this.dane_seriale.Location = new System.Drawing.Point(0, 25);
+            this.dane_seriale.Location = new System.Drawing.Point(12, 36);
             this.dane_seriale.Name = "dane_seriale";
             this.dane_seriale.ReadOnly = true;
             dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -116,7 +116,7 @@
             this.dane_seriale.RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.dane_seriale.RowHeadersVisible = false;
             this.dane_seriale.RowHeadersWidth = 62;
-            this.dane_seriale.Size = new System.Drawing.Size(1744, 990);
+            this.dane_seriale.Size = new System.Drawing.Size(1720, 601);
             this.dane_seriale.TabIndex = 0;
             this.dane_seriale.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dane_seriale_CellContentClick);
             this.dane_seriale.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dane_seriale_CellMouseDoubleClick);
@@ -170,9 +170,9 @@
             this.Odśwież.BackColor = System.Drawing.Color.White;
             this.Odśwież.BackgroundImage = global::Serialak.Properties.Resources.refresh1;
             this.Odśwież.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.Odśwież.Location = new System.Drawing.Point(1673, 36);
+            this.Odśwież.Location = new System.Drawing.Point(1666, 46);
             this.Odśwież.Name = "Odśwież";
-            this.Odśwież.Size = new System.Drawing.Size(48, 48);
+            this.Odśwież.Size = new System.Drawing.Size(56, 49);
             this.Odśwież.TabIndex = 3;
             this.Odśwież.UseVisualStyleBackColor = false;
             this.Odśwież.Click += new System.EventHandler(this.Odśwież_Click);
@@ -271,8 +271,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(1744, 1013);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.ClientSize = new System.Drawing.Size(1744, 651);
             this.Controls.Add(this.Odśwież);
             this.Controls.Add(this.Menu);
             this.Controls.Add(this.dane_seriale);
