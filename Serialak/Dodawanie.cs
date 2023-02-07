@@ -54,6 +54,7 @@ namespace Serialak
             string sezon = ilosc_Sezony.Value.ToString();
             string odcinek = ilosc_odcinki.Value.ToString();
             string tyg = ch_box.Text;
+            string link = tBox_Link.Text;
 
             if (check == true)
             {
@@ -63,6 +64,10 @@ namespace Serialak
             else
             {
                 tyg = "";
+            }
+            if(link == "")
+            {
+                link = "Brak";
             }
 
             if (!File.Exists(@"C:\Seriale\Seriale.xml"))
@@ -88,7 +93,7 @@ namespace Serialak
                              new XElement("Ilość_Sezonów", sezon),
                             new XElement("Dzień_tygodnia", tyg),
                             new XElement("Ostatnio_oglądany", thisDay.ToString("M")),
-                            new XElement("Link", tBox_Link.Text),
+                            new XElement("Link", link),
                             new XElement("Status")));
            xml.Save(@"C:\Seriale\Seriale.xml");
            

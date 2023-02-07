@@ -46,7 +46,11 @@ namespace Serialak
             {
                 DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
                 linkCell.Value = row.Cells[7].Value;
-                row.Cells[7] = linkCell;
+                if (row.Cells[7].Value.ToString() != "Brak")
+                {
+                    row.Cells[7] = linkCell;
+                }
+                
             }
 
             foreach (DataGridViewRow row in dane_seriale.Rows)
@@ -161,9 +165,35 @@ namespace Serialak
 
         private void dane_seriale_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dane_seriale.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewLinkCell)
+            try
             {
-                System.Diagnostics.Process.Start(dane_seriale.Rows[e.RowIndex].Cells[e.ColumnIndex].Value as string);
+
+                if (dane_seriale.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewLinkCell)
+                {
+                    System.Diagnostics.Process.Start(dane_seriale.Rows[e.RowIndex].Cells[e.ColumnIndex].Value as string);
+                }
+            }catch(Exception)
+            {
+                MessageBox.Show("Błędny link");
+            }
+            finally
+            {
+                XDocument xdoc = XDocument.Load(@"C:\Seriale\Seriale.xml");
+                string nazwa = dane_seriale.CurrentRow.Cells[0].Value.ToString();
+
+                var elStatus = xdoc.Descendants()?.
+                Elements("Nazwa")?.
+                Where(x => x.Value == nazwa)?.
+                Ancestors("Serial");
+                var nlink = elStatus.Elements("Link").FirstOrDefault();
+
+
+                if (nlink != null)
+                {
+                    nlink.Value = "Brak";
+
+                }
+                xdoc.Save(@"C:\Seriale\Seriale.xml");
             }
         }
     }

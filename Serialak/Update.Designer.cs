@@ -74,18 +74,38 @@
             // n_odc
             // 
             this.n_odc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.n_odc.Location = new System.Drawing.Point(36, 149);
+            this.n_odc.Location = new System.Drawing.Point(36, 134);
+            this.n_odc.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.n_odc.Name = "n_odc";
             this.n_odc.Size = new System.Drawing.Size(180, 35);
             this.n_odc.TabIndex = 3;
+            this.n_odc.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // n_sez
             // 
             this.n_sez.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.n_sez.Location = new System.Drawing.Point(308, 149);
+            this.n_sez.Location = new System.Drawing.Point(308, 134);
+            this.n_sez.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.n_sez.Name = "n_sez";
             this.n_sez.Size = new System.Drawing.Size(180, 35);
             this.n_sez.TabIndex = 4;
+            this.n_sez.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // label2
             // 
