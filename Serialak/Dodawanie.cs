@@ -46,6 +46,11 @@ namespace Serialak
 
         private void Btn_dodaj_Click(object sender, EventArgs e)
         {
+            if(tBox_nazwa.Text == "")
+            {
+                MessageBox.Show("Wpisz nazwę");
+                return;
+            }
             string sezon = ilosc_Sezony.Value.ToString();
             string odcinek = ilosc_odcinki.Value.ToString();
             string tyg = ch_box.Text;

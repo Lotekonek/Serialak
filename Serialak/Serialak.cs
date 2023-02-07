@@ -149,6 +149,14 @@ namespace Serialak
             Form akt = new Update();
             akt.ShowDialog();
         }
+
+        private void dane_seriale_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dane_seriale.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewLinkCell)
+            {
+                System.Diagnostics.Process.Start(dane_seriale.Rows[e.RowIndex].Cells[e.ColumnIndex].Value as string);
+            }
+        }
     }
     }
 
