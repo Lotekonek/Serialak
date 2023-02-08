@@ -53,7 +53,7 @@ namespace Serialak
             }
             string sezon = ilosc_Sezony.Value.ToString();
             string odcinek = ilosc_odcinki.Value.ToString();
-            string tyg = ch_box.Text;
+            string tyg = c_box.Text;
             string link = tBox_Link.Text;
 
             if (check == true)

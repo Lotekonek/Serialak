@@ -104,7 +104,7 @@
             this.c_box.Items.AddRange(new object[] {
             "Poniedziałek",
             "Wtorek",
-            "Sroda",
+            "Środa",
             "Czwartek",
             "Piątek",
             "Sobota",

@@ -14,6 +14,7 @@ namespace Serialak
         readonly List<string> Spis = new List<string>();
         readonly Random rnd = new Random();
         private Color acolor;
+        readonly DateTime thisDay = DateTime.Today;
 
         public Serialak()
         {
@@ -21,7 +22,12 @@ namespace Serialak
             Zaladuj();
 
         }
-    
+        string UppercaseFirst(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return string.Empty;
+            return char.ToUpper(str[0]) + str.Substring(1).ToLower();
+        }
         public void Zaladuj()
         {
             dane_seriale.Rows.Clear();
@@ -41,9 +47,14 @@ namespace Serialak
                 Spis.Add(node2.SelectSingleNode("Status").InnerText);
                 dane_seriale.Rows.Add(Spis.ToArray());
                 Spis.Clear();
+
             }
             foreach (DataGridViewRow row in dane_seriale.Rows)
             {
+                if((UppercaseFirst(thisDay.ToString("dddd")) == row.Cells[5].Value.ToString()))
+                {
+                    row.DefaultCellStyle.BackColor = Color.Aqua;
+                }
                 DataGridViewLinkCell linkCell = new DataGridViewLinkCell
                 {
                     Value = row.Cells[7].Value
