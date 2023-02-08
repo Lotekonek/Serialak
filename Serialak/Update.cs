@@ -16,16 +16,16 @@ namespace Serialak
     public partial class Update : Form
     {
         string nazwa;
-        XDocument xdoc = XDocument.Load(@"C:\Seriale\Seriale.xml");
-        List<string> Seriale = new List<string>();
-        DateTime thisDay = DateTime.Today;
+        readonly XDocument xdoc = XDocument.Load(@"C:\Seriale\Seriale.xml");
+        readonly List<string> Seriale = new List<string>();
+        readonly DateTime thisDay = DateTime.Today;
         public Update()
         {
             InitializeComponent();
 
         }
             
-        private void laduj()
+        private void Laduj()
         {
             Seriale.Clear();
             cBox.Items.Clear();
@@ -41,7 +41,7 @@ namespace Serialak
         }
         
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
 
             string nazwa = cBox.SelectedItem.ToString();
@@ -66,7 +66,7 @@ namespace Serialak
             this.Close();
         }
 
-        private void cBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void CBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cBox.SelectedItem != null)
             {
@@ -88,9 +88,9 @@ namespace Serialak
             }
         }
 
-        private void cBox_Click(object sender, EventArgs e)
+        private void CBox_Click(object sender, EventArgs e)
         {
-            laduj();
+            Laduj();
         }
     }
 }

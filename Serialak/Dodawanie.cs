@@ -9,7 +9,7 @@ namespace Serialak
 {
     public partial class Dodawanie : Form
     {
-        DateTime thisDay = DateTime.Today;
+        readonly DateTime thisDay = DateTime.Today;
         XDocument xml;
 
         bool check = false;

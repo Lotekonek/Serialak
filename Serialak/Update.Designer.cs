@@ -69,7 +69,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "Aktualizuj";
             this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // n_odc
             // 
@@ -125,8 +125,8 @@
             this.cBox.Name = "cBox";
             this.cBox.Size = new System.Drawing.Size(452, 28);
             this.cBox.TabIndex = 6;
-            this.cBox.SelectedIndexChanged += new System.EventHandler(this.cBox_SelectedIndexChanged);
-            this.cBox.Click += new System.EventHandler(this.cBox_Click);
+            this.cBox.SelectedIndexChanged += new System.EventHandler(this.CBox_SelectedIndexChanged);
+            this.cBox.Click += new System.EventHandler(this.CBox_Click);
             // 
             // Update
             // 

@@ -14,7 +14,7 @@ namespace Serialak
 {
     public partial class Delete : Form
     {
-        List<string> Seriale = new List<string>();
+        readonly List<string> Seriale = new List<string>();
         public Delete()
         {
             InitializeComponent();
@@ -31,7 +31,7 @@ namespace Serialak
             c_seriale.Items.AddRange(Seriale.ToArray());
         }
 
-        private void btn_delete_Click(object sender, EventArgs e)
+        private void Btn_delete_Click(object sender, EventArgs e)
         {
             if (c_seriale.Items.Count == 0)
             {

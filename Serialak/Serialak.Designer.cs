@@ -118,8 +118,8 @@
             this.dane_seriale.RowHeadersWidth = 62;
             this.dane_seriale.Size = new System.Drawing.Size(1720, 601);
             this.dane_seriale.TabIndex = 0;
-            this.dane_seriale.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dane_seriale_CellContentClick);
-            this.dane_seriale.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dane_seriale_CellMouseDoubleClick);
+            this.dane_seriale.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dane_seriale_CellContentClick);
+            this.dane_seriale.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Dane_seriale_CellMouseDoubleClick);
             // 
             // Menu
             // 

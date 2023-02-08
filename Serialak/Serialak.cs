@@ -10,9 +10,9 @@ namespace Serialak
 {
     public partial class Serialak : Form
     {
-        List<string> Losowanie = new List<string>();
-        List<string> Spis = new List<string>();
-        Random rnd = new Random();
+        readonly List<string> Losowanie = new List<string>();
+        readonly List<string> Spis = new List<string>();
+        readonly Random rnd = new Random();
         private Color acolor;
 
         public Serialak()
@@ -44,8 +44,10 @@ namespace Serialak
             }
             foreach (DataGridViewRow row in dane_seriale.Rows)
             {
-                DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
-                linkCell.Value = row.Cells[7].Value;
+                DataGridViewLinkCell linkCell = new DataGridViewLinkCell
+                {
+                    Value = row.Cells[7].Value
+                };
                 if (row.Cells[7].Value.ToString() != "Brak")
                 {
                     row.Cells[7] = linkCell;
@@ -116,7 +118,7 @@ namespace Serialak
 
         }
 
-        private void dane_seriale_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void Dane_seriale_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             string nazwa = dane_seriale.CurrentRow.Cells[0].Value.ToString();
             XDocument xdoc = XDocument.Load(@"C:\Seriale\Seriale.xml");
@@ -163,7 +165,7 @@ namespace Serialak
             akt.ShowDialog();
         }
 
-        private void dane_seriale_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void Dane_seriale_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
