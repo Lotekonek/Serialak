@@ -1,7 +1,4 @@
-﻿using Serialak;
-using System;
-using System.IO;
-using System.Threading;
+﻿using System;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -9,15 +6,15 @@ namespace Serialak
 {
     public partial class Dodawanie : Form
     {
-        readonly DateTime thisDay = DateTime.Today;
-        XDocument xml;
+        private readonly DateTime thisDay = DateTime.Today;
+        private XDocument xml;
+        private bool check = false;
 
-        bool check = false;
         public Dodawanie()
         {
-
             InitializeComponent();
         }
+
         private void Ch_box_CheckedChanged(object sender, EventArgs e)
         {
             if (check == false)
@@ -41,12 +38,11 @@ namespace Serialak
                 ilosc_Sezony.Visible = true;
                 check = false;
             }
-
         }
 
         private void Btn_dodaj_Click(object sender, EventArgs e)
         {
-            if(tBox_nazwa.Text == "")
+            if (tBox_nazwa.Text == "")
             {
                 MessageBox.Show("Wpisz nazwę");
                 return;
@@ -65,46 +61,29 @@ namespace Serialak
             {
                 tyg = "";
             }
-            if(link == "")
+            if (link == "")
             {
                 link = "Brak";
             }
 
-            if (!File.Exists(@"C:\Seriale\Seriale.xml"))
-            {
-                Directory.CreateDirectory(@"C:\Seriale");
-                xml = new XDocument(
-                   new XDeclaration("1.0", "utf-8", "true"),
-                   new XElement("Spis"));
-            }
-
-            else
-            {
-                xml = XDocument.Load(@"C:\Seriale\Seriale.xml");
-            }
+            xml = XDocument.Load(@"C:\Seriale\Seriale.xml");
 
             xml.Element("Spis").Add(
                             new XElement("Serial",
                             new XAttribute("Name", tBox_nazwa.Text),
                             new XElement("Nazwa", tBox_nazwa.Text),
-                            new XElement("Aktualny_odcinek",1),
-                            new XElement("Aktualny_sezon",1),
+                            new XElement("Aktualny_odcinek", 1),
+                            new XElement("Aktualny_sezon", 1),
                             new XElement("Ilość_Odcinków", odcinek),
                              new XElement("Ilość_Sezonów", sezon),
                             new XElement("Dzień_tygodnia", tyg),
                             new XElement("Ostatnio_oglądany", thisDay.ToString("M")),
                             new XElement("Link", link),
                             new XElement("Status")));
-           xml.Save(@"C:\Seriale\Seriale.xml");
-           
+            xml.Save(@"C:\Seriale\Seriale.xml");
 
-            this.Close();
+            Close();
             MessageBox.Show("Poprawnie wczytano serial");
-
-            
-
         }
-
-    } 
     }
-  
+}

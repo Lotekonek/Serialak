@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
@@ -14,7 +10,8 @@ namespace Serialak
 {
     public partial class Delete : Form
     {
-        readonly List<string> Seriale = new List<string>();
+        private readonly List<string> Seriale = new List<string>();
+
         public Delete()
         {
             InitializeComponent();
@@ -26,7 +23,6 @@ namespace Serialak
             foreach (XmlNode node2 in node)
             {
                 Seriale.Add(node2.InnerText);
-
             }
             c_seriale.Items.AddRange(Seriale.ToArray());
         }
@@ -51,14 +47,8 @@ namespace Serialak
                 c_seriale.Text = null;
                 c_seriale.Items.Clear();
             }
-            
-            this.Close();
-        }
 
-        private void Delete_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Serialak series = new Serialak();
-            series.Zaladuj();
+            Close();
         }
     }
 }

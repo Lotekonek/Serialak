@@ -126,7 +126,6 @@
             this.cBox.Size = new System.Drawing.Size(452, 28);
             this.cBox.TabIndex = 6;
             this.cBox.SelectedIndexChanged += new System.EventHandler(this.CBox_SelectedIndexChanged);
-            this.cBox.Click += new System.EventHandler(this.CBox_Click);
             // 
             // Update
             // 

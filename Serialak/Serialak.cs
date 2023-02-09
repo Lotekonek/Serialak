@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
@@ -10,24 +11,34 @@ namespace Serialak
 {
     public partial class Serialak : Form
     {
-        readonly List<string> Losowanie = new List<string>();
-        readonly List<string> Spis = new List<string>();
-        readonly Random rnd = new Random();
+        private readonly List<string> Losowanie = new List<string>();
+        private readonly List<string> Spis = new List<string>();
+        private readonly Random rnd = new Random();
         private Color acolor;
-        readonly DateTime thisDay = DateTime.Today;
+        private readonly DateTime thisDay = DateTime.Today;
+        private readonly XDocument xml;
 
         public Serialak()
         {
             InitializeComponent();
+            if (!File.Exists(@"C:\Seriale\Seriale.xml"))
+            {
+                Directory.CreateDirectory(@"C:\Seriale");
+                xml = new XDocument(
+                   new XDeclaration("1.0", "utf-8", "true"),
+                   new XElement("Spis"));
+                xml.Save(@"C:\Seriale\Seriale.xml");
+            }
             Zaladuj();
-
         }
-        string UppercaseFirst(string str)
+
+        private string UppercaseFirst(string str)
         {
             if (string.IsNullOrEmpty(str))
                 return string.Empty;
             return char.ToUpper(str[0]) + str.Substring(1).ToLower();
         }
+
         public void Zaladuj()
         {
             dane_seriale.Rows.Clear();
@@ -47,11 +58,10 @@ namespace Serialak
                 Spis.Add(node2.SelectSingleNode("Status").InnerText);
                 dane_seriale.Rows.Add(Spis.ToArray());
                 Spis.Clear();
-
             }
             foreach (DataGridViewRow row in dane_seriale.Rows)
             {
-                if((UppercaseFirst(thisDay.ToString("dddd")) == row.Cells[5].Value.ToString()))
+                if (UppercaseFirst(thisDay.ToString("dddd")) == row.Cells[5].Value.ToString())
                 {
                     row.DefaultCellStyle.BackColor = Color.Aqua;
                 }
@@ -63,7 +73,6 @@ namespace Serialak
                 {
                     row.Cells[7] = linkCell;
                 }
-                
             }
 
             foreach (DataGridViewRow row in dane_seriale.Rows)
@@ -81,12 +90,7 @@ namespace Serialak
             }
             dane_seriale.DefaultCellStyle.SelectionBackColor
             = dane_seriale.DefaultCellStyle.BackColor;
-
         }
-    
-
-    
-
 
         private void Dodaj_Click(object sender, EventArgs e)
         {
@@ -97,7 +101,7 @@ namespace Serialak
         private void Usuń_Click(object sender, EventArgs e)
         {
             Form delete = new Delete();
-            delete.ShowDialog();    
+            delete.ShowDialog();
         }
 
         private void Losuj_Click(object sender, EventArgs e)
@@ -108,7 +112,6 @@ namespace Serialak
             foreach (XmlNode node2 in node)
             {
                 Losowanie.Add(node2.InnerText);
-
             }
             int x = rnd.Next(Losowanie.Count());
             var wylosowane = Losowanie.ElementAt(x);
@@ -126,7 +129,6 @@ namespace Serialak
         public void Odśwież_Click(object sender, EventArgs e)
         {
             Zaladuj();
-
         }
 
         private void Dane_seriale_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -140,20 +142,14 @@ namespace Serialak
 
             var elColor = elStatus.Elements("Status").FirstOrDefault();
 
-
-
-
             if (dane_seriale.CurrentRow.DefaultCellStyle.BackColor == Color.Green)
             {
-                
                 dane_seriale.CurrentRow.DefaultCellStyle.SelectionBackColor = acolor;
                 dane_seriale.CurrentRow.DefaultCellStyle.BackColor = acolor;
                 if (elColor != null)
                 {
                     elColor.Value = "";
                 }
-
-
             }
             else
             {
@@ -180,17 +176,14 @@ namespace Serialak
         {
             try
             {
-
                 if (dane_seriale.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewLinkCell)
                 {
                     System.Diagnostics.Process.Start(dane_seriale.Rows[e.RowIndex].Cells[e.ColumnIndex].Value as string);
                 }
-            }catch(Exception)
+            }
+            catch (Exception)
             {
                 MessageBox.Show("Błędny link");
-            }
-            finally
-            {
                 XDocument xdoc = XDocument.Load(@"C:\Seriale\Seriale.xml");
                 string nazwa = dane_seriale.CurrentRow.Cells[0].Value.ToString();
 
@@ -200,15 +193,12 @@ namespace Serialak
                 Ancestors("Serial");
                 var nlink = elStatus.Elements("Link").FirstOrDefault();
 
-
                 if (nlink != null)
                 {
                     nlink.Value = "Brak";
-
                 }
                 xdoc.Save(@"C:\Seriale\Seriale.xml");
             }
         }
     }
-    }
-
+}
