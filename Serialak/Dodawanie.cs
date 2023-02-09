@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -13,6 +14,8 @@ namespace Serialak
         public Dodawanie()
         {
             InitializeComponent();
+            Serialak series = new Serialak();
+            series.Zaladuj();
         }
 
         private void Ch_box_CheckedChanged(object sender, EventArgs e)
@@ -68,6 +71,18 @@ namespace Serialak
 
             xml = XDocument.Load(@"C:\Seriale\Seriale.xml");
 
+            Serialak series = new Serialak();
+
+            foreach (DataGridViewRow row in series.dane_seriale.Rows)
+            {
+                if (row.Cells[0].Value.ToString() == tBox_nazwa.Text)
+                {
+                    MessageBox.Show("Taki serial już istnieje!!!");
+                    return;
+                }
+            }
+
+
             xml.Element("Spis").Add(
                             new XElement("Serial",
                             new XAttribute("Name", tBox_nazwa.Text),
@@ -81,6 +96,12 @@ namespace Serialak
                             new XElement("Link", link),
                             new XElement("Status")));
             xml.Save(@"C:\Seriale\Seriale.xml");
+
+            
+            
+            this.DialogResult = DialogResult.OK;
+
+
 
             Close();
             MessageBox.Show("Poprawnie wczytano serial");

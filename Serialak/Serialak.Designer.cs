@@ -54,7 +54,10 @@
             this.Usuń = new System.Windows.Forms.ToolStripMenuItem();
             this.Aktualizuj = new System.Windows.Forms.ToolStripMenuItem();
             this.Losuj = new System.Windows.Forms.ToolStripMenuItem();
+            this.zapiszDoPlikuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Odśwież = new System.Windows.Forms.Button();
+            this.Save = new System.Windows.Forms.SaveFileDialog();
+            this.cbox_ogladane = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dane_seriale)).BeginInit();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
@@ -103,7 +106,7 @@
             this.dane_seriale.DefaultCellStyle = dataGridViewCellStyle9;
             this.dane_seriale.EnableHeadersVisualStyles = false;
             this.dane_seriale.GridColor = System.Drawing.Color.Black;
-            this.dane_seriale.Location = new System.Drawing.Point(12, 36);
+            this.dane_seriale.Location = new System.Drawing.Point(0, 38);
             this.dane_seriale.Name = "dane_seriale";
             this.dane_seriale.ReadOnly = true;
             dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -116,10 +119,9 @@
             this.dane_seriale.RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.dane_seriale.RowHeadersVisible = false;
             this.dane_seriale.RowHeadersWidth = 62;
-            this.dane_seriale.Size = new System.Drawing.Size(1720, 601);
+            this.dane_seriale.Size = new System.Drawing.Size(1744, 615);
             this.dane_seriale.TabIndex = 0;
             this.dane_seriale.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dane_seriale_CellContentClick);
-            this.dane_seriale.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Dane_seriale_CellMouseDoubleClick);
             // 
             // Nazwa
             // 
@@ -220,7 +222,8 @@
             this.Dodaj,
             this.Usuń,
             this.Aktualizuj,
-            this.Losuj});
+            this.Losuj,
+            this.zapiszDoPlikuToolStripMenuItem});
             this.Menu.Location = new System.Drawing.Point(0, 0);
             this.Menu.Name = "Menu";
             this.Menu.Size = new System.Drawing.Size(1744, 36);
@@ -255,6 +258,13 @@
             this.Losuj.Text = "Losuj";
             this.Losuj.Click += new System.EventHandler(this.Losuj_Click);
             // 
+            // zapiszDoPlikuToolStripMenuItem
+            // 
+            this.zapiszDoPlikuToolStripMenuItem.Name = "zapiszDoPlikuToolStripMenuItem";
+            this.zapiszDoPlikuToolStripMenuItem.Size = new System.Drawing.Size(148, 32);
+            this.zapiszDoPlikuToolStripMenuItem.Text = "Zapisz do pliku";
+            this.zapiszDoPlikuToolStripMenuItem.Click += new System.EventHandler(this.ZapiszDoPlikuToolStripMenuItem_Click);
+            // 
             // Odśwież
             // 
             this.Odśwież.BackColor = System.Drawing.Color.White;
@@ -267,12 +277,24 @@
             this.Odśwież.UseVisualStyleBackColor = false;
             this.Odśwież.Click += new System.EventHandler(this.Odśwież_Click);
             // 
+            // cbox_ogladane
+            // 
+            this.cbox_ogladane.AutoSize = true;
+            this.cbox_ogladane.Location = new System.Drawing.Point(570, 8);
+            this.cbox_ogladane.Name = "cbox_ogladane";
+            this.cbox_ogladane.Size = new System.Drawing.Size(194, 24);
+            this.cbox_ogladane.TabIndex = 4;
+            this.cbox_ogladane.Text = "Ukryj obejrzane seriale";
+            this.cbox_ogladane.UseVisualStyleBackColor = true;
+            this.cbox_ogladane.CheckedChanged += new System.EventHandler(this.Cbox_ogladane_CheckedChanged);
+            // 
             // Serialak
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(1744, 651);
+            this.Controls.Add(this.cbox_ogladane);
             this.Controls.Add(this.Odśwież);
             this.Controls.Add(this.Menu);
             this.Controls.Add(this.dane_seriale);
@@ -301,6 +323,8 @@
         private System.Windows.Forms.ToolStripMenuItem Losuj;
         private System.Windows.Forms.Button Odśwież;
         public System.Windows.Forms.DataGridView dane_seriale;
+        private System.Windows.Forms.ToolStripMenuItem zapiszDoPlikuToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog Save;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nazwa;
         private System.Windows.Forms.DataGridViewTextBoxColumn odc;
         private System.Windows.Forms.DataGridViewTextBoxColumn sez;
@@ -310,6 +334,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn last;
         private System.Windows.Forms.DataGridViewTextBoxColumn link;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
+        private System.Windows.Forms.CheckBox cbox_ogladane;
     }
 }
 

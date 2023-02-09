@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.Office.Core;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
@@ -14,7 +16,13 @@ namespace Serialak
         private readonly List<string> Losowanie = new List<string>();
         private readonly List<string> Spis = new List<string>();
         private readonly Random rnd = new Random();
-        private Color acolor;
+
+        public Serialak(Random rnd)
+        {
+            this.rnd = rnd;
+        }
+
+        private bool check = false;
         private readonly DateTime thisDay = DateTime.Today;
         private readonly XDocument xml;
 
@@ -39,6 +47,7 @@ namespace Serialak
             return char.ToUpper(str[0]) + str.Substring(1).ToLower();
         }
 
+
         public void Zaladuj()
         {
             dane_seriale.Rows.Clear();
@@ -56,13 +65,25 @@ namespace Serialak
                 Spis.Add(node2.SelectSingleNode("Ostatnio_oglądany").InnerText);
                 Spis.Add(node2.SelectSingleNode("Link").InnerText);
                 Spis.Add(node2.SelectSingleNode("Status").InnerText);
+
                 dane_seriale.Rows.Add(Spis.ToArray());
                 Spis.Clear();
             }
             foreach (DataGridViewRow row in dane_seriale.Rows)
             {
+                if (row.Cells[8].Value.ToString() == "Skończone")
+                {
+                    row.DefaultCellStyle.SelectionBackColor = Color.Green;
+                    row.DefaultCellStyle.BackColor = Color.Green;
+                    row.DefaultCellStyle.ForeColor = Color.Black;
+                }
+                if (row.Cells[5].Value.ToString() == "")
+                {
+                    row.Cells[5].Value = "Nie";
+                }
                 if (UppercaseFirst(thisDay.ToString("dddd")) == row.Cells[5].Value.ToString())
                 {
+
                     row.DefaultCellStyle.BackColor = Color.Aqua;
                     row.DefaultCellStyle.SelectionBackColor = Color.Aqua;
                 }
@@ -76,37 +97,34 @@ namespace Serialak
                 }
             }
 
-            foreach (DataGridViewRow row in dane_seriale.Rows)
-            {
-                if (row.Cells[5].Value.ToString() == "")
-                {
-                    row.Cells[5].Value = "Nie";
-                }
-                if (row.Cells[8].Value.ToString() == "Skończone")
-                {
-                    row.DefaultCellStyle.SelectionBackColor = Color.Green;
-                    row.DefaultCellStyle.BackColor = Color.Green;
-                    row.DefaultCellStyle.ForeColor = Color.Black;
-                }
-            }
+            
             dane_seriale.DefaultCellStyle.SelectionBackColor
             = dane_seriale.DefaultCellStyle.BackColor;
         }
 
         private void Dodaj_Click(object sender, EventArgs e)
         {
-            Form ADD = new Dodawanie();
-            ADD.ShowDialog();
+            
+            using (Form ADD = new Dodawanie())
+            {
+                if (ADD.ShowDialog() == DialogResult.OK)
+                    Zaladuj();
+                
+            }
         }
 
         private void Usuń_Click(object sender, EventArgs e)
         {
-            Form delete = new Delete();
-            delete.ShowDialog();
+            using (Form delete = new Delete())
+            {
+                if (delete.ShowDialog() == DialogResult.OK)
+                    Zaladuj();
+            }
         }
 
         private void Losuj_Click(object sender, EventArgs e)
         {
+            Zaladuj();
             XmlDocument doc = new XmlDocument();
             doc.Load(@"C:\Seriale\Seriale.xml");
             XmlNodeList node = doc.DocumentElement.SelectNodes("/Spis/Serial/Nazwa");
@@ -132,45 +150,14 @@ namespace Serialak
             Zaladuj();
         }
 
-        private void Dane_seriale_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            string nazwa = dane_seriale.CurrentRow.Cells[0].Value.ToString();
-            XDocument xdoc = XDocument.Load(@"C:\Seriale\Seriale.xml");
-            var elStatus = xdoc.Descendants()?.
-            Elements("Nazwa")?.
-            Where(x => x.Value == nazwa)?.
-            Ancestors("Serial");
-
-            var elColor = elStatus.Elements("Status").FirstOrDefault();
-
-            if (dane_seriale.CurrentRow.DefaultCellStyle.BackColor == Color.Green)
-            {
-                dane_seriale.CurrentRow.DefaultCellStyle.SelectionBackColor = acolor;
-                dane_seriale.CurrentRow.DefaultCellStyle.BackColor = acolor;
-                if (elColor != null)
-                {
-                    elColor.Value = "";
-                }
-            }
-            else
-            {
-                acolor = dane_seriale.CurrentRow.DefaultCellStyle.SelectionBackColor;
-                dane_seriale.CurrentRow.DefaultCellStyle.SelectionBackColor = Color.Green;
-                dane_seriale.CurrentRow.DefaultCellStyle.BackColor = Color.Green;
-                if (elColor != null)
-                {
-                    elColor.Value = "Skończone";
-                }
-            }
-            dane_seriale.DefaultCellStyle.SelectionBackColor
-            = dane_seriale.DefaultCellStyle.BackColor;
-            xdoc.Save(@"C:\Seriale\Seriale.xml");
-        }
 
         private void Aktualizuj_Click(object sender, EventArgs e)
         {
-            Form akt = new Update();
-            akt.ShowDialog();
+            using (Form akt = new Update())
+            {
+                if (akt.ShowDialog() == DialogResult.OK)
+                    Zaladuj();
+            }
         }
 
         private void Dane_seriale_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -184,6 +171,7 @@ namespace Serialak
             }
             catch (Exception)
             {
+
                 MessageBox.Show("Błędny link");
                 XDocument xdoc = XDocument.Load(@"C:\Seriale\Seriale.xml");
                 string nazwa = dane_seriale.CurrentRow.Cells[0].Value.ToString();
@@ -201,5 +189,102 @@ namespace Serialak
                 xdoc.Save(@"C:\Seriale\Seriale.xml");
             }
         }
+
+        private void ZapiszDoPlikuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var csv = new StringBuilder();
+            csv.AppendLine("Nazwa\tAktualny odcinek\tAktualny sezon\tIlość odcinków\tIlość sezonów\tWychodzi\tOstatnio oglądany\tLink");
+            foreach (DataGridViewRow row in dane_seriale.Rows)
+            {
+                var first = row.Cells[0].Value;
+                var second = row.Cells[1].Value;
+                var third = row.Cells[2].Value;
+                var fourth = row.Cells[3].Value;
+                var fifth = row.Cells[4].Value;
+                var sixth = row.Cells[5].Value;
+                var seventh = row.Cells[6].Value;
+                var eighth = row.Cells[7].Value;
+                var newLine = string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}", first,second,third,fourth,fifth,sixth,seventh,eighth);
+                csv.AppendLine(newLine);
+            }
+            Save.InitialDirectory = @"C:\Seriale";
+            Save.FilterIndex = 0;
+            Save.Title = "Zapisz plik";
+            Save.CheckFileExists = false;
+            Save.CheckPathExists = true;
+            Save.DefaultExt = "csv";
+            Save.Filter = "CSV files (*.csv)|*.csv";
+
+            if (Save.ShowDialog() == DialogResult.OK)
+            {
+                File.WriteAllText(Save.FileName, csv.ToString());
+                MessageBox.Show("Pomyśnie zapisano plik");
+            }
+
+        }
+
+        private void Cbox_ogladane_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!check)
+            {
+                dane_seriale.Rows.Clear();
+                XmlDocument doc = new XmlDocument();
+                doc.Load(@"C:\Seriale\Seriale.xml");
+                XmlNodeList node = doc.DocumentElement.SelectNodes("/Spis/Serial");
+                foreach (XmlNode node2 in node)
+                {
+                    if (node2.SelectSingleNode("Status").InnerText != "Skończone")
+                    {
+                        Spis.Add(node2.SelectSingleNode("Nazwa").InnerText);
+                        Spis.Add(node2.SelectSingleNode("Aktualny_odcinek").InnerText);
+                        Spis.Add(node2.SelectSingleNode("Aktualny_sezon").InnerText);
+                        Spis.Add(node2.SelectSingleNode("Ilość_Odcinków").InnerText);
+                        Spis.Add(node2.SelectSingleNode("Ilość_Sezonów").InnerText);
+                        Spis.Add(node2.SelectSingleNode("Dzień_tygodnia").InnerText);
+                        Spis.Add(node2.SelectSingleNode("Ostatnio_oglądany").InnerText);
+                        Spis.Add(node2.SelectSingleNode("Link").InnerText);
+                        Spis.Add(node2.SelectSingleNode("Status").InnerText);
+
+                        dane_seriale.Rows.Add(Spis.ToArray());
+                        Spis.Clear();
+                    }
+                }
+                foreach (DataGridViewRow row in dane_seriale.Rows)
+                {
+                    
+                    if (row.Cells[5].Value.ToString() == "")
+                    {
+                        row.Cells[5].Value = "Nie";
+                    }
+                    if (UppercaseFirst(thisDay.ToString("dddd")) == row.Cells[5].Value.ToString())
+                    {
+
+                        row.DefaultCellStyle.BackColor = Color.Aqua;
+                        row.DefaultCellStyle.SelectionBackColor = Color.Aqua;
+                    }
+                    DataGridViewLinkCell linkCell = new DataGridViewLinkCell
+                    {
+                        Value = row.Cells[7].Value
+                    };
+                    if (row.Cells[7].Value.ToString() != "Brak")
+                    {
+                        row.Cells[7] = linkCell;
+                    }
+                
+
+            
+                dane_seriale.DefaultCellStyle.SelectionBackColor
+                = dane_seriale.DefaultCellStyle.BackColor;
+            }
+            check = true;
+            }
+            else
+            {
+                Zaladuj();
+                check = false;
+            }
+            
+        }
+
     }
 }

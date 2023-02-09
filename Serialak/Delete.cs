@@ -47,7 +47,7 @@ namespace Serialak
                 c_seriale.Text = null;
                 c_seriale.Items.Clear();
             }
-
+            this.DialogResult = DialogResult.OK;
             Close();
         }
     }
