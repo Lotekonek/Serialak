@@ -40,12 +40,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Serialak));
             this.dane_seriale = new System.Windows.Forms.DataGridView();
-            this.Menu = new System.Windows.Forms.MenuStrip();
-            this.Dodaj = new System.Windows.Forms.ToolStripMenuItem();
-            this.Usuń = new System.Windows.Forms.ToolStripMenuItem();
-            this.Aktualizuj = new System.Windows.Forms.ToolStripMenuItem();
-            this.Losuj = new System.Windows.Forms.ToolStripMenuItem();
-            this.Odśwież = new System.Windows.Forms.Button();
             this.Nazwa = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.odc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sez = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,6 +49,12 @@
             this.last = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.link = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Menu = new System.Windows.Forms.MenuStrip();
+            this.Dodaj = new System.Windows.Forms.ToolStripMenuItem();
+            this.Usuń = new System.Windows.Forms.ToolStripMenuItem();
+            this.Aktualizuj = new System.Windows.Forms.ToolStripMenuItem();
+            this.Losuj = new System.Windows.Forms.ToolStripMenuItem();
+            this.Odśwież = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dane_seriale)).BeginInit();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
@@ -120,62 +120,6 @@
             this.dane_seriale.TabIndex = 0;
             this.dane_seriale.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dane_seriale_CellContentClick);
             this.dane_seriale.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Dane_seriale_CellMouseDoubleClick);
-            // 
-            // Menu
-            // 
-            this.Menu.BackColor = System.Drawing.Color.White;
-            this.Menu.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
-            this.Menu.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Dodaj,
-            this.Usuń,
-            this.Aktualizuj,
-            this.Losuj});
-            this.Menu.Location = new System.Drawing.Point(0, 0);
-            this.Menu.Name = "Menu";
-            this.Menu.Size = new System.Drawing.Size(1744, 33);
-            this.Menu.TabIndex = 2;
-            this.Menu.Text = "menuStrip1";
-            // 
-            // Dodaj
-            // 
-            this.Dodaj.Name = "Dodaj";
-            this.Dodaj.Size = new System.Drawing.Size(76, 29);
-            this.Dodaj.Text = "Dodaj";
-            this.Dodaj.Click += new System.EventHandler(this.Dodaj_Click);
-            // 
-            // Usuń
-            // 
-            this.Usuń.Name = "Usuń";
-            this.Usuń.Size = new System.Drawing.Size(68, 29);
-            this.Usuń.Text = "Usuń";
-            this.Usuń.Click += new System.EventHandler(this.Usuń_Click);
-            // 
-            // Aktualizuj
-            // 
-            this.Aktualizuj.Name = "Aktualizuj";
-            this.Aktualizuj.Size = new System.Drawing.Size(104, 29);
-            this.Aktualizuj.Text = "Aktualizuj";
-            this.Aktualizuj.Click += new System.EventHandler(this.Aktualizuj_Click);
-            // 
-            // Losuj
-            // 
-            this.Losuj.Name = "Losuj";
-            this.Losuj.Size = new System.Drawing.Size(69, 29);
-            this.Losuj.Text = "Losuj";
-            this.Losuj.Click += new System.EventHandler(this.Losuj_Click);
-            // 
-            // Odśwież
-            // 
-            this.Odśwież.BackColor = System.Drawing.Color.White;
-            this.Odśwież.BackgroundImage = global::Serialak.Properties.Resources.refresh1;
-            this.Odśwież.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.Odśwież.Location = new System.Drawing.Point(1666, 46);
-            this.Odśwież.Name = "Odśwież";
-            this.Odśwież.Size = new System.Drawing.Size(56, 49);
-            this.Odśwież.TabIndex = 3;
-            this.Odśwież.UseVisualStyleBackColor = false;
-            this.Odśwież.Click += new System.EventHandler(this.Odśwież_Click);
             // 
             // Nazwa
             // 
@@ -267,6 +211,62 @@
             this.status.ReadOnly = true;
             this.status.Visible = false;
             // 
+            // Menu
+            // 
+            this.Menu.BackColor = System.Drawing.Color.White;
+            this.Menu.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
+            this.Menu.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Dodaj,
+            this.Usuń,
+            this.Aktualizuj,
+            this.Losuj});
+            this.Menu.Location = new System.Drawing.Point(0, 0);
+            this.Menu.Name = "Menu";
+            this.Menu.Size = new System.Drawing.Size(1744, 36);
+            this.Menu.TabIndex = 2;
+            this.Menu.Text = "menuStrip1";
+            // 
+            // Dodaj
+            // 
+            this.Dodaj.Name = "Dodaj";
+            this.Dodaj.Size = new System.Drawing.Size(76, 32);
+            this.Dodaj.Text = "Dodaj";
+            this.Dodaj.Click += new System.EventHandler(this.Dodaj_Click);
+            // 
+            // Usuń
+            // 
+            this.Usuń.Name = "Usuń";
+            this.Usuń.Size = new System.Drawing.Size(68, 32);
+            this.Usuń.Text = "Usuń";
+            this.Usuń.Click += new System.EventHandler(this.Usuń_Click);
+            // 
+            // Aktualizuj
+            // 
+            this.Aktualizuj.Name = "Aktualizuj";
+            this.Aktualizuj.Size = new System.Drawing.Size(104, 32);
+            this.Aktualizuj.Text = "Aktualizuj";
+            this.Aktualizuj.Click += new System.EventHandler(this.Aktualizuj_Click);
+            // 
+            // Losuj
+            // 
+            this.Losuj.Name = "Losuj";
+            this.Losuj.Size = new System.Drawing.Size(69, 32);
+            this.Losuj.Text = "Losuj";
+            this.Losuj.Click += new System.EventHandler(this.Losuj_Click);
+            // 
+            // Odśwież
+            // 
+            this.Odśwież.BackColor = System.Drawing.Color.White;
+            this.Odśwież.BackgroundImage = global::Serialak.Properties.Resources.refresh1;
+            this.Odśwież.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.Odśwież.Location = new System.Drawing.Point(1666, 46);
+            this.Odśwież.Name = "Odśwież";
+            this.Odśwież.Size = new System.Drawing.Size(56, 49);
+            this.Odśwież.TabIndex = 3;
+            this.Odśwież.UseVisualStyleBackColor = false;
+            this.Odśwież.Click += new System.EventHandler(this.Odśwież_Click);
+            // 
             // Serialak
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -283,9 +283,9 @@
             this.MainMenuStrip = this.Menu;
             this.MaximizeBox = false;
             this.Name = "Serialak";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Serialak";
-            this.TransparencyKey = System.Drawing.Color.Red;
             ((System.ComponentModel.ISupportInitialize)(this.dane_seriale)).EndInit();
             this.Menu.ResumeLayout(false);
             this.Menu.PerformLayout();
