@@ -64,6 +64,7 @@ namespace Serialak
                 if (UppercaseFirst(thisDay.ToString("dddd")) == row.Cells[5].Value.ToString())
                 {
                     row.DefaultCellStyle.BackColor = Color.Aqua;
+                    row.DefaultCellStyle.SelectionBackColor = Color.Aqua;
                 }
                 DataGridViewLinkCell linkCell = new DataGridViewLinkCell
                 {

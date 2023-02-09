@@ -283,7 +283,6 @@
             this.MainMenuStrip = this.Menu;
             this.MaximizeBox = false;
             this.Name = "Serialak";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Serialak";
             ((System.ComponentModel.ISupportInitialize)(this.dane_seriale)).EndInit();
