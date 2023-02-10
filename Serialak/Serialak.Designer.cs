@@ -55,9 +55,11 @@
             this.Aktualizuj = new System.Windows.Forms.ToolStripMenuItem();
             this.Losuj = new System.Windows.Forms.ToolStripMenuItem();
             this.zapiszDoPlikuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Odśwież = new System.Windows.Forms.Button();
             this.Save = new System.Windows.Forms.SaveFileDialog();
             this.cbox_ogladane = new System.Windows.Forms.CheckBox();
+            this.pDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dane_seriale)).BeginInit();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
@@ -226,44 +228,53 @@
             this.zapiszDoPlikuToolStripMenuItem});
             this.Menu.Location = new System.Drawing.Point(0, 0);
             this.Menu.Name = "Menu";
-            this.Menu.Size = new System.Drawing.Size(1744, 36);
+            this.Menu.Size = new System.Drawing.Size(1744, 33);
             this.Menu.TabIndex = 2;
             this.Menu.Text = "menuStrip1";
             // 
             // Dodaj
             // 
             this.Dodaj.Name = "Dodaj";
-            this.Dodaj.Size = new System.Drawing.Size(76, 32);
+            this.Dodaj.Size = new System.Drawing.Size(76, 29);
             this.Dodaj.Text = "Dodaj";
             this.Dodaj.Click += new System.EventHandler(this.Dodaj_Click);
             // 
             // Usuń
             // 
             this.Usuń.Name = "Usuń";
-            this.Usuń.Size = new System.Drawing.Size(68, 32);
+            this.Usuń.Size = new System.Drawing.Size(68, 29);
             this.Usuń.Text = "Usuń";
             this.Usuń.Click += new System.EventHandler(this.Usuń_Click);
             // 
             // Aktualizuj
             // 
             this.Aktualizuj.Name = "Aktualizuj";
-            this.Aktualizuj.Size = new System.Drawing.Size(104, 32);
+            this.Aktualizuj.Size = new System.Drawing.Size(104, 29);
             this.Aktualizuj.Text = "Aktualizuj";
             this.Aktualizuj.Click += new System.EventHandler(this.Aktualizuj_Click);
             // 
             // Losuj
             // 
             this.Losuj.Name = "Losuj";
-            this.Losuj.Size = new System.Drawing.Size(69, 32);
+            this.Losuj.Size = new System.Drawing.Size(69, 29);
             this.Losuj.Text = "Losuj";
             this.Losuj.Click += new System.EventHandler(this.Losuj_Click);
             // 
             // zapiszDoPlikuToolStripMenuItem
             // 
+            this.zapiszDoPlikuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cSVToolStripMenuItem,
+            this.pDFToolStripMenuItem});
             this.zapiszDoPlikuToolStripMenuItem.Name = "zapiszDoPlikuToolStripMenuItem";
-            this.zapiszDoPlikuToolStripMenuItem.Size = new System.Drawing.Size(148, 32);
+            this.zapiszDoPlikuToolStripMenuItem.Size = new System.Drawing.Size(148, 29);
             this.zapiszDoPlikuToolStripMenuItem.Text = "Zapisz do pliku";
-            this.zapiszDoPlikuToolStripMenuItem.Click += new System.EventHandler(this.ZapiszDoPlikuToolStripMenuItem_Click);
+            // 
+            // cSVToolStripMenuItem
+            // 
+            this.cSVToolStripMenuItem.Name = "cSVToolStripMenuItem";
+            this.cSVToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.cSVToolStripMenuItem.Text = "CSV";
+            this.cSVToolStripMenuItem.Click += new System.EventHandler(this.CSVToolStripMenuItem_Click);
             // 
             // Odśwież
             // 
@@ -287,6 +298,13 @@
             this.cbox_ogladane.Text = "Ukryj obejrzane seriale";
             this.cbox_ogladane.UseVisualStyleBackColor = true;
             this.cbox_ogladane.CheckedChanged += new System.EventHandler(this.Cbox_ogladane_CheckedChanged);
+            // 
+            // pDFToolStripMenuItem
+            // 
+            this.pDFToolStripMenuItem.Name = "pDFToolStripMenuItem";
+            this.pDFToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.pDFToolStripMenuItem.Text = "PDF";
+            this.pDFToolStripMenuItem.Click += new System.EventHandler(this.pDFToolStripMenuItem_Click);
             // 
             // Serialak
             // 
@@ -335,6 +353,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn link;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
         private System.Windows.Forms.CheckBox cbox_ogladane;
+        private System.Windows.Forms.ToolStripMenuItem cSVToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pDFToolStripMenuItem;
     }
 }
 

@@ -1,4 +1,7 @@
-﻿using Microsoft.Office.Core;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using Syncfusion.Pdf.Graphics;
+using Syncfusion.Pdf.Interactive;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -26,6 +29,7 @@ namespace Serialak
         private readonly DateTime thisDay = DateTime.Today;
         private readonly XDocument xml;
 
+
         public Serialak()
         {
             InitializeComponent();
@@ -46,7 +50,6 @@ namespace Serialak
                 return string.Empty;
             return char.ToUpper(str[0]) + str.Substring(1).ToLower();
         }
-
 
         public void Zaladuj()
         {
@@ -77,13 +80,16 @@ namespace Serialak
                     row.DefaultCellStyle.BackColor = Color.Green;
                     row.DefaultCellStyle.ForeColor = Color.Black;
                 }
+                else
+                {
+                    row.Cells[8].Value = "Oglądane";
+                }
                 if (row.Cells[5].Value.ToString() == "")
                 {
                     row.Cells[5].Value = "Nie";
                 }
                 if (UppercaseFirst(thisDay.ToString("dddd")) == row.Cells[5].Value.ToString())
                 {
-
                     row.DefaultCellStyle.BackColor = Color.Aqua;
                     row.DefaultCellStyle.SelectionBackColor = Color.Aqua;
                 }
@@ -97,19 +103,16 @@ namespace Serialak
                 }
             }
 
-            
             dane_seriale.DefaultCellStyle.SelectionBackColor
             = dane_seriale.DefaultCellStyle.BackColor;
         }
 
         private void Dodaj_Click(object sender, EventArgs e)
         {
-            
             using (Form ADD = new Dodawanie())
             {
                 if (ADD.ShowDialog() == DialogResult.OK)
                     Zaladuj();
-                
             }
         }
 
@@ -150,7 +153,6 @@ namespace Serialak
             Zaladuj();
         }
 
-
         private void Aktualizuj_Click(object sender, EventArgs e)
         {
             using (Form akt = new Update())
@@ -164,10 +166,17 @@ namespace Serialak
         {
             try
             {
+                if (e.RowIndex < 0)
+                {
+                    return;
+                }
                 if (dane_seriale.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewLinkCell)
                 {
                     System.Diagnostics.Process.Start(dane_seriale.Rows[e.RowIndex].Cells[e.ColumnIndex].Value as string);
                 }
+
+
+
             }
             catch (Exception)
             {
@@ -188,39 +197,6 @@ namespace Serialak
                 }
                 xdoc.Save(@"C:\Seriale\Seriale.xml");
             }
-        }
-
-        private void ZapiszDoPlikuToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var csv = new StringBuilder();
-            csv.AppendLine("Nazwa\tAktualny odcinek\tAktualny sezon\tIlość odcinków\tIlość sezonów\tWychodzi\tOstatnio oglądany\tLink");
-            foreach (DataGridViewRow row in dane_seriale.Rows)
-            {
-                var first = row.Cells[0].Value;
-                var second = row.Cells[1].Value;
-                var third = row.Cells[2].Value;
-                var fourth = row.Cells[3].Value;
-                var fifth = row.Cells[4].Value;
-                var sixth = row.Cells[5].Value;
-                var seventh = row.Cells[6].Value;
-                var eighth = row.Cells[7].Value;
-                var newLine = string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}", first,second,third,fourth,fifth,sixth,seventh,eighth);
-                csv.AppendLine(newLine);
-            }
-            Save.InitialDirectory = @"C:\Seriale";
-            Save.FilterIndex = 0;
-            Save.Title = "Zapisz plik";
-            Save.CheckFileExists = false;
-            Save.CheckPathExists = true;
-            Save.DefaultExt = "csv";
-            Save.Filter = "CSV files (*.csv)|*.csv";
-
-            if (Save.ShowDialog() == DialogResult.OK)
-            {
-                File.WriteAllText(Save.FileName, csv.ToString());
-                MessageBox.Show("Pomyśnie zapisano plik");
-            }
-
         }
 
         private void Cbox_ogladane_CheckedChanged(object sender, EventArgs e)
@@ -251,14 +227,12 @@ namespace Serialak
                 }
                 foreach (DataGridViewRow row in dane_seriale.Rows)
                 {
-                    
                     if (row.Cells[5].Value.ToString() == "")
                     {
                         row.Cells[5].Value = "Nie";
                     }
                     if (UppercaseFirst(thisDay.ToString("dddd")) == row.Cells[5].Value.ToString())
                     {
-
                         row.DefaultCellStyle.BackColor = Color.Aqua;
                         row.DefaultCellStyle.SelectionBackColor = Color.Aqua;
                     }
@@ -270,21 +244,131 @@ namespace Serialak
                     {
                         row.Cells[7] = linkCell;
                     }
-                
 
-            
-                dane_seriale.DefaultCellStyle.SelectionBackColor
-                = dane_seriale.DefaultCellStyle.BackColor;
-            }
-            check = true;
+                    dane_seriale.DefaultCellStyle.SelectionBackColor
+                    = dane_seriale.DefaultCellStyle.BackColor;
+                }
+                check = true;
             }
             else
             {
                 Zaladuj();
                 check = false;
             }
-            
         }
 
+        private void CSVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var csv = new StringBuilder();
+            csv.AppendLine("Nazwa\tAktualny odcinek\tAktualny sezon\tIlość odcinków\tIlość sezonów\tWychodzi\tOstatnio oglądany\tLink");
+            foreach (DataGridViewRow row in dane_seriale.Rows)
+            {
+                var first = row.Cells[0].Value;
+                var second = row.Cells[1].Value;
+                var third = row.Cells[2].Value;
+                var fourth = row.Cells[3].Value;
+                var fifth = row.Cells[4].Value;
+                var sixth = row.Cells[5].Value;
+                var seventh = row.Cells[6].Value;
+                var eighth = row.Cells[7].Value;
+                var newLine = string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}", first, second, third, fourth, fifth, sixth, seventh, eighth);
+                csv.AppendLine(newLine);
+            }
+            Save.InitialDirectory = @"C:\Seriale";
+            Save.FileName = "Seriale.csv";
+            Save.FilterIndex = 0;
+            Save.Title = "Zapisz plik";
+            Save.CheckFileExists = false;
+            Save.CheckPathExists = true;
+            Save.DefaultExt = "csv";
+            Save.Filter = "CSV files (*.csv)|*.csv";
+
+            if (Save.ShowDialog() == DialogResult.OK)
+            {
+                File.WriteAllText(Save.FileName, csv.ToString());
+                MessageBox.Show("Pomyślnie zapisano plik");
+            }
+        }
+
+        private void pDFToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+                if (dane_seriale.Rows.Count > 0)
+                {
+                    SaveFileDialog save = new SaveFileDialog();
+                    save.Filter = "PDF (*.pdf)|*.pdf";
+                    save.FileName = "Seriale.pdf";
+                    bool ErrorMessage = false;
+                    if (save.ShowDialog() == DialogResult.OK)
+                    {
+                        if (File.Exists(save.FileName))
+                        {
+                            try
+                            {
+                                File.Delete(save.FileName);
+                            }
+                            catch (Exception ex)
+                            {
+                                ErrorMessage = true;
+                                MessageBox.Show("Unable to wride data in disk" + ex.Message);
+                            }
+                        }
+                        if (!ErrorMessage)
+                        {
+                            try
+                            {
+                                PdfPTable pTable = new PdfPTable(dane_seriale.Columns.Count);
+                                pTable.DefaultCell.Padding = 2;
+                                pTable.WidthPercentage = 100;
+                                pTable.HorizontalAlignment = Element.ALIGN_LEFT;
+                            PdfStandardFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 12, PdfFontStyle.Italic);
+
+
+                            foreach (DataGridViewColumn col in dane_seriale.Columns)
+                                {
+                                    PdfPCell pCell = new PdfPCell(new Phrase(col.HeaderText));
+                                    pTable.AddCell(pCell);
+
+                                }
+                                foreach (DataGridViewRow viewRow in dane_seriale.Rows)
+                                {
+
+                                    foreach (DataGridViewCell dcell in viewRow.Cells)
+                                    {
+                                    if (dcell.ColumnIndex == 7 && dcell.Value.ToString() != "Brak")
+                                    {
+                                        pTable.AddCell("Zawiera");
+                                    }
+                                    else
+                                    {
+                                        pTable.AddCell(dcell.Value.ToString());
+                                    }
+                                    }
+                                }
+
+                                using (FileStream fileStream = new FileStream(save.FileName, FileMode.Create))
+                                {
+                                    Document document = new Document(PageSize.A4, 8f, 16f, 16f, 8f);
+                                    PdfWriter.GetInstance(document, fileStream);
+                                    document.Open();
+                                    document.Add(pTable);
+                                    document.Close();
+                                    fileStream.Close();
+                                }
+                                MessageBox.Show("Udało się zapisać plik", "info");
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Wystąpił błąd" + ex.Message);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Nie znaleziono danych", "Info");
+                }
+            }
+        
     }
 }

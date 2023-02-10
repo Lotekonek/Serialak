@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Linq.Expressions;
-using System.ServiceModel.Configuration;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
@@ -16,7 +14,7 @@ namespace Serialak
         private readonly XDocument xdoc = XDocument.Load(@"C:\Seriale\Seriale.xml");
         private readonly List<string> Seriale = new List<string>();
         private readonly DateTime thisDay = DateTime.Today;
-        bool ended = false;
+        private bool ended = false;
 
         public Update()
         {
@@ -49,8 +47,6 @@ namespace Serialak
                 MessageBox.Show("Wybierz serial z listy!!!");
                 return;
             }
-          
-            
 
             var elStatus = xdoc.Descendants()?.
             Elements("Nazwa")?.
@@ -63,8 +59,9 @@ namespace Serialak
 
             if (ended)
             {
-                if (elSezon != null || elOdcinek != null||elEnded!=null)
-                { var elTyg = elStatus.Elements("Dzień_tygodnia").FirstOrDefault();
+                if (elSezon != null || elOdcinek != null || elEnded != null)
+                {
+                    var elTyg = elStatus.Elements("Dzień_tygodnia").FirstOrDefault();
                     elOdcinek.Value = "";
                     elSezon.Value = "";
                     elOdcinek = elStatus.Elements("Ilość_Odcinków").FirstOrDefault();
