@@ -304,7 +304,7 @@
             this.pDFToolStripMenuItem.Name = "pDFToolStripMenuItem";
             this.pDFToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.pDFToolStripMenuItem.Text = "PDF";
-            this.pDFToolStripMenuItem.Click += new System.EventHandler(this.pDFToolStripMenuItem_Click);
+            this.pDFToolStripMenuItem.Click += new System.EventHandler(this.PDFToolStripMenuItem_Click);
             // 
             // Serialak
             // 

@@ -1,7 +1,6 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Syncfusion.Pdf.Graphics;
-using Syncfusion.Pdf.Interactive;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -28,7 +27,6 @@ namespace Serialak
         private bool check = false;
         private readonly DateTime thisDay = DateTime.Today;
         private readonly XDocument xml;
-
 
         public Serialak()
         {
@@ -174,13 +172,9 @@ namespace Serialak
                 {
                     System.Diagnostics.Process.Start(dane_seriale.Rows[e.RowIndex].Cells[e.ColumnIndex].Value as string);
                 }
-
-
-
             }
             catch (Exception)
             {
-
                 MessageBox.Show("Błędny link");
                 XDocument xdoc = XDocument.Load(@"C:\Seriale\Seriale.xml");
                 string nazwa = dane_seriale.CurrentRow.Cells[0].Value.ToString();
@@ -290,51 +284,49 @@ namespace Serialak
             }
         }
 
-        private void pDFToolStripMenuItem_Click(object sender, EventArgs e)
+        private void PDFToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-                if (dane_seriale.Rows.Count > 0)
+            if (dane_seriale.Rows.Count > 0)
+            {
+                SaveFileDialog save = new SaveFileDialog
                 {
-                    SaveFileDialog save = new SaveFileDialog();
-                    save.Filter = "PDF (*.pdf)|*.pdf";
-                    save.FileName = "Seriale.pdf";
-                    bool ErrorMessage = false;
-                    if (save.ShowDialog() == DialogResult.OK)
+                    Filter = "PDF (*.pdf)|*.pdf",
+                    FileName = "Seriale.pdf"
+                };
+                bool ErrorMessage = false;
+                if (save.ShowDialog() == DialogResult.OK)
+                {
+                    if (File.Exists(save.FileName))
                     {
-                        if (File.Exists(save.FileName))
+                        try
                         {
-                            try
-                            {
-                                File.Delete(save.FileName);
-                            }
-                            catch (Exception ex)
-                            {
-                                ErrorMessage = true;
-                                MessageBox.Show("Unable to wride data in disk" + ex.Message);
-                            }
+                            File.Delete(save.FileName);
                         }
-                        if (!ErrorMessage)
+                        catch (Exception ex)
                         {
-                            try
-                            {
-                                PdfPTable pTable = new PdfPTable(dane_seriale.Columns.Count);
-                                pTable.DefaultCell.Padding = 2;
-                                pTable.WidthPercentage = 100;
-                                pTable.HorizontalAlignment = Element.ALIGN_LEFT;
+                            ErrorMessage = true;
+                            MessageBox.Show("Unable to wride data in disk" + ex.Message);
+                        }
+                    }
+                    if (!ErrorMessage)
+                    {
+                        try
+                        {
+                            PdfPTable pTable = new PdfPTable(dane_seriale.Columns.Count);
+                            pTable.DefaultCell.Padding = 2;
+                            pTable.WidthPercentage = 100;
+                            pTable.HorizontalAlignment = Element.ALIGN_LEFT;
                             PdfStandardFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 12, PdfFontStyle.Italic);
 
-
                             foreach (DataGridViewColumn col in dane_seriale.Columns)
+                            {
+                                PdfPCell pCell = new PdfPCell(new Phrase(col.HeaderText));
+                                pTable.AddCell(pCell);
+                            }
+                            foreach (DataGridViewRow viewRow in dane_seriale.Rows)
+                            {
+                                foreach (DataGridViewCell dcell in viewRow.Cells)
                                 {
-                                    PdfPCell pCell = new PdfPCell(new Phrase(col.HeaderText));
-                                    pTable.AddCell(pCell);
-
-                                }
-                                foreach (DataGridViewRow viewRow in dane_seriale.Rows)
-                                {
-
-                                    foreach (DataGridViewCell dcell in viewRow.Cells)
-                                    {
                                     if (dcell.ColumnIndex == 7 && dcell.Value.ToString() != "Brak")
                                     {
                                         pTable.AddCell("Zawiera");
@@ -343,32 +335,31 @@ namespace Serialak
                                     {
                                         pTable.AddCell(dcell.Value.ToString());
                                     }
-                                    }
                                 }
+                            }
 
-                                using (FileStream fileStream = new FileStream(save.FileName, FileMode.Create))
-                                {
-                                    Document document = new Document(PageSize.A4, 8f, 16f, 16f, 8f);
-                                    PdfWriter.GetInstance(document, fileStream);
-                                    document.Open();
-                                    document.Add(pTable);
-                                    document.Close();
-                                    fileStream.Close();
-                                }
-                                MessageBox.Show("Udało się zapisać plik", "info");
-                            }
-                            catch (Exception ex)
+                            using (FileStream fileStream = new FileStream(save.FileName, FileMode.Create))
                             {
-                                MessageBox.Show("Wystąpił błąd" + ex.Message);
+                                Document document = new Document(PageSize.A4, 8f, 16f, 16f, 8f);
+                                PdfWriter.GetInstance(document, fileStream);
+                                document.Open();
+                                document.Add(pTable);
+                                document.Close();
+                                fileStream.Close();
                             }
+                            MessageBox.Show("Udało się zapisać plik", "info");
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Wystąpił błąd" + ex.Message);
                         }
                     }
                 }
-                else
-                {
-                    MessageBox.Show("Nie znaleziono danych", "Info");
-                }
             }
-        
+            else
+            {
+                MessageBox.Show("Nie znaleziono danych", "Info");
+            }
+        }
     }
 }
