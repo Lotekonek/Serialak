@@ -55,6 +55,22 @@ namespace Serialak
             string tyg = c_box.Text;
             string link = tBox_Link.Text;
 
+            bool result = Uri.TryCreate(link, UriKind.Absolute, out Uri uriResult)
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+            if (!result)
+            {
+                DialogResult dr = MessageBox.Show("Wykryto błędny link, czy chcesz go poprawić?",
+                      "Błędny link!!!", MessageBoxButtons.YesNo);
+                switch (dr)
+                {
+                    case DialogResult.Yes:
+                        return;
+                    case DialogResult.No:
+                        link = "";
+                        break;
+                }
+            }
+
             if (check == true)
             {
                 sezon = "";

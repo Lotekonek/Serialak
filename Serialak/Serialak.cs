@@ -145,11 +145,6 @@ namespace Serialak
             Losowanie.Clear();
         }
 
-        public void Odśwież_Click(object sender, EventArgs e)
-        {
-            Zaladuj();
-        }
-
 
         private void Aktualizuj_Click(object sender, EventArgs e)
         {
@@ -164,29 +159,19 @@ namespace Serialak
         {
             try
             {
+
+                if (e.RowIndex == -1) return;
+
+
                 if (dane_seriale.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewLinkCell)
                 {
                     System.Diagnostics.Process.Start(dane_seriale.Rows[e.RowIndex].Cells[e.ColumnIndex].Value as string);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                MessageBox.Show("Błędny link");
-                XDocument xdoc = XDocument.Load(@"C:\Seriale\Seriale.xml");
-                string nazwa = dane_seriale.CurrentRow.Cells[0].Value.ToString();
-
-                var elStatus = xdoc.Descendants()?.
-                Elements("Nazwa")?.
-                Where(x => x.Value == nazwa)?.
-                Ancestors("Serial");
-                var nlink = elStatus.Elements("Link").FirstOrDefault();
-
-                if (nlink != null)
-                {
-                    nlink.Value = "Brak";
-                }
-                xdoc.Save(@"C:\Seriale\Seriale.xml");
+               MessageBox.Show("Błędny link" + ex);
             }
         }
 

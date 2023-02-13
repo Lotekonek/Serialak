@@ -40,6 +40,14 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Serialak));
             this.dane_seriale = new System.Windows.Forms.DataGridView();
+            this.Menu = new System.Windows.Forms.MenuStrip();
+            this.Dodaj = new System.Windows.Forms.ToolStripMenuItem();
+            this.Usuń = new System.Windows.Forms.ToolStripMenuItem();
+            this.Aktualizuj = new System.Windows.Forms.ToolStripMenuItem();
+            this.Losuj = new System.Windows.Forms.ToolStripMenuItem();
+            this.zapiszDoPlikuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Save = new System.Windows.Forms.SaveFileDialog();
+            this.cbox_ogladane = new System.Windows.Forms.CheckBox();
             this.Nazwa = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.odc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sez = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,15 +57,6 @@
             this.last = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.link = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Menu = new System.Windows.Forms.MenuStrip();
-            this.Dodaj = new System.Windows.Forms.ToolStripMenuItem();
-            this.Usuń = new System.Windows.Forms.ToolStripMenuItem();
-            this.Aktualizuj = new System.Windows.Forms.ToolStripMenuItem();
-            this.Losuj = new System.Windows.Forms.ToolStripMenuItem();
-            this.zapiszDoPlikuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Odśwież = new System.Windows.Forms.Button();
-            this.Save = new System.Windows.Forms.SaveFileDialog();
-            this.cbox_ogladane = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dane_seriale)).BeginInit();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
@@ -122,6 +121,69 @@
             this.dane_seriale.Size = new System.Drawing.Size(1744, 615);
             this.dane_seriale.TabIndex = 0;
             this.dane_seriale.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dane_seriale_CellContentClick);
+            // 
+            // Menu
+            // 
+            this.Menu.BackColor = System.Drawing.Color.White;
+            this.Menu.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
+            this.Menu.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Dodaj,
+            this.Usuń,
+            this.Aktualizuj,
+            this.Losuj,
+            this.zapiszDoPlikuToolStripMenuItem});
+            this.Menu.Location = new System.Drawing.Point(0, 0);
+            this.Menu.Name = "Menu";
+            this.Menu.Size = new System.Drawing.Size(1744, 33);
+            this.Menu.TabIndex = 2;
+            this.Menu.Text = "menuStrip1";
+            // 
+            // Dodaj
+            // 
+            this.Dodaj.Name = "Dodaj";
+            this.Dodaj.Size = new System.Drawing.Size(76, 29);
+            this.Dodaj.Text = "Dodaj";
+            this.Dodaj.Click += new System.EventHandler(this.Dodaj_Click);
+            // 
+            // Usuń
+            // 
+            this.Usuń.Name = "Usuń";
+            this.Usuń.Size = new System.Drawing.Size(68, 29);
+            this.Usuń.Text = "Usuń";
+            this.Usuń.Click += new System.EventHandler(this.Usuń_Click);
+            // 
+            // Aktualizuj
+            // 
+            this.Aktualizuj.Name = "Aktualizuj";
+            this.Aktualizuj.Size = new System.Drawing.Size(104, 29);
+            this.Aktualizuj.Text = "Aktualizuj";
+            this.Aktualizuj.Click += new System.EventHandler(this.Aktualizuj_Click);
+            // 
+            // Losuj
+            // 
+            this.Losuj.Name = "Losuj";
+            this.Losuj.Size = new System.Drawing.Size(69, 29);
+            this.Losuj.Text = "Losuj";
+            this.Losuj.Click += new System.EventHandler(this.Losuj_Click);
+            // 
+            // zapiszDoPlikuToolStripMenuItem
+            // 
+            this.zapiszDoPlikuToolStripMenuItem.Name = "zapiszDoPlikuToolStripMenuItem";
+            this.zapiszDoPlikuToolStripMenuItem.Size = new System.Drawing.Size(148, 29);
+            this.zapiszDoPlikuToolStripMenuItem.Text = "Zapisz do pliku";
+            this.zapiszDoPlikuToolStripMenuItem.Click += new System.EventHandler(this.ZapiszDoPlikuToolStripMenuItem_Click);
+            // 
+            // cbox_ogladane
+            // 
+            this.cbox_ogladane.AutoSize = true;
+            this.cbox_ogladane.Location = new System.Drawing.Point(570, 8);
+            this.cbox_ogladane.Name = "cbox_ogladane";
+            this.cbox_ogladane.Size = new System.Drawing.Size(194, 24);
+            this.cbox_ogladane.TabIndex = 4;
+            this.cbox_ogladane.Text = "Ukryj obejrzane seriale";
+            this.cbox_ogladane.UseVisualStyleBackColor = true;
+            this.cbox_ogladane.CheckedChanged += new System.EventHandler(this.Cbox_ogladane_CheckedChanged);
             // 
             // Nazwa
             // 
@@ -203,6 +265,7 @@
             this.link.MinimumWidth = 8;
             this.link.Name = "link";
             this.link.ReadOnly = true;
+            this.link.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // status
             // 
@@ -213,81 +276,6 @@
             this.status.ReadOnly = true;
             this.status.Visible = false;
             // 
-            // Menu
-            // 
-            this.Menu.BackColor = System.Drawing.Color.White;
-            this.Menu.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
-            this.Menu.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Dodaj,
-            this.Usuń,
-            this.Aktualizuj,
-            this.Losuj,
-            this.zapiszDoPlikuToolStripMenuItem});
-            this.Menu.Location = new System.Drawing.Point(0, 0);
-            this.Menu.Name = "Menu";
-            this.Menu.Size = new System.Drawing.Size(1744, 36);
-            this.Menu.TabIndex = 2;
-            this.Menu.Text = "menuStrip1";
-            // 
-            // Dodaj
-            // 
-            this.Dodaj.Name = "Dodaj";
-            this.Dodaj.Size = new System.Drawing.Size(76, 32);
-            this.Dodaj.Text = "Dodaj";
-            this.Dodaj.Click += new System.EventHandler(this.Dodaj_Click);
-            // 
-            // Usuń
-            // 
-            this.Usuń.Name = "Usuń";
-            this.Usuń.Size = new System.Drawing.Size(68, 32);
-            this.Usuń.Text = "Usuń";
-            this.Usuń.Click += new System.EventHandler(this.Usuń_Click);
-            // 
-            // Aktualizuj
-            // 
-            this.Aktualizuj.Name = "Aktualizuj";
-            this.Aktualizuj.Size = new System.Drawing.Size(104, 32);
-            this.Aktualizuj.Text = "Aktualizuj";
-            this.Aktualizuj.Click += new System.EventHandler(this.Aktualizuj_Click);
-            // 
-            // Losuj
-            // 
-            this.Losuj.Name = "Losuj";
-            this.Losuj.Size = new System.Drawing.Size(69, 32);
-            this.Losuj.Text = "Losuj";
-            this.Losuj.Click += new System.EventHandler(this.Losuj_Click);
-            // 
-            // zapiszDoPlikuToolStripMenuItem
-            // 
-            this.zapiszDoPlikuToolStripMenuItem.Name = "zapiszDoPlikuToolStripMenuItem";
-            this.zapiszDoPlikuToolStripMenuItem.Size = new System.Drawing.Size(148, 32);
-            this.zapiszDoPlikuToolStripMenuItem.Text = "Zapisz do pliku";
-            this.zapiszDoPlikuToolStripMenuItem.Click += new System.EventHandler(this.ZapiszDoPlikuToolStripMenuItem_Click);
-            // 
-            // Odśwież
-            // 
-            this.Odśwież.BackColor = System.Drawing.Color.White;
-            this.Odśwież.BackgroundImage = global::Serialak.Properties.Resources.refresh1;
-            this.Odśwież.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.Odśwież.Location = new System.Drawing.Point(1666, 46);
-            this.Odśwież.Name = "Odśwież";
-            this.Odśwież.Size = new System.Drawing.Size(56, 49);
-            this.Odśwież.TabIndex = 3;
-            this.Odśwież.UseVisualStyleBackColor = false;
-            this.Odśwież.Click += new System.EventHandler(this.Odśwież_Click);
-            // 
-            // cbox_ogladane
-            // 
-            this.cbox_ogladane.AutoSize = true;
-            this.cbox_ogladane.Location = new System.Drawing.Point(570, 8);
-            this.cbox_ogladane.Name = "cbox_ogladane";
-            this.cbox_ogladane.Size = new System.Drawing.Size(194, 24);
-            this.cbox_ogladane.TabIndex = 4;
-            this.cbox_ogladane.Text = "Ukryj obejrzane seriale";
-            this.cbox_ogladane.UseVisualStyleBackColor = true;
-            this.cbox_ogladane.CheckedChanged += new System.EventHandler(this.Cbox_ogladane_CheckedChanged);
-            // 
             // Serialak
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -295,7 +283,6 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(1744, 651);
             this.Controls.Add(this.cbox_ogladane);
-            this.Controls.Add(this.Odśwież);
             this.Controls.Add(this.Menu);
             this.Controls.Add(this.dane_seriale);
             this.Cursor = System.Windows.Forms.Cursors.Default;
@@ -321,10 +308,10 @@
         private System.Windows.Forms.ToolStripMenuItem Dodaj;
         private System.Windows.Forms.ToolStripMenuItem Usuń;
         private System.Windows.Forms.ToolStripMenuItem Losuj;
-        private System.Windows.Forms.Button Odśwież;
         public System.Windows.Forms.DataGridView dane_seriale;
         private System.Windows.Forms.ToolStripMenuItem zapiszDoPlikuToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog Save;
+        private System.Windows.Forms.CheckBox cbox_ogladane;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nazwa;
         private System.Windows.Forms.DataGridViewTextBoxColumn odc;
         private System.Windows.Forms.DataGridViewTextBoxColumn sez;
@@ -334,7 +321,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn last;
         private System.Windows.Forms.DataGridViewTextBoxColumn link;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
-        private System.Windows.Forms.CheckBox cbox_ogladane;
     }
 }
 

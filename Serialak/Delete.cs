@@ -1,54 +1,76 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Serialak
 {
     public partial class Delete : Form
     {
-        private readonly List<string> Seriale = new List<string>();
+        private readonly List<string> Spis = new List<string>();
 
         public Delete()
         {
             InitializeComponent();
-            Seriale.Clear();
-            c_seriale.Items.Clear();
+
+            dane_usuwanie.Rows.Clear();
             XmlDocument doc = new XmlDocument();
             doc.Load(@"C:\Seriale\Seriale.xml");
-            XmlNodeList node = doc.DocumentElement.SelectNodes("/Spis/Serial/Nazwa");
+            XmlNodeList node = doc.DocumentElement.SelectNodes("/Spis/Serial");
             foreach (XmlNode node2 in node)
             {
-                Seriale.Add(node2.InnerText);
+                Spis.Add(node2.SelectSingleNode("Nazwa").InnerText);
+
+                dane_usuwanie.Rows.Add(Spis.ToArray());
+                Spis.Clear();
+
             }
-            c_seriale.Items.AddRange(Seriale.ToArray());
         }
 
         private void Btn_delete_Click(object sender, EventArgs e)
         {
-            if (c_seriale.Items.Count == 0)
+            try
             {
-                c_seriale.Visible = false;
-                btn_delete.Visible = false;
+                foreach (DataGridViewRow row in dane_usuwanie.Rows)
+                {
+                    if (Convert.ToBoolean(row.Cells[choose.Name].Value) == true)
+                    {
+                        var xDoc = XDocument.Load(@"C:\Seriale\Seriale.xml");
+
+                        xDoc.Root?.Descendants("Serial")
+                            .Where(f => f.Attribute("Name")?.Value == row.Cells[0].Value.ToString())
+                            .Remove();
+                        xDoc.Save(@"C:\Seriale\Seriale.xml");
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Błąd" + ex);
+            }
+            finally
+            {
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+        }
+
+        private void dane_usuwanie_CellClick(object sender, DataGridViewCellEventArgs e)
+        { if (Convert.ToBoolean(dane_usuwanie.CurrentRow.Cells[choose.Name].Value) == false)
+            {
+                dane_usuwanie.CurrentRow.Cells[choose.Name].Value = true;
             }
             else
             {
-                var xDoc = XDocument.Load(@"C:\Seriale\Seriale.xml");
-                var source = xDoc.Root?.Descendants("Serial")
-                    .Where(f => f.Attribute("Name")?.Value == c_seriale.Text)
-                    .First();
-                xDoc.Root?.Descendants("Serial")
-                    .Where(f => f.Attribute("Name")?.Value == c_seriale.Text)
-                    .Remove();
-                xDoc.Save(@"C:\Seriale\Seriale.xml");
-                c_seriale.Text = null;
-                c_seriale.Items.Clear();
+                dane_usuwanie.CurrentRow.Cells[choose.Name].Value = false;
             }
-            this.DialogResult = DialogResult.OK;
-            Close();
         }
     }
 }
+ 
