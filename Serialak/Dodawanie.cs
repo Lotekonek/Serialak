@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -98,7 +97,6 @@ namespace Serialak
                 }
             }
 
-
             xml.Element("Spis").Add(
                             new XElement("Serial",
                             new XAttribute("Name", tBox_nazwa.Text),
@@ -113,11 +111,7 @@ namespace Serialak
                             new XElement("Status")));
             xml.Save(@"C:\Seriale\Seriale.xml");
 
-            
-            
             this.DialogResult = DialogResult.OK;
-
-
 
             Close();
             MessageBox.Show("Poprawnie wczytano serial");
