@@ -64,6 +64,7 @@ namespace Serialak
                 {
                     case DialogResult.Yes:
                         return;
+
                     case DialogResult.No:
                         link = "";
                         break;

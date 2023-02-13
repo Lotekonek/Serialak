@@ -40,14 +40,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Serialak));
             this.dane_seriale = new System.Windows.Forms.DataGridView();
-            this.Menu = new System.Windows.Forms.MenuStrip();
-            this.Dodaj = new System.Windows.Forms.ToolStripMenuItem();
-            this.Usuń = new System.Windows.Forms.ToolStripMenuItem();
-            this.Aktualizuj = new System.Windows.Forms.ToolStripMenuItem();
-            this.Losuj = new System.Windows.Forms.ToolStripMenuItem();
-            this.zapiszDoPlikuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Save = new System.Windows.Forms.SaveFileDialog();
-            this.cbox_ogladane = new System.Windows.Forms.CheckBox();
             this.Nazwa = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.odc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sez = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -57,6 +49,16 @@
             this.last = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.link = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Menu = new System.Windows.Forms.MenuStrip();
+            this.Dodaj = new System.Windows.Forms.ToolStripMenuItem();
+            this.Usuń = new System.Windows.Forms.ToolStripMenuItem();
+            this.Aktualizuj = new System.Windows.Forms.ToolStripMenuItem();
+            this.Losuj = new System.Windows.Forms.ToolStripMenuItem();
+            this.zapiszDoPlikuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Save = new System.Windows.Forms.SaveFileDialog();
+            this.cbox_ogladane = new System.Windows.Forms.CheckBox();
+            this.zapiszDoPlikuCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zapisDoPlikuPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dane_seriale)).BeginInit();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
@@ -121,69 +123,6 @@
             this.dane_seriale.Size = new System.Drawing.Size(1744, 615);
             this.dane_seriale.TabIndex = 0;
             this.dane_seriale.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dane_seriale_CellContentClick);
-            // 
-            // Menu
-            // 
-            this.Menu.BackColor = System.Drawing.Color.White;
-            this.Menu.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
-            this.Menu.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Dodaj,
-            this.Usuń,
-            this.Aktualizuj,
-            this.Losuj,
-            this.zapiszDoPlikuToolStripMenuItem});
-            this.Menu.Location = new System.Drawing.Point(0, 0);
-            this.Menu.Name = "Menu";
-            this.Menu.Size = new System.Drawing.Size(1744, 33);
-            this.Menu.TabIndex = 2;
-            this.Menu.Text = "menuStrip1";
-            // 
-            // Dodaj
-            // 
-            this.Dodaj.Name = "Dodaj";
-            this.Dodaj.Size = new System.Drawing.Size(76, 29);
-            this.Dodaj.Text = "Dodaj";
-            this.Dodaj.Click += new System.EventHandler(this.Dodaj_Click);
-            // 
-            // Usuń
-            // 
-            this.Usuń.Name = "Usuń";
-            this.Usuń.Size = new System.Drawing.Size(68, 29);
-            this.Usuń.Text = "Usuń";
-            this.Usuń.Click += new System.EventHandler(this.Usuń_Click);
-            // 
-            // Aktualizuj
-            // 
-            this.Aktualizuj.Name = "Aktualizuj";
-            this.Aktualizuj.Size = new System.Drawing.Size(104, 29);
-            this.Aktualizuj.Text = "Aktualizuj";
-            this.Aktualizuj.Click += new System.EventHandler(this.Aktualizuj_Click);
-            // 
-            // Losuj
-            // 
-            this.Losuj.Name = "Losuj";
-            this.Losuj.Size = new System.Drawing.Size(69, 29);
-            this.Losuj.Text = "Losuj";
-            this.Losuj.Click += new System.EventHandler(this.Losuj_Click);
-            // 
-            // zapiszDoPlikuToolStripMenuItem
-            // 
-            this.zapiszDoPlikuToolStripMenuItem.Name = "zapiszDoPlikuToolStripMenuItem";
-            this.zapiszDoPlikuToolStripMenuItem.Size = new System.Drawing.Size(148, 29);
-            this.zapiszDoPlikuToolStripMenuItem.Text = "Zapisz do pliku";
-            this.zapiszDoPlikuToolStripMenuItem.Click += new System.EventHandler(this.ZapiszDoPlikuToolStripMenuItem_Click);
-            // 
-            // cbox_ogladane
-            // 
-            this.cbox_ogladane.AutoSize = true;
-            this.cbox_ogladane.Location = new System.Drawing.Point(570, 8);
-            this.cbox_ogladane.Name = "cbox_ogladane";
-            this.cbox_ogladane.Size = new System.Drawing.Size(194, 24);
-            this.cbox_ogladane.TabIndex = 4;
-            this.cbox_ogladane.Text = "Ukryj obejrzane seriale";
-            this.cbox_ogladane.UseVisualStyleBackColor = true;
-            this.cbox_ogladane.CheckedChanged += new System.EventHandler(this.Cbox_ogladane_CheckedChanged);
             // 
             // Nazwa
             // 
@@ -276,6 +215,85 @@
             this.status.ReadOnly = true;
             this.status.Visible = false;
             // 
+            // Menu
+            // 
+            this.Menu.BackColor = System.Drawing.Color.White;
+            this.Menu.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
+            this.Menu.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Dodaj,
+            this.Usuń,
+            this.Aktualizuj,
+            this.Losuj,
+            this.zapiszDoPlikuToolStripMenuItem});
+            this.Menu.Location = new System.Drawing.Point(0, 0);
+            this.Menu.Name = "Menu";
+            this.Menu.Size = new System.Drawing.Size(1744, 33);
+            this.Menu.TabIndex = 2;
+            this.Menu.Text = "menuStrip1";
+            // 
+            // Dodaj
+            // 
+            this.Dodaj.Name = "Dodaj";
+            this.Dodaj.Size = new System.Drawing.Size(76, 29);
+            this.Dodaj.Text = "Dodaj";
+            this.Dodaj.Click += new System.EventHandler(this.Dodaj_Click);
+            // 
+            // Usuń
+            // 
+            this.Usuń.Name = "Usuń";
+            this.Usuń.Size = new System.Drawing.Size(68, 29);
+            this.Usuń.Text = "Usuń";
+            this.Usuń.Click += new System.EventHandler(this.Usuń_Click);
+            // 
+            // Aktualizuj
+            // 
+            this.Aktualizuj.Name = "Aktualizuj";
+            this.Aktualizuj.Size = new System.Drawing.Size(104, 29);
+            this.Aktualizuj.Text = "Aktualizuj";
+            this.Aktualizuj.Click += new System.EventHandler(this.Aktualizuj_Click);
+            // 
+            // Losuj
+            // 
+            this.Losuj.Name = "Losuj";
+            this.Losuj.Size = new System.Drawing.Size(69, 29);
+            this.Losuj.Text = "Losuj";
+            this.Losuj.Click += new System.EventHandler(this.Losuj_Click);
+            // 
+            // zapiszDoPlikuToolStripMenuItem
+            // 
+            this.zapiszDoPlikuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.zapiszDoPlikuCSVToolStripMenuItem,
+            this.zapisDoPlikuPDFToolStripMenuItem});
+            this.zapiszDoPlikuToolStripMenuItem.Name = "zapiszDoPlikuToolStripMenuItem";
+            this.zapiszDoPlikuToolStripMenuItem.Size = new System.Drawing.Size(148, 29);
+            this.zapiszDoPlikuToolStripMenuItem.Text = "Zapisz do pliku";
+            // 
+            // cbox_ogladane
+            // 
+            this.cbox_ogladane.AutoSize = true;
+            this.cbox_ogladane.Location = new System.Drawing.Point(570, 8);
+            this.cbox_ogladane.Name = "cbox_ogladane";
+            this.cbox_ogladane.Size = new System.Drawing.Size(194, 24);
+            this.cbox_ogladane.TabIndex = 4;
+            this.cbox_ogladane.Text = "Ukryj obejrzane seriale";
+            this.cbox_ogladane.UseVisualStyleBackColor = true;
+            this.cbox_ogladane.CheckedChanged += new System.EventHandler(this.Cbox_ogladane_CheckedChanged);
+            // 
+            // zapiszDoPlikuCSVToolStripMenuItem
+            // 
+            this.zapiszDoPlikuCSVToolStripMenuItem.Name = "zapiszDoPlikuCSVToolStripMenuItem";
+            this.zapiszDoPlikuCSVToolStripMenuItem.Size = new System.Drawing.Size(271, 34);
+            this.zapiszDoPlikuCSVToolStripMenuItem.Text = "Zapisz do pliku CSV";
+            this.zapiszDoPlikuCSVToolStripMenuItem.Click += new System.EventHandler(this.CSVToolStripMenuItem_Click);
+            // 
+            // zapisDoPlikuPDFToolStripMenuItem
+            // 
+            this.zapisDoPlikuPDFToolStripMenuItem.Name = "zapisDoPlikuPDFToolStripMenuItem";
+            this.zapisDoPlikuPDFToolStripMenuItem.Size = new System.Drawing.Size(271, 34);
+            this.zapisDoPlikuPDFToolStripMenuItem.Text = "Zapis do pliku PDF";
+            this.zapisDoPlikuPDFToolStripMenuItem.Click += new System.EventHandler(this.PDFToolStripMenuItem_Click);
+            // 
             // Serialak
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -321,6 +339,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn last;
         private System.Windows.Forms.DataGridViewTextBoxColumn link;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
+        private System.Windows.Forms.ToolStripMenuItem zapiszDoPlikuCSVToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem zapisDoPlikuPDFToolStripMenuItem;
     }
 }
 

@@ -160,6 +160,8 @@ namespace Serialak
         {
             try
             {
+                if (e.RowIndex == -1) return;
+
                 if (dane_seriale.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewLinkCell)
                 {
                     System.Diagnostics.Process.Start(dane_seriale.Rows[e.RowIndex].Cells[e.ColumnIndex].Value as string);
