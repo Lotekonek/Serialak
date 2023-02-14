@@ -49,16 +49,20 @@
             this.last = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.link = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.end = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Menu = new System.Windows.Forms.MenuStrip();
             this.Dodaj = new System.Windows.Forms.ToolStripMenuItem();
             this.Usuń = new System.Windows.Forms.ToolStripMenuItem();
             this.Aktualizuj = new System.Windows.Forms.ToolStripMenuItem();
             this.Losuj = new System.Windows.Forms.ToolStripMenuItem();
             this.zapiszDoPlikuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Save = new System.Windows.Forms.SaveFileDialog();
-            this.cbox_ogladane = new System.Windows.Forms.CheckBox();
             this.zapiszDoPlikuCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zapisDoPlikuPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Save = new System.Windows.Forms.SaveFileDialog();
+            this.cbox_ogladane = new System.Windows.Forms.CheckBox();
+            this.btn_end = new System.Windows.Forms.Button();
+            this.lbl1 = new System.Windows.Forms.Label();
+            this.btn_approve = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dane_seriale)).BeginInit();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
@@ -96,7 +100,8 @@
             this.when,
             this.last,
             this.link,
-            this.status});
+            this.status,
+            this.end});
             dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -107,9 +112,8 @@
             this.dane_seriale.DefaultCellStyle = dataGridViewCellStyle9;
             this.dane_seriale.EnableHeadersVisualStyles = false;
             this.dane_seriale.GridColor = System.Drawing.Color.Black;
-            this.dane_seriale.Location = new System.Drawing.Point(0, 38);
+            this.dane_seriale.Location = new System.Drawing.Point(0, 35);
             this.dane_seriale.Name = "dane_seriale";
-            this.dane_seriale.ReadOnly = true;
             dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle10.BackColor = System.Drawing.Color.Black;
             dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -120,7 +124,7 @@
             this.dane_seriale.RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.dane_seriale.RowHeadersVisible = false;
             this.dane_seriale.RowHeadersWidth = 62;
-            this.dane_seriale.Size = new System.Drawing.Size(1744, 615);
+            this.dane_seriale.Size = new System.Drawing.Size(1744, 700);
             this.dane_seriale.TabIndex = 0;
             this.dane_seriale.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dane_seriale_CellContentClick);
             // 
@@ -215,6 +219,15 @@
             this.status.ReadOnly = true;
             this.status.Visible = false;
             // 
+            // end
+            // 
+            this.end.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.end.FillWeight = 25F;
+            this.end.HeaderText = "Wybierz";
+            this.end.MinimumWidth = 8;
+            this.end.Name = "end";
+            this.end.Visible = false;
+            // 
             // Menu
             // 
             this.Menu.BackColor = System.Drawing.Color.White;
@@ -269,17 +282,6 @@
             this.zapiszDoPlikuToolStripMenuItem.Size = new System.Drawing.Size(148, 29);
             this.zapiszDoPlikuToolStripMenuItem.Text = "Zapisz do pliku";
             // 
-            // cbox_ogladane
-            // 
-            this.cbox_ogladane.AutoSize = true;
-            this.cbox_ogladane.Location = new System.Drawing.Point(570, 8);
-            this.cbox_ogladane.Name = "cbox_ogladane";
-            this.cbox_ogladane.Size = new System.Drawing.Size(194, 24);
-            this.cbox_ogladane.TabIndex = 4;
-            this.cbox_ogladane.Text = "Ukryj obejrzane seriale";
-            this.cbox_ogladane.UseVisualStyleBackColor = true;
-            this.cbox_ogladane.CheckedChanged += new System.EventHandler(this.Cbox_ogladane_CheckedChanged);
-            // 
             // zapiszDoPlikuCSVToolStripMenuItem
             // 
             this.zapiszDoPlikuCSVToolStripMenuItem.Name = "zapiszDoPlikuCSVToolStripMenuItem";
@@ -294,12 +296,58 @@
             this.zapisDoPlikuPDFToolStripMenuItem.Text = "Zapis do pliku PDF";
             this.zapisDoPlikuPDFToolStripMenuItem.Click += new System.EventHandler(this.PDFToolStripMenuItem_Click);
             // 
+            // cbox_ogladane
+            // 
+            this.cbox_ogladane.AutoSize = true;
+            this.cbox_ogladane.Location = new System.Drawing.Point(485, 8);
+            this.cbox_ogladane.Name = "cbox_ogladane";
+            this.cbox_ogladane.Size = new System.Drawing.Size(194, 24);
+            this.cbox_ogladane.TabIndex = 4;
+            this.cbox_ogladane.Text = "Ukryj obejrzane seriale";
+            this.cbox_ogladane.UseVisualStyleBackColor = true;
+            this.cbox_ogladane.CheckedChanged += new System.EventHandler(this.Cbox_ogladane_CheckedChanged);
+            // 
+            // btn_end
+            // 
+            this.btn_end.Location = new System.Drawing.Point(1597, 0);
+            this.btn_end.Name = "btn_end";
+            this.btn_end.Size = new System.Drawing.Size(147, 38);
+            this.btn_end.TabIndex = 5;
+            this.btn_end.Text = "Zakończ serial";
+            this.btn_end.UseVisualStyleBackColor = true;
+            this.btn_end.Click += new System.EventHandler(this.Btn_end_Click);
+            // 
+            // lbl1
+            // 
+            this.lbl1.AutoSize = true;
+            this.lbl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lbl1.Location = new System.Drawing.Point(1142, 7);
+            this.lbl1.Name = "lbl1";
+            this.lbl1.Size = new System.Drawing.Size(384, 25);
+            this.lbl1.TabIndex = 6;
+            this.lbl1.Text = "Wybierz serial który chcesz zakończyć";
+            this.lbl1.Visible = false;
+            // 
+            // btn_approve
+            // 
+            this.btn_approve.Location = new System.Drawing.Point(1597, 2);
+            this.btn_approve.Name = "btn_approve";
+            this.btn_approve.Size = new System.Drawing.Size(147, 38);
+            this.btn_approve.TabIndex = 7;
+            this.btn_approve.Text = "Potwierdź";
+            this.btn_approve.UseVisualStyleBackColor = true;
+            this.btn_approve.Visible = false;
+            this.btn_approve.Click += new System.EventHandler(this.Btn_approve_Click);
+            // 
             // Serialak
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.ClientSize = new System.Drawing.Size(1744, 651);
+            this.ClientSize = new System.Drawing.Size(1744, 735);
+            this.Controls.Add(this.btn_approve);
+            this.Controls.Add(this.lbl1);
+            this.Controls.Add(this.btn_end);
             this.Controls.Add(this.cbox_ogladane);
             this.Controls.Add(this.Menu);
             this.Controls.Add(this.dane_seriale);
@@ -330,6 +378,11 @@
         private System.Windows.Forms.ToolStripMenuItem zapiszDoPlikuToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog Save;
         private System.Windows.Forms.CheckBox cbox_ogladane;
+        private System.Windows.Forms.ToolStripMenuItem zapiszDoPlikuCSVToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem zapisDoPlikuPDFToolStripMenuItem;
+        private System.Windows.Forms.Button btn_end;
+        private System.Windows.Forms.Label lbl1;
+        private System.Windows.Forms.Button btn_approve;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nazwa;
         private System.Windows.Forms.DataGridViewTextBoxColumn odc;
         private System.Windows.Forms.DataGridViewTextBoxColumn sez;
@@ -339,8 +392,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn last;
         private System.Windows.Forms.DataGridViewTextBoxColumn link;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
-        private System.Windows.Forms.ToolStripMenuItem zapiszDoPlikuCSVToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem zapisDoPlikuPDFToolStripMenuItem;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn end;
     }
 }
 

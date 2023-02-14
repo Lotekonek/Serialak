@@ -18,6 +18,7 @@ namespace Serialak
         private readonly List<string> Losowanie = new List<string>();
         private readonly List<string> Spis = new List<string>();
         private readonly Random rnd = new Random();
+        private readonly XDocument xdoc;
 
         public Serialak(Random rnd)
         {
@@ -38,6 +39,7 @@ namespace Serialak
                    new XDeclaration("1.0", "utf-8", "true"),
                    new XElement("Spis"));
                 xml.Save(@"C:\Seriale\Seriale.xml");
+                xdoc = XDocument.Load(@"C:\Seriale\Seriale.xml");
             }
             Zaladuj();
         }
@@ -66,7 +68,6 @@ namespace Serialak
                 Spis.Add(node2.SelectSingleNode("Ostatnio_oglądany").InnerText);
                 Spis.Add(node2.SelectSingleNode("Link").InnerText);
                 Spis.Add(node2.SelectSingleNode("Status").InnerText);
-
                 dane_seriale.Rows.Add(Spis.ToArray());
                 Spis.Clear();
             }
@@ -146,7 +147,6 @@ namespace Serialak
             Losowanie.Clear();
         }
 
-
         private void Aktualizuj_Click(object sender, EventArgs e)
         {
             using (Form akt = new Update())
@@ -169,8 +169,7 @@ namespace Serialak
             }
             catch (Exception ex)
             {
-
-               MessageBox.Show("Błędny link" + ex);
+                MessageBox.Show("Błędny link" + ex);
             }
         }
 
@@ -340,6 +339,63 @@ namespace Serialak
             else
             {
                 MessageBox.Show("Nie znaleziono danych", "Info");
+            }
+        }
+
+        private void Btn_end_Click(object sender, EventArgs e)
+        {
+            btn_end.Visible = false;
+            btn_approve.Visible = true;
+            dane_seriale.Columns["end"].Visible = true;
+            lbl1.Visible = true;
+        }
+
+        private void Btn_approve_Click(object sender, EventArgs e)
+        {
+            lbl1.Visible = false;
+            btn_end.Visible = true;
+            btn_approve.Visible = false;
+            dane_seriale.Columns["end"].Visible = false;
+
+            try
+            {
+                foreach (DataGridViewRow row in dane_seriale.Rows)
+                {
+                    var nazwa = row.Cells[0].Value as string;
+                    if (Convert.ToBoolean(row.Cells[end.Name].Value) == true)
+                    {
+                        var elStatus = xdoc.Descendants()?.
+                        Elements("Nazwa")?.
+                        Where(x => x.Value == nazwa)?.
+                        Ancestors("Serial");
+
+                        var elOdcinek = elStatus.Elements("Aktualny_odcinek").FirstOrDefault();
+                        var elSezon = elStatus.Elements("Aktualny_sezon").FirstOrDefault();
+                        var elOdcineki = elStatus.Elements("Ilość_Odcinków").FirstOrDefault();
+                        var elSezoni = elStatus.Elements("Ilość_Sezonów").FirstOrDefault();
+                        var elEnded = elStatus.Elements("Status").FirstOrDefault();
+                        var elTyg = elStatus.Elements("Dzień_tygodnia").FirstOrDefault();
+                        if (elOdcinek != null || elSezon != null || elEnded != null || elOdcineki != null || elSezoni != null || elTyg != null)
+                        {
+                            elOdcineki.Value = elOdcinek.Value;
+                            elSezoni.Value = elSezon.Value;
+                            elOdcinek.Value = "";
+                            elSezon.Value = "";
+                            elEnded.Value = "Skończone";
+                            elTyg.Value = "";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Błąd: " + ex);
+            }
+            finally
+            {
+                xdoc.Save(@"C:\Seriale\Seriale.xml");
+                Zaladuj();
+                MessageBox.Show("Poprawnie zaktualizowano seriale");
             }
         }
     }

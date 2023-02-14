@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Serialak
 {
@@ -28,7 +26,6 @@ namespace Serialak
 
                 dane_usuwanie.Rows.Add(Spis.ToArray());
                 Spis.Clear();
-
             }
         }
 
@@ -47,7 +44,6 @@ namespace Serialak
                             .Remove();
                         xDoc.Save(@"C:\Seriale\Seriale.xml");
                     }
-
                 }
             }
             catch (Exception ex)
@@ -61,8 +57,9 @@ namespace Serialak
             }
         }
 
-        private void dane_usuwanie_CellClick(object sender, DataGridViewCellEventArgs e)
-        { if (Convert.ToBoolean(dane_usuwanie.CurrentRow.Cells[choose.Name].Value) == false)
+        private void Dane_usuwanie_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (Convert.ToBoolean(dane_usuwanie.CurrentRow.Cells[choose.Name].Value) == false)
             {
                 dane_usuwanie.CurrentRow.Cells[choose.Name].Value = true;
             }
@@ -73,4 +70,3 @@ namespace Serialak
         }
     }
 }
- 

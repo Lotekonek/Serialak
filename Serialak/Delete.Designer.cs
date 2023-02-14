@@ -104,7 +104,7 @@
             this.dane_usuwanie.RowHeadersWidth = 62;
             this.dane_usuwanie.Size = new System.Drawing.Size(857, 496);
             this.dane_usuwanie.TabIndex = 2;
-            this.dane_usuwanie.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dane_usuwanie_CellClick);
+            this.dane_usuwanie.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dane_usuwanie_CellClick);
             // 
             // Nazwa
             // 

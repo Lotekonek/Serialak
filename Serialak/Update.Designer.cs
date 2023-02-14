@@ -35,7 +35,6 @@
             this.n_sez = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.cBox = new System.Windows.Forms.ComboBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.n_odc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.n_sez)).BeginInit();
             this.SuspendLayout();
@@ -64,7 +63,7 @@
             // 
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button1.Location = new System.Drawing.Point(36, 270);
+            this.button1.Location = new System.Drawing.Point(36, 187);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(452, 58);
             this.button1.TabIndex = 2;
@@ -128,25 +127,12 @@
             this.cBox.TabIndex = 6;
             this.cBox.SelectedIndexChanged += new System.EventHandler(this.CBox_SelectedIndexChanged);
             // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.checkBox1.Location = new System.Drawing.Point(157, 214);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(164, 33);
-            this.checkBox1.TabIndex = 7;
-            this.checkBox1.Text = "Skończony";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.CheckBox1_CheckedChanged);
-            // 
             // Update
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(526, 340);
-            this.Controls.Add(this.checkBox1);
+            this.ClientSize = new System.Drawing.Size(526, 250);
             this.Controls.Add(this.cBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.n_sez);
@@ -174,6 +160,5 @@
         private System.Windows.Forms.NumericUpDown n_sez;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cBox;
-        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
