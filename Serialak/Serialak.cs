@@ -1,6 +1,5 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
-using Syncfusion.Pdf.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -24,6 +23,8 @@ namespace Serialak
         private bool check = false;
         private readonly DateTime thisDay = DateTime.Today;
         private readonly XDocument xml;
+        private readonly iTextSharp.text.Font fontTinyItalic = FontFactory.GetFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1257, 18, iTextSharp.text.Font.BOLD);
+        private readonly iTextSharp.text.Font fontCell = FontFactory.GetFont(BaseFont.HELVETICA, BaseFont.CP1257, 15);
 
         public static void AddOrUpdateAppSettings(string key, string value)
         {
@@ -51,13 +52,9 @@ namespace Serialak
         public Serialak()
         {
             InitializeComponent();
-
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
-            sb.AppendLine("<configuration>");
-            sb.AppendLine("<appSettings>");
-            sb.AppendLine("</appSettings>");
-            sb.AppendLine("</configuration>");
+            System.Configuration.Configuration config =
+                ConfigurationManager.OpenExeConfiguration(
+                ConfigurationUserLevel.None);
             string loc = Assembly.GetEntryAssembly().Location;
             string lokalizacja = String.Concat(loc, ".config");
             if (!File.Exists(lokalizacja))
@@ -66,8 +63,8 @@ namespace Serialak
                 {
                     if (lok.ShowDialog() == DialogResult.OK)
                     {
-                        System.IO.File.WriteAllText(String.Concat(lokalizacja), sb.ToString());
                         AddOrUpdateAppSettings("Lokalizacja", lok.tBox_loc.Text);
+                        config.Save(ConfigurationSaveMode.Full);
                     }
                 }
             }
@@ -344,77 +341,82 @@ namespace Serialak
         {
             if (dane_seriale.Rows.Count > 0)
             {
-                SaveFileDialog save = new SaveFileDialog
+                Save.Filter = "PDF (*.pdf)|*.pdf";
+                Save.FileName = "Seriale.pdf";
+                bool fileError = false;
+                if (Save.ShowDialog() == DialogResult.OK)
                 {
-                    Filter = "PDF (*.pdf)|*.pdf",
-                    FileName = "Seriale.pdf"
-                };
-                bool ErrorMessage = false;
-                if (save.ShowDialog() == DialogResult.OK)
-                {
-                    if (File.Exists(save.FileName))
+                    if (File.Exists(Save.FileName))
                     {
                         try
                         {
-                            File.Delete(save.FileName);
+                            File.Delete(Save.FileName);
                         }
-                        catch (Exception ex)
+                        catch (IOException ex)
                         {
-                            ErrorMessage = true;
-                            MessageBox.Show("Nie można zapisać danych na dysku" + ex.Message);
+                            fileError = true;
+                            MessageBox.Show("Nie udało się zapisać pliku na dysku." + ex.Message);
                         }
                     }
-                    if (!ErrorMessage)
+                    if (!fileError)
                     {
                         try
                         {
-                            PdfPTable pTable = new PdfPTable(dane_seriale.Columns.Count);
-                            pTable.DefaultCell.Padding = 2;
-                            pTable.WidthPercentage = 100;
-                            pTable.HorizontalAlignment = Element.ALIGN_LEFT;
-                            PdfStandardFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 12, PdfFontStyle.Italic);
+                            PdfPTable pdfTable = new PdfPTable(dane_seriale.ColumnCount - 1);
+                            pdfTable.DefaultCell.Padding = 3;
+                            pdfTable.HorizontalAlignment = Element.ALIGN_LEFT;
+                            pdfTable.DefaultCell.BorderWidth = 1;
+                            pdfTable.WidthPercentage = 100;
 
-                            foreach (DataGridViewColumn col in dane_seriale.Columns)
+                            foreach (DataGridViewColumn column in dane_seriale.Columns)
                             {
-                                PdfPCell pCell = new PdfPCell(new Phrase(col.HeaderText));
-                                pTable.AddCell(pCell);
-                            }
-                            foreach (DataGridViewRow viewRow in dane_seriale.Rows)
-                            {
-                                foreach (DataGridViewCell dcell in viewRow.Cells)
+                                if (column.Name != "end")
                                 {
-                                    if (dcell.ColumnIndex == 7 && dcell.Value.ToString() != "Brak")
+                                    PdfPCell cell = new PdfPCell(new Phrase(column.HeaderText, fontTinyItalic));
+
+                                    pdfTable.AddCell(cell);
+                                }
+                            }
+
+                            foreach (DataGridViewRow row in dane_seriale.Rows)
+                            {
+                                foreach (DataGridViewCell cell in row.Cells)
+                                {
+                                    if (cell.ColumnIndex != 9)
                                     {
-                                        pTable.AddCell("Zawiera");
-                                    }
-                                    else
-                                    {
-                                        pTable.AddCell(dcell.Value.ToString());
+                                        PdfPCell cell1 = new PdfPCell(new Phrase(cell.Value.ToString(), fontCell));
+                                        if (cell.Value.ToString() != "Brak" && cell.ColumnIndex == 7)
+                                        {
+                                            PdfPCell cell2 = new PdfPCell(new Phrase("Zawiera", fontCell));
+                                            pdfTable.AddCell(cell2);
+                                        }
+                                        else
+                                            pdfTable.AddCell(cell1);
                                     }
                                 }
                             }
 
-                            using (FileStream fileStream = new FileStream(save.FileName, FileMode.Create))
+                            using (FileStream stream = new FileStream(Save.FileName, FileMode.Create))
                             {
-                                Document document = new Document(PageSize.A4, 8f, 16f, 16f, 8f);
-                                PdfWriter.GetInstance(document, fileStream);
-                                document.Open();
-                                document.Add(pTable);
-                                document.Close();
-                                fileStream.Close();
+                                Document pdfDoc = new Document(PageSize.A2, 10f, 10f, 10f, 10f);
+                                PdfWriter.GetInstance(pdfDoc, stream);
+                                pdfDoc.Open();
+                                pdfDoc.Add(pdfTable);
+                                pdfDoc.Close();
+                                stream.Close();
                             }
-                            MessageBox.Show("Udało się zapisać plik", "info");
+                            MessageBox.Show("Udało się zapisać plik");
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Wystąpił błąd" + ex.Message);
+                            MessageBox.Show("Błąd: " + ex.Message);
                         }
                     }
                 }
             }
             else
             {
-                MessageBox.Show("Nie znaleziono danych", "Błąd!");
+                MessageBox.Show("Brak danych", "Błąd!");
             }
         }
 
@@ -435,6 +437,7 @@ namespace Serialak
 
         private void Btn_approve_Click(object sender, EventArgs e)
         {
+            bool zmiana = false;
             lbl1.Visible = false;
             btn_end.Visible = true;
             btn_approve.Visible = false;
@@ -467,6 +470,7 @@ namespace Serialak
                             elSezon.Value = "";
                             elEnded.Value = "Skończone";
                             elTyg.Value = "";
+                            zmiana = true;
                         }
                     }
                 }
@@ -477,16 +481,77 @@ namespace Serialak
             }
             finally
             {
-                if (dane_seriale.Rows.Count <= 0)
+                if (zmiana)
                 {
-                    MessageBox.Show("Nie wybrano żadnego serialu!!!", "Błąd");
+                    if (dane_seriale.Rows.Count <= 0)
+                    {
+                        MessageBox.Show("Nie wybrano żadnego serialu!!!", "Błąd");
+                    }
+                    else
+                    {
+                        xdoc.Save(sAttr);
+                        Zaladuj();
+                        MessageBox.Show("Poprawnie zaktualizowano seriale");
+                    }
+                }
+            }
+        }
+
+        private void ZapiszDoPlikuXMLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dane_seriale.Rows.Count > 0)
+                {
+                    Save.InitialDirectory = sAttr;
+                    Save.FileName = "Seriale.xml";
+                    Save.FilterIndex = 0;
+                    Save.Title = "Zapisz plik";
+                    Save.CheckFileExists = false;
+                    Save.CheckPathExists = true;
+                    Save.DefaultExt = "xml";
+                    Save.Filter = "XML files (*.xml)|*.xml";
+
+                    if (Save.ShowDialog() == DialogResult.OK)
+                    {
+                        File.Copy(sAttr, Save.FileName, true);
+                        MessageBox.Show("Pomyślnie zapisano plik");
+                    }
                 }
                 else
                 {
-                    xdoc.Save(sAttr);
-                    Zaladuj();
-                    MessageBox.Show("Poprawnie zaktualizowano seriale");
+                    MessageBox.Show("Nie znaleziono danych", "Błąd!");
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Wystąpił błąd " + ex, "Błąd!");
+            }
+        }
+
+        private void WczytajZPlikuXMLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (OpenFileDialog opf = new OpenFileDialog())
+                {
+                    opf.Filter = "XML files (*.xml)|*.xml";
+                    opf.FilterIndex = 2;
+                    opf.RestoreDirectory = true;
+                    opf.DefaultExt = "xml";
+                    opf.Title = "Wczytaj plik";
+
+                    if (opf.ShowDialog() == DialogResult.OK)
+                    {
+                        File.Copy(opf.FileName, sAttr, true);
+                        MessageBox.Show("Pomyślnie wczytano plik");
+                        Zaladuj();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Błąd: " + ex, "Błąd");
             }
         }
     }

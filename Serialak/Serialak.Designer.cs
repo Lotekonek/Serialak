@@ -58,11 +58,14 @@
             this.zapiszDoPlikuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zapiszDoPlikuCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zapisDoPlikuPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zapiszDoPlikuXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.wczytajZPlikuXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Save = new System.Windows.Forms.SaveFileDialog();
             this.cbox_ogladane = new System.Windows.Forms.CheckBox();
             this.btn_end = new System.Windows.Forms.Button();
             this.lbl1 = new System.Windows.Forms.Label();
             this.btn_approve = new System.Windows.Forms.Button();
+            this.Loadfile = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dane_seriale)).BeginInit();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
@@ -164,7 +167,7 @@
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.ilosc_odc.DefaultCellStyle = dataGridViewCellStyle5;
             this.ilosc_odc.FillWeight = 25F;
-            this.ilosc_odc.HeaderText = "Ilość odcinków";
+            this.ilosc_odc.HeaderText = "Odcinki";
             this.ilosc_odc.MinimumWidth = 8;
             this.ilosc_odc.Name = "ilosc_odc";
             this.ilosc_odc.ReadOnly = true;
@@ -175,7 +178,7 @@
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.ilosc_sez.DefaultCellStyle = dataGridViewCellStyle6;
             this.ilosc_sez.FillWeight = 25F;
-            this.ilosc_sez.HeaderText = "Ilość sezonów";
+            this.ilosc_sez.HeaderText = "Sezony";
             this.ilosc_sez.MinimumWidth = 8;
             this.ilosc_sez.Name = "ilosc_sez";
             this.ilosc_sez.ReadOnly = true;
@@ -238,7 +241,8 @@
             this.Usuń,
             this.Aktualizuj,
             this.Losuj,
-            this.zapiszDoPlikuToolStripMenuItem});
+            this.zapiszDoPlikuToolStripMenuItem,
+            this.wczytajZPlikuXMLToolStripMenuItem});
             this.Menu.Location = new System.Drawing.Point(0, 0);
             this.Menu.Name = "Menu";
             this.Menu.Size = new System.Drawing.Size(1744, 33);
@@ -277,7 +281,8 @@
             // 
             this.zapiszDoPlikuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.zapiszDoPlikuCSVToolStripMenuItem,
-            this.zapisDoPlikuPDFToolStripMenuItem});
+            this.zapisDoPlikuPDFToolStripMenuItem,
+            this.zapiszDoPlikuXMLToolStripMenuItem});
             this.zapiszDoPlikuToolStripMenuItem.Name = "zapiszDoPlikuToolStripMenuItem";
             this.zapiszDoPlikuToolStripMenuItem.Size = new System.Drawing.Size(148, 29);
             this.zapiszDoPlikuToolStripMenuItem.Text = "Zapisz do pliku";
@@ -285,21 +290,35 @@
             // zapiszDoPlikuCSVToolStripMenuItem
             // 
             this.zapiszDoPlikuCSVToolStripMenuItem.Name = "zapiszDoPlikuCSVToolStripMenuItem";
-            this.zapiszDoPlikuCSVToolStripMenuItem.Size = new System.Drawing.Size(271, 34);
+            this.zapiszDoPlikuCSVToolStripMenuItem.Size = new System.Drawing.Size(274, 34);
             this.zapiszDoPlikuCSVToolStripMenuItem.Text = "Zapisz do pliku CSV";
             this.zapiszDoPlikuCSVToolStripMenuItem.Click += new System.EventHandler(this.CSVToolStripMenuItem_Click);
             // 
             // zapisDoPlikuPDFToolStripMenuItem
             // 
             this.zapisDoPlikuPDFToolStripMenuItem.Name = "zapisDoPlikuPDFToolStripMenuItem";
-            this.zapisDoPlikuPDFToolStripMenuItem.Size = new System.Drawing.Size(271, 34);
+            this.zapisDoPlikuPDFToolStripMenuItem.Size = new System.Drawing.Size(274, 34);
             this.zapisDoPlikuPDFToolStripMenuItem.Text = "Zapis do pliku PDF";
             this.zapisDoPlikuPDFToolStripMenuItem.Click += new System.EventHandler(this.PDFToolStripMenuItem_Click);
+            // 
+            // zapiszDoPlikuXMLToolStripMenuItem
+            // 
+            this.zapiszDoPlikuXMLToolStripMenuItem.Name = "zapiszDoPlikuXMLToolStripMenuItem";
+            this.zapiszDoPlikuXMLToolStripMenuItem.Size = new System.Drawing.Size(274, 34);
+            this.zapiszDoPlikuXMLToolStripMenuItem.Text = "Zapisz do pliku XML";
+            this.zapiszDoPlikuXMLToolStripMenuItem.Click += new System.EventHandler(this.ZapiszDoPlikuXMLToolStripMenuItem_Click);
+            // 
+            // wczytajZPlikuXMLToolStripMenuItem
+            // 
+            this.wczytajZPlikuXMLToolStripMenuItem.Name = "wczytajZPlikuXMLToolStripMenuItem";
+            this.wczytajZPlikuXMLToolStripMenuItem.Size = new System.Drawing.Size(184, 29);
+            this.wczytajZPlikuXMLToolStripMenuItem.Text = "Wczytaj z pliku XML";
+            this.wczytajZPlikuXMLToolStripMenuItem.Click += new System.EventHandler(this.WczytajZPlikuXMLToolStripMenuItem_Click);
             // 
             // cbox_ogladane
             // 
             this.cbox_ogladane.AutoSize = true;
-            this.cbox_ogladane.Location = new System.Drawing.Point(485, 8);
+            this.cbox_ogladane.Location = new System.Drawing.Point(667, 7);
             this.cbox_ogladane.Name = "cbox_ogladane";
             this.cbox_ogladane.Size = new System.Drawing.Size(194, 24);
             this.cbox_ogladane.TabIndex = 4;
@@ -309,9 +328,9 @@
             // 
             // btn_end
             // 
-            this.btn_end.Location = new System.Drawing.Point(1597, 0);
+            this.btn_end.Location = new System.Drawing.Point(1614, 0);
             this.btn_end.Name = "btn_end";
-            this.btn_end.Size = new System.Drawing.Size(147, 38);
+            this.btn_end.Size = new System.Drawing.Size(130, 32);
             this.btn_end.TabIndex = 5;
             this.btn_end.Text = "Zakończ serial";
             this.btn_end.UseVisualStyleBackColor = true;
@@ -330,14 +349,18 @@
             // 
             // btn_approve
             // 
-            this.btn_approve.Location = new System.Drawing.Point(1597, 2);
+            this.btn_approve.Location = new System.Drawing.Point(1614, 0);
             this.btn_approve.Name = "btn_approve";
-            this.btn_approve.Size = new System.Drawing.Size(147, 38);
+            this.btn_approve.Size = new System.Drawing.Size(130, 33);
             this.btn_approve.TabIndex = 7;
             this.btn_approve.Text = "Potwierdź";
             this.btn_approve.UseVisualStyleBackColor = true;
             this.btn_approve.Visible = false;
             this.btn_approve.Click += new System.EventHandler(this.Btn_approve_Click);
+            // 
+            // Loadfile
+            // 
+            this.Loadfile.FileName = "openFileDialog1";
             // 
             // Serialak
             // 
@@ -393,6 +416,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn link;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
         private System.Windows.Forms.DataGridViewCheckBoxColumn end;
+        private System.Windows.Forms.ToolStripMenuItem zapiszDoPlikuXMLToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem wczytajZPlikuXMLToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog Loadfile;
     }
 }
 
