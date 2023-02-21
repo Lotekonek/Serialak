@@ -3,9 +3,11 @@ using iTextSharp.text.pdf;
 using Syncfusion.Pdf.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
@@ -18,29 +20,68 @@ namespace Serialak
         private readonly List<string> Losowanie = new List<string>();
         private readonly List<string> Spis = new List<string>();
         private readonly Random rnd = new Random();
-        private readonly XDocument xdoc;
-
-        public Serialak(Random rnd)
-        {
-            this.rnd = rnd;
-        }
-
+        private readonly string sAttr;
         private bool check = false;
         private readonly DateTime thisDay = DateTime.Today;
         private readonly XDocument xml;
 
+        public static void AddOrUpdateAppSettings(string key, string value)
+        {
+            try
+            {
+                var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                var settings = configFile.AppSettings.Settings;
+                if (settings[key] == null)
+                {
+                    settings.Add(key, value);
+                }
+                else
+                {
+                    settings[key].Value = value;
+                }
+                configFile.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
+            }
+            catch (ConfigurationErrorsException)
+            {
+                Console.WriteLine("Error writing app settings");
+            }
+        }
+
         public Serialak()
         {
             InitializeComponent();
-            if (!File.Exists(@"C:\Seriale\Seriale.xml"))
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
+            sb.AppendLine("<configuration>");
+            sb.AppendLine("<appSettings>");
+            sb.AppendLine("</appSettings>");
+            sb.AppendLine("</configuration>");
+            string loc = Assembly.GetEntryAssembly().Location;
+            string lokalizacja = String.Concat(loc, ".config");
+            if (!File.Exists(lokalizacja))
             {
-                Directory.CreateDirectory(@"C:\Seriale");
+                using (Lokalizacja lok = new Lokalizacja())
+                {
+                    if (lok.ShowDialog() == DialogResult.OK)
+                    {
+                        System.IO.File.WriteAllText(String.Concat(lokalizacja), sb.ToString());
+                        AddOrUpdateAppSettings("Lokalizacja", lok.tBox_loc.Text);
+                    }
+                }
+            }
+
+            sAttr = ConfigurationManager.AppSettings.Get("Lokalizacja");
+
+            if (!File.Exists(sAttr))
+            {
                 xml = new XDocument(
                    new XDeclaration("1.0", "utf-8", "true"),
                    new XElement("Spis"));
-                xml.Save(@"C:\Seriale\Seriale.xml");
-                xdoc = XDocument.Load(@"C:\Seriale\Seriale.xml");
+                xml.Save(sAttr);
             }
+
             Zaladuj();
         }
 
@@ -55,7 +96,7 @@ namespace Serialak
         {
             dane_seriale.Rows.Clear();
             XmlDocument doc = new XmlDocument();
-            doc.Load(@"C:\Seriale\Seriale.xml");
+            doc.Load(sAttr);
             XmlNodeList node = doc.DocumentElement.SelectNodes("/Spis/Serial");
             foreach (XmlNode node2 in node)
             {
@@ -117,42 +158,63 @@ namespace Serialak
 
         private void Usuń_Click(object sender, EventArgs e)
         {
-            using (Form delete = new Delete())
+            if (dane_seriale.Rows.Count > 0)
             {
-                if (delete.ShowDialog() == DialogResult.OK)
-                    Zaladuj();
+                using (Form delete = new Delete())
+                {
+                    if (delete.ShowDialog() == DialogResult.OK)
+                        Zaladuj();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Brak seriali do usunięcia", "Błąd!");
             }
         }
 
         private void Losuj_Click(object sender, EventArgs e)
         {
-            Zaladuj();
-            XmlDocument doc = new XmlDocument();
-            doc.Load(@"C:\Seriale\Seriale.xml");
-            XmlNodeList node = doc.DocumentElement.SelectNodes("/Spis/Serial/Nazwa");
-            foreach (XmlNode node2 in node)
+            try
             {
-                Losowanie.Add(node2.InnerText);
-            }
-            int x = rnd.Next(Losowanie.Count());
-            var wylosowane = Losowanie.ElementAt(x);
-            foreach (DataGridViewRow row in dane_seriale.Rows)
-            {
-                if (row.Cells[0].Value.ToString() == wylosowane)
+                Zaladuj();
+                XmlDocument doc = new XmlDocument();
+                doc.Load(sAttr);
+                XmlNodeList node = doc.DocumentElement.SelectNodes("/Spis/Serial/Nazwa");
+                foreach (XmlNode node2 in node)
                 {
-                    row.DefaultCellStyle.BackColor = Color.Yellow;
-                    row.DefaultCellStyle.SelectionBackColor = Color.Yellow;
+                    Losowanie.Add(node2.InnerText);
                 }
+                int x = rnd.Next(Losowanie.Count());
+                var wylosowane = Losowanie.ElementAt(x);
+                foreach (DataGridViewRow row in dane_seriale.Rows)
+                {
+                    if (row.Cells[0].Value.ToString() == wylosowane)
+                    {
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                        row.DefaultCellStyle.SelectionBackColor = Color.Yellow;
+                    }
+                }
+                Losowanie.Clear();
             }
-            Losowanie.Clear();
+            catch (Exception)
+            {
+                MessageBox.Show("Brak seriali do wylosowania", "Błąd!");
+            }
         }
 
         private void Aktualizuj_Click(object sender, EventArgs e)
         {
-            using (Form akt = new Update())
+            if (dane_seriale.Rows.Count > 0)
             {
-                if (akt.ShowDialog() == DialogResult.OK)
-                    Zaladuj();
+                using (Form akt = new Update())
+                {
+                    if (akt.ShowDialog() == DialogResult.OK)
+                        Zaladuj();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Brak seriali do modyfikacji", "Błąd!");
             }
         }
 
@@ -169,7 +231,7 @@ namespace Serialak
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Błędny link" + ex);
+                MessageBox.Show("Błędny link" + ex, "Błąd!");
             }
         }
 
@@ -179,7 +241,7 @@ namespace Serialak
             {
                 dane_seriale.Rows.Clear();
                 XmlDocument doc = new XmlDocument();
-                doc.Load(@"C:\Seriale\Seriale.xml");
+                doc.Load(sAttr);
                 XmlNodeList node = doc.DocumentElement.SelectNodes("/Spis/Serial");
                 foreach (XmlNode node2 in node)
                 {
@@ -233,34 +295,48 @@ namespace Serialak
 
         private void CSVToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var csv = new StringBuilder();
-            csv.AppendLine("Nazwa\tAktualny odcinek\tAktualny sezon\tIlość odcinków\tIlość sezonów\tWychodzi\tOstatnio oglądany\tLink");
-            foreach (DataGridViewRow row in dane_seriale.Rows)
+            try
             {
-                var first = row.Cells[0].Value;
-                var second = row.Cells[1].Value;
-                var third = row.Cells[2].Value;
-                var fourth = row.Cells[3].Value;
-                var fifth = row.Cells[4].Value;
-                var sixth = row.Cells[5].Value;
-                var seventh = row.Cells[6].Value;
-                var eighth = row.Cells[7].Value;
-                var newLine = string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}", first, second, third, fourth, fifth, sixth, seventh, eighth);
-                csv.AppendLine(newLine);
-            }
-            Save.InitialDirectory = @"C:\Seriale";
-            Save.FileName = "Seriale.csv";
-            Save.FilterIndex = 0;
-            Save.Title = "Zapisz plik";
-            Save.CheckFileExists = false;
-            Save.CheckPathExists = true;
-            Save.DefaultExt = "csv";
-            Save.Filter = "CSV files (*.csv)|*.csv";
+                if (dane_seriale.Rows.Count > 0)
+                {
+                    var csv = new StringBuilder();
+                    csv.AppendLine("Nazwa\tAktualny odcinek\tAktualny sezon\tIlość odcinków\tIlość sezonów\tWychodzi\tOstatnio oglądany\tLink");
+                    foreach (DataGridViewRow row in dane_seriale.Rows)
+                    {
+                        var first = row.Cells[0].Value;
+                        var second = row.Cells[1].Value;
+                        var third = row.Cells[2].Value;
+                        var fourth = row.Cells[3].Value;
+                        var fifth = row.Cells[4].Value;
+                        var sixth = row.Cells[5].Value;
+                        var seventh = row.Cells[6].Value;
+                        var eighth = row.Cells[7].Value;
+                        var newLine = string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}", first, second, third, fourth, fifth, sixth, seventh, eighth);
+                        csv.AppendLine(newLine);
+                    }
+                    Save.InitialDirectory = @"C:\";
+                    Save.FileName = "Seriale.csv";
+                    Save.FilterIndex = 0;
+                    Save.Title = "Zapisz plik";
+                    Save.CheckFileExists = false;
+                    Save.CheckPathExists = true;
+                    Save.DefaultExt = "csv";
+                    Save.Filter = "CSV files (*.csv)|*.csv";
 
-            if (Save.ShowDialog() == DialogResult.OK)
+                    if (Save.ShowDialog() == DialogResult.OK)
+                    {
+                        File.WriteAllText(Save.FileName, csv.ToString());
+                        MessageBox.Show("Pomyślnie zapisano plik");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Nie znaleziono danych", "Błąd!");
+                }
+            }
+            catch (Exception ex)
             {
-                File.WriteAllText(Save.FileName, csv.ToString());
-                MessageBox.Show("Pomyślnie zapisano plik");
+                MessageBox.Show("Wystąpił błąd " + ex, "Błąd!");
             }
         }
 
@@ -285,7 +361,7 @@ namespace Serialak
                         catch (Exception ex)
                         {
                             ErrorMessage = true;
-                            MessageBox.Show("Unable to wride data in disk" + ex.Message);
+                            MessageBox.Show("Nie można zapisać danych na dysku" + ex.Message);
                         }
                     }
                     if (!ErrorMessage)
@@ -338,16 +414,23 @@ namespace Serialak
             }
             else
             {
-                MessageBox.Show("Nie znaleziono danych", "Info");
+                MessageBox.Show("Nie znaleziono danych", "Błąd!");
             }
         }
 
         private void Btn_end_Click(object sender, EventArgs e)
         {
-            btn_end.Visible = false;
-            btn_approve.Visible = true;
-            dane_seriale.Columns["end"].Visible = true;
-            lbl1.Visible = true;
+            if (dane_seriale.Rows.Count > 0)
+            {
+                btn_end.Visible = false;
+                btn_approve.Visible = true;
+                dane_seriale.Columns["end"].Visible = true;
+                lbl1.Visible = true;
+            }
+            else
+            {
+                MessageBox.Show("Brak seriali do zakończenia", "Błąd!");
+            }
         }
 
         private void Btn_approve_Click(object sender, EventArgs e)
@@ -356,6 +439,7 @@ namespace Serialak
             btn_end.Visible = true;
             btn_approve.Visible = false;
             dane_seriale.Columns["end"].Visible = false;
+            XDocument xdoc = XDocument.Load(sAttr);
 
             try
             {
@@ -393,9 +477,16 @@ namespace Serialak
             }
             finally
             {
-                xdoc.Save(@"C:\Seriale\Seriale.xml");
-                Zaladuj();
-                MessageBox.Show("Poprawnie zaktualizowano seriale");
+                if (dane_seriale.Rows.Count <= 0)
+                {
+                    MessageBox.Show("Nie wybrano żadnego serialu!!!", "Błąd");
+                }
+                else
+                {
+                    xdoc.Save(sAttr);
+                    Zaladuj();
+                    MessageBox.Show("Poprawnie zaktualizowano seriale");
+                }
             }
         }
     }

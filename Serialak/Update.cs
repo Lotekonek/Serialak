@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
@@ -11,12 +12,15 @@ namespace Serialak
     public partial class Update : Form
     {
         private string nazwa;
-        private readonly XDocument xdoc = XDocument.Load(@"C:\Seriale\Seriale.xml");
+        private readonly string sAttr;
+        private readonly XDocument xdoc;
         private readonly List<string> Seriale = new List<string>();
         private readonly DateTime thisDay = DateTime.Today;
 
         public Update()
         {
+            sAttr = ConfigurationManager.AppSettings.Get("Lokalizacja");
+            xdoc = XDocument.Load(sAttr);
             InitializeComponent();
             Laduj();
         }
@@ -26,7 +30,7 @@ namespace Serialak
             Seriale.Clear();
             cBox.Items.Clear();
             XmlDocument doc = new XmlDocument();
-            doc.Load(@"C:\Seriale\Seriale.xml");
+            doc.Load(sAttr);
             XmlNodeList node = doc.DocumentElement.SelectNodes("/Spis/Serial/Nazwa");
             foreach (XmlNode node2 in node)
             {
@@ -55,12 +59,11 @@ namespace Serialak
             var elSezon = elStatus.Elements("Aktualny_sezon").FirstOrDefault();
             var elLast = elStatus.Elements("Ostatnio_oglądany").FirstOrDefault();
             var elEnded = elStatus.Elements("Status").FirstOrDefault();
-             elSezon.Value = n_sez.Value.ToString();
-             elOdcinek.Value = n_odc.Value.ToString();
-             elLast.Value = thisDay.ToString("M");
-                
-            
-            xdoc.Save(@"C:\Seriale\Seriale.xml");
+            elSezon.Value = n_sez.Value.ToString();
+            elOdcinek.Value = n_odc.Value.ToString();
+            elLast.Value = thisDay.ToString("M");
+
+            xdoc.Save(sAttr);
             this.DialogResult = DialogResult.OK;
             MessageBox.Show("Poprawnie zaktualizowano serial");
             Close();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -9,9 +10,11 @@ namespace Serialak
         private readonly DateTime thisDay = DateTime.Today;
         private XDocument xml;
         private bool check = false;
+        private readonly string sAttr;
 
         public Dodawanie()
         {
+            sAttr = ConfigurationManager.AppSettings.Get("Lokalizacja");
             InitializeComponent();
             Serialak series = new Serialak();
             series.Zaladuj();
@@ -46,7 +49,7 @@ namespace Serialak
         {
             if (tBox_nazwa.Text == "")
             {
-                MessageBox.Show("Wpisz nazwę");
+                MessageBox.Show("Wpisz nazwę", "Info");
                 return;
             }
             string sezon = ilosc_Sezony.Value.ToString();
@@ -85,7 +88,7 @@ namespace Serialak
                 link = "Brak";
             }
 
-            xml = XDocument.Load(@"C:\Seriale\Seriale.xml");
+            xml = XDocument.Load(sAttr);
 
             Serialak series = new Serialak();
 
@@ -110,7 +113,7 @@ namespace Serialak
                             new XElement("Ostatnio_oglądany", thisDay.ToString("M")),
                             new XElement("Link", link),
                             new XElement("Status")));
-            xml.Save(@"C:\Seriale\Seriale.xml");
+            xml.Save(sAttr);
 
             this.DialogResult = DialogResult.OK;
 

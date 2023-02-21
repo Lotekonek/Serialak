@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
@@ -11,14 +12,16 @@ namespace Serialak
     public partial class Delete : Form
     {
         private readonly List<string> Spis = new List<string>();
+        private readonly string sAttr;
 
         public Delete()
         {
+            sAttr = ConfigurationManager.AppSettings.Get("Lokalizacja");
             InitializeComponent();
 
             dane_usuwanie.Rows.Clear();
             XmlDocument doc = new XmlDocument();
-            doc.Load(@"C:\Seriale\Seriale.xml");
+            doc.Load(sAttr);
             XmlNodeList node = doc.DocumentElement.SelectNodes("/Spis/Serial");
             foreach (XmlNode node2 in node)
             {
@@ -31,18 +34,29 @@ namespace Serialak
 
         private void Btn_delete_Click(object sender, EventArgs e)
         {
+            DialogResult dr = MessageBox.Show("Czy na pewno chcesz usunąć wybrane seriale?",
+                  "Potwierdzenie", MessageBoxButtons.YesNo);
+            switch (dr)
+            {
+                case DialogResult.Yes:
+                    break;
+
+                case DialogResult.No:
+                    return;
+            }
+
             try
             {
                 foreach (DataGridViewRow row in dane_usuwanie.Rows)
                 {
                     if (Convert.ToBoolean(row.Cells[choose.Name].Value) == true)
                     {
-                        var xDoc = XDocument.Load(@"C:\Seriale\Seriale.xml");
+                        var xDoc = XDocument.Load(sAttr);
 
                         xDoc.Root?.Descendants("Serial")
                             .Where(f => f.Attribute("Name")?.Value == row.Cells[0].Value.ToString())
                             .Remove();
-                        xDoc.Save(@"C:\Seriale\Seriale.xml");
+                        xDoc.Save(sAttr);
                     }
                 }
             }
