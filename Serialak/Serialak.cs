@@ -2,17 +2,13 @@
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.DirectoryServices.ActiveDirectory;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
-using static System.Windows.Forms.AxHost;
 
 namespace Serialak
 {
@@ -28,9 +24,6 @@ namespace Serialak
         private readonly iTextSharp.text.Font fontTinyItalic = FontFactory.GetFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1257, 18, iTextSharp.text.Font.BOLD);
         private readonly iTextSharp.text.Font fontCell = FontFactory.GetFont(BaseFont.HELVETICA, BaseFont.CP1257, 15);
 
-       
-        
-
         public Serialak()
         {
             InitializeComponent();
@@ -41,7 +34,7 @@ namespace Serialak
                 xml = new XDocument(
                    new XDeclaration("1.0", "utf-8", "true"),
                    new XElement("Spis"));
-                    xml.Save(Seriale);
+                xml.Save(Seriale);
             }
 
             Zaladuj();
@@ -505,10 +498,9 @@ namespace Serialak
                     {
                         Directory.CreateDirectory(bak);
                     }
-                        File.Copy(Seriale, bak+"Seriale.bak", true);
-                        MessageBox.Show("Pomyślnie zrobiono backup");
+                    File.Copy(Seriale, bak + "Seriale.bak", true);
+                    MessageBox.Show("Pomyślnie zrobiono backup");
                 }
-               
             }
             catch (Exception ex)
             {
@@ -540,7 +532,6 @@ namespace Serialak
             {
                 MessageBox.Show("Błąd: " + ex, "Błąd");
             }
-
         }
 
         private void WczytajbackupToolStripMenuItem_Click(object sender, EventArgs e)

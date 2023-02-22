@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Configuration;
-using System.IO.Ports;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -12,7 +10,6 @@ namespace Serialak
         private XDocument xml;
         private bool check = false;
         private static readonly string Seriale = AppDomain.CurrentDomain.BaseDirectory + @"Data\Seriale.xml";
-
 
         public Dodawanie()
         {
