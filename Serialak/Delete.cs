@@ -12,16 +12,15 @@ namespace Serialak
     public partial class Delete : Form
     {
         private readonly List<string> Spis = new List<string>();
-        private readonly string sAttr;
+        private static readonly string Seriale = AppDomain.CurrentDomain.BaseDirectory + @"Data\Seriale.xml";
 
         public Delete()
         {
-            sAttr = ConfigurationManager.AppSettings.Get("Lokalizacja");
             InitializeComponent();
 
             dane_usuwanie.Rows.Clear();
             XmlDocument doc = new XmlDocument();
-            doc.Load(sAttr);
+            doc.Load(Seriale);
             XmlNodeList node = doc.DocumentElement.SelectNodes("/Spis/Serial");
             foreach (XmlNode node2 in node)
             {
@@ -51,12 +50,12 @@ namespace Serialak
                 {
                     if (Convert.ToBoolean(row.Cells[choose.Name].Value) == true)
                     {
-                        var xDoc = XDocument.Load(sAttr);
+                        var xDoc = XDocument.Load(Seriale);
 
                         xDoc.Root?.Descendants("Serial")
                             .Where(f => f.Attribute("Name")?.Value == row.Cells[0].Value.ToString())
                             .Remove();
-                        xDoc.Save(sAttr);
+                        xDoc.Save(Seriale);
                     }
                 }
             }

@@ -12,15 +12,14 @@ namespace Serialak
     public partial class Update : Form
     {
         private string nazwa;
-        private readonly string sAttr;
+        private static readonly string Series = AppDomain.CurrentDomain.BaseDirectory + @"Data\Seriale.xml";
         private readonly XDocument xdoc;
         private readonly List<string> Seriale = new List<string>();
         private readonly DateTime thisDay = DateTime.Today;
 
         public Update()
         {
-            sAttr = ConfigurationManager.AppSettings.Get("Lokalizacja");
-            xdoc = XDocument.Load(sAttr);
+            xdoc = XDocument.Load(Series);
             InitializeComponent();
             Laduj();
         }
@@ -30,7 +29,7 @@ namespace Serialak
             Seriale.Clear();
             cBox.Items.Clear();
             XmlDocument doc = new XmlDocument();
-            doc.Load(sAttr);
+            doc.Load(Series);
             XmlNodeList node = doc.DocumentElement.SelectNodes("/Spis/Serial/Nazwa");
             foreach (XmlNode node2 in node)
             {
@@ -63,7 +62,7 @@ namespace Serialak
             elOdcinek.Value = n_odc.Value.ToString();
             elLast.Value = thisDay.ToString("M");
 
-            xdoc.Save(sAttr);
+            xdoc.Save(Series);
             this.DialogResult = DialogResult.OK;
             MessageBox.Show("Poprawnie zaktualizowano serial");
             Close();

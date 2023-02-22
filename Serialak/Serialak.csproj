@@ -381,12 +381,6 @@
     <Compile Include="Dodawanie.designer.cs">
       <DependentUpon>Dodawanie.cs</DependentUpon>
     </Compile>
-    <Compile Include="Lokalizacja.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Lokalizacja.Designer.cs">
-      <DependentUpon>Lokalizacja.cs</DependentUpon>
-    </Compile>
     <Compile Include="Update.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -406,9 +400,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dodawanie.resx">
       <DependentUpon>Dodawanie.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Lokalizacja.resx">
-      <DependentUpon>Lokalizacja.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Serialak.resx">
       <DependentUpon>Serialak.cs</DependentUpon>

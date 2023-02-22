@@ -59,13 +59,16 @@
             this.zapiszDoPlikuCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zapisDoPlikuPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zapiszDoPlikuXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.wczytajZPlikuXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zapiszBackupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.wczytajToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Save = new System.Windows.Forms.SaveFileDialog();
             this.cbox_ogladane = new System.Windows.Forms.CheckBox();
             this.btn_end = new System.Windows.Forms.Button();
             this.lbl1 = new System.Windows.Forms.Label();
             this.btn_approve = new System.Windows.Forms.Button();
             this.Loadfile = new System.Windows.Forms.OpenFileDialog();
+            this.wczytajZPlikuXMLToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.WczytajbackupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dane_seriale)).BeginInit();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
@@ -242,38 +245,38 @@
             this.Aktualizuj,
             this.Losuj,
             this.zapiszDoPlikuToolStripMenuItem,
-            this.wczytajZPlikuXMLToolStripMenuItem});
+            this.wczytajToolStripMenuItem});
             this.Menu.Location = new System.Drawing.Point(0, 0);
             this.Menu.Name = "Menu";
-            this.Menu.Size = new System.Drawing.Size(1744, 33);
+            this.Menu.Size = new System.Drawing.Size(1744, 36);
             this.Menu.TabIndex = 2;
             this.Menu.Text = "menuStrip1";
             // 
             // Dodaj
             // 
             this.Dodaj.Name = "Dodaj";
-            this.Dodaj.Size = new System.Drawing.Size(76, 29);
+            this.Dodaj.Size = new System.Drawing.Size(76, 32);
             this.Dodaj.Text = "Dodaj";
             this.Dodaj.Click += new System.EventHandler(this.Dodaj_Click);
             // 
             // Usuń
             // 
             this.Usuń.Name = "Usuń";
-            this.Usuń.Size = new System.Drawing.Size(68, 29);
+            this.Usuń.Size = new System.Drawing.Size(68, 32);
             this.Usuń.Text = "Usuń";
             this.Usuń.Click += new System.EventHandler(this.Usuń_Click);
             // 
             // Aktualizuj
             // 
             this.Aktualizuj.Name = "Aktualizuj";
-            this.Aktualizuj.Size = new System.Drawing.Size(104, 29);
+            this.Aktualizuj.Size = new System.Drawing.Size(104, 32);
             this.Aktualizuj.Text = "Aktualizuj";
             this.Aktualizuj.Click += new System.EventHandler(this.Aktualizuj_Click);
             // 
             // Losuj
             // 
             this.Losuj.Name = "Losuj";
-            this.Losuj.Size = new System.Drawing.Size(69, 29);
+            this.Losuj.Size = new System.Drawing.Size(69, 32);
             this.Losuj.Text = "Losuj";
             this.Losuj.Click += new System.EventHandler(this.Losuj_Click);
             // 
@@ -282,9 +285,10 @@
             this.zapiszDoPlikuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.zapiszDoPlikuCSVToolStripMenuItem,
             this.zapisDoPlikuPDFToolStripMenuItem,
-            this.zapiszDoPlikuXMLToolStripMenuItem});
+            this.zapiszDoPlikuXMLToolStripMenuItem,
+            this.zapiszBackupToolStripMenuItem});
             this.zapiszDoPlikuToolStripMenuItem.Name = "zapiszDoPlikuToolStripMenuItem";
-            this.zapiszDoPlikuToolStripMenuItem.Size = new System.Drawing.Size(148, 29);
+            this.zapiszDoPlikuToolStripMenuItem.Size = new System.Drawing.Size(148, 32);
             this.zapiszDoPlikuToolStripMenuItem.Text = "Zapisz do pliku";
             // 
             // zapiszDoPlikuCSVToolStripMenuItem
@@ -308,12 +312,21 @@
             this.zapiszDoPlikuXMLToolStripMenuItem.Text = "Zapisz do pliku XML";
             this.zapiszDoPlikuXMLToolStripMenuItem.Click += new System.EventHandler(this.ZapiszDoPlikuXMLToolStripMenuItem_Click);
             // 
-            // wczytajZPlikuXMLToolStripMenuItem
+            // zapiszBackupToolStripMenuItem
             // 
-            this.wczytajZPlikuXMLToolStripMenuItem.Name = "wczytajZPlikuXMLToolStripMenuItem";
-            this.wczytajZPlikuXMLToolStripMenuItem.Size = new System.Drawing.Size(184, 29);
-            this.wczytajZPlikuXMLToolStripMenuItem.Text = "Wczytaj z pliku XML";
-            this.wczytajZPlikuXMLToolStripMenuItem.Click += new System.EventHandler(this.WczytajZPlikuXMLToolStripMenuItem_Click);
+            this.zapiszBackupToolStripMenuItem.Name = "zapiszBackupToolStripMenuItem";
+            this.zapiszBackupToolStripMenuItem.Size = new System.Drawing.Size(274, 34);
+            this.zapiszBackupToolStripMenuItem.Text = "Stwórz backup";
+            this.zapiszBackupToolStripMenuItem.Click += new System.EventHandler(this.ZapiszBackupToolStripMenuItem_Click);
+            // 
+            // wczytajToolStripMenuItem
+            // 
+            this.wczytajToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.wczytajZPlikuXMLToolStripMenuItem1,
+            this.WczytajbackupToolStripMenuItem});
+            this.wczytajToolStripMenuItem.Name = "wczytajToolStripMenuItem";
+            this.wczytajToolStripMenuItem.Size = new System.Drawing.Size(144, 32);
+            this.wczytajToolStripMenuItem.Text = "Wczytaj z pliku";
             // 
             // cbox_ogladane
             // 
@@ -361,6 +374,20 @@
             // Loadfile
             // 
             this.Loadfile.FileName = "openFileDialog1";
+            // 
+            // wczytajZPlikuXMLToolStripMenuItem1
+            // 
+            this.wczytajZPlikuXMLToolStripMenuItem1.Name = "wczytajZPlikuXMLToolStripMenuItem1";
+            this.wczytajZPlikuXMLToolStripMenuItem1.Size = new System.Drawing.Size(270, 34);
+            this.wczytajZPlikuXMLToolStripMenuItem1.Text = "Wczytaj z pliku XML";
+            this.wczytajZPlikuXMLToolStripMenuItem1.Click += new System.EventHandler(this.WczytajZPlikuXMLToolStripMenuItem1_Click);
+            // 
+            // WczytajbackupToolStripMenuItem
+            // 
+            this.WczytajbackupToolStripMenuItem.Name = "WczytajbackupToolStripMenuItem";
+            this.WczytajbackupToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.WczytajbackupToolStripMenuItem.Text = "Wczytaj backup";
+            this.WczytajbackupToolStripMenuItem.Click += new System.EventHandler(this.WczytajbackupToolStripMenuItem_Click);
             // 
             // Serialak
             // 
@@ -417,8 +444,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
         private System.Windows.Forms.DataGridViewCheckBoxColumn end;
         private System.Windows.Forms.ToolStripMenuItem zapiszDoPlikuXMLToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem wczytajZPlikuXMLToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem wczytajToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog Loadfile;
+        private System.Windows.Forms.ToolStripMenuItem zapiszBackupToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem wczytajZPlikuXMLToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem WczytajbackupToolStripMenuItem;
     }
 }
 

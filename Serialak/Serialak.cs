@@ -3,6 +3,7 @@ using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.DirectoryServices.ActiveDirectory;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
+using static System.Windows.Forms.AxHost;
 
 namespace Serialak
 {
@@ -19,64 +21,27 @@ namespace Serialak
         private readonly List<string> Losowanie = new List<string>();
         private readonly List<string> Spis = new List<string>();
         private readonly Random rnd = new Random();
-        private readonly string sAttr;
+        private static readonly string Seriale = AppDomain.CurrentDomain.BaseDirectory + @"Data\Seriale.xml";
         private bool check = false;
         private readonly DateTime thisDay = DateTime.Today;
         private readonly XDocument xml;
         private readonly iTextSharp.text.Font fontTinyItalic = FontFactory.GetFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1257, 18, iTextSharp.text.Font.BOLD);
         private readonly iTextSharp.text.Font fontCell = FontFactory.GetFont(BaseFont.HELVETICA, BaseFont.CP1257, 15);
 
-        public static void AddOrUpdateAppSettings(string key, string value)
-        {
-            try
-            {
-                var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                var settings = configFile.AppSettings.Settings;
-                if (settings[key] == null)
-                {
-                    settings.Add(key, value);
-                }
-                else
-                {
-                    settings[key].Value = value;
-                }
-                configFile.Save(ConfigurationSaveMode.Modified);
-                ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
-            }
-            catch (ConfigurationErrorsException)
-            {
-                Console.WriteLine("Error writing app settings");
-            }
-        }
+       
+        
 
         public Serialak()
         {
             InitializeComponent();
-            System.Configuration.Configuration config =
-                ConfigurationManager.OpenExeConfiguration(
-                ConfigurationUserLevel.None);
-            string loc = Assembly.GetEntryAssembly().Location;
-            string lokalizacja = String.Concat(loc, ".config");
-            if (!File.Exists(lokalizacja))
-            {
-                using (Lokalizacja lok = new Lokalizacja())
-                {
-                    if (lok.ShowDialog() == DialogResult.OK)
-                    {
-                        AddOrUpdateAppSettings("Lokalizacja", lok.tBox_loc.Text);
-                        config.Save(ConfigurationSaveMode.Full);
-                    }
-                }
-            }
 
-            sAttr = ConfigurationManager.AppSettings.Get("Lokalizacja");
-
-            if (!File.Exists(sAttr))
+            if (!File.Exists(Seriale))
             {
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + @"\Data");
                 xml = new XDocument(
                    new XDeclaration("1.0", "utf-8", "true"),
                    new XElement("Spis"));
-                xml.Save(sAttr);
+                    xml.Save(Seriale);
             }
 
             Zaladuj();
@@ -93,7 +58,7 @@ namespace Serialak
         {
             dane_seriale.Rows.Clear();
             XmlDocument doc = new XmlDocument();
-            doc.Load(sAttr);
+            doc.Load(Seriale);
             XmlNodeList node = doc.DocumentElement.SelectNodes("/Spis/Serial");
             foreach (XmlNode node2 in node)
             {
@@ -175,7 +140,7 @@ namespace Serialak
             {
                 Zaladuj();
                 XmlDocument doc = new XmlDocument();
-                doc.Load(sAttr);
+                doc.Load(Seriale);
                 XmlNodeList node = doc.DocumentElement.SelectNodes("/Spis/Serial/Nazwa");
                 foreach (XmlNode node2 in node)
                 {
@@ -238,7 +203,7 @@ namespace Serialak
             {
                 dane_seriale.Rows.Clear();
                 XmlDocument doc = new XmlDocument();
-                doc.Load(sAttr);
+                doc.Load(Seriale);
                 XmlNodeList node = doc.DocumentElement.SelectNodes("/Spis/Serial");
                 foreach (XmlNode node2 in node)
                 {
@@ -442,7 +407,7 @@ namespace Serialak
             btn_end.Visible = true;
             btn_approve.Visible = false;
             dane_seriale.Columns["end"].Visible = false;
-            XDocument xdoc = XDocument.Load(sAttr);
+            XDocument xdoc = XDocument.Load(Seriale);
 
             try
             {
@@ -489,7 +454,7 @@ namespace Serialak
                     }
                     else
                     {
-                        xdoc.Save(sAttr);
+                        xdoc.Save(Seriale);
                         Zaladuj();
                         MessageBox.Show("Poprawnie zaktualizowano seriale");
                     }
@@ -503,7 +468,7 @@ namespace Serialak
             {
                 if (dane_seriale.Rows.Count > 0)
                 {
-                    Save.InitialDirectory = sAttr;
+                    Save.InitialDirectory = Seriale;
                     Save.FileName = "Seriale.xml";
                     Save.FilterIndex = 0;
                     Save.Title = "Zapisz plik";
@@ -514,7 +479,7 @@ namespace Serialak
 
                     if (Save.ShowDialog() == DialogResult.OK)
                     {
-                        File.Copy(sAttr, Save.FileName, true);
+                        File.Copy(Seriale, Save.FileName, true);
                         MessageBox.Show("Pomyślnie zapisano plik");
                     }
                 }
@@ -529,7 +494,29 @@ namespace Serialak
             }
         }
 
-        private void WczytajZPlikuXMLToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ZapiszBackupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string bak = AppDomain.CurrentDomain.BaseDirectory + @"\Backup\";
+            try
+            {
+                if (dane_seriale.Rows.Count > 0)
+                {
+                    if (!Directory.Exists(bak))
+                    {
+                        Directory.CreateDirectory(bak);
+                    }
+                        File.Copy(Seriale, bak+"Seriale.bak", true);
+                        MessageBox.Show("Pomyślnie zrobiono backup");
+                }
+               
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Wystąpił błąd " + ex, "Błąd!");
+            }
+        }
+
+        private void WczytajZPlikuXMLToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             try
             {
@@ -543,8 +530,36 @@ namespace Serialak
 
                     if (opf.ShowDialog() == DialogResult.OK)
                     {
-                        File.Copy(opf.FileName, sAttr, true);
+                        File.Copy(opf.FileName, Seriale, true);
                         MessageBox.Show("Pomyślnie wczytano plik");
+                        Zaladuj();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Błąd: " + ex, "Błąd");
+            }
+
+        }
+
+        private void WczytajbackupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (OpenFileDialog opf = new OpenFileDialog())
+                {
+                    opf.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                    opf.Filter = "BAK files (*.bak)|*.bak";
+                    opf.FilterIndex = 2;
+                    opf.RestoreDirectory = true;
+                    opf.DefaultExt = "bak";
+                    opf.Title = "Wczytaj plik";
+
+                    if (opf.ShowDialog() == DialogResult.OK)
+                    {
+                        File.Copy(opf.FileName, Seriale, true);
+                        MessageBox.Show("Pomyślnie wczytano backup");
                         Zaladuj();
                     }
                 }

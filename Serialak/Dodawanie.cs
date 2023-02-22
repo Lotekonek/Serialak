@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.IO.Ports;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -10,11 +11,11 @@ namespace Serialak
         private readonly DateTime thisDay = DateTime.Today;
         private XDocument xml;
         private bool check = false;
-        private readonly string sAttr;
+        private static readonly string Seriale = AppDomain.CurrentDomain.BaseDirectory + @"Data\Seriale.xml";
+
 
         public Dodawanie()
         {
-            sAttr = ConfigurationManager.AppSettings.Get("Lokalizacja");
             InitializeComponent();
             Serialak series = new Serialak();
             series.Zaladuj();
@@ -88,7 +89,7 @@ namespace Serialak
                 link = "Brak";
             }
 
-            xml = XDocument.Load(sAttr);
+            xml = XDocument.Load(Seriale);
 
             Serialak series = new Serialak();
 
@@ -113,7 +114,7 @@ namespace Serialak
                             new XElement("Ostatnio_oglądany", thisDay.ToString("M")),
                             new XElement("Link", link),
                             new XElement("Status")));
-            xml.Save(sAttr);
+            xml.Save(Seriale);
 
             this.DialogResult = DialogResult.OK;
 
