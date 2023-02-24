@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -56,11 +57,22 @@ namespace Serialak
                 }
                 try
                 {
-                    File.Copy(tBox_IMG.Text, Image + tBox_nazwa.Text.Replace(" ", "_") + ".png");
+                    bool result1 = Uri.TryCreate(tBox_IMG.Text, UriKind.Absolute, out Uri uriResult1)
+                && (uriResult1.Scheme == Uri.UriSchemeHttp || uriResult1.Scheme == Uri.UriSchemeHttps);
+                    if (!result1)
+                    {
+                        File.Copy(tBox_IMG.Text, Image + tBox_nazwa.Text.Replace(" ", "_") + ".png");
+                    }
+                    else
+                    {
+                        WebClient webClient = new WebClient();
+                        webClient.DownloadFile(uriResult1, Image + tBox_nazwa.Text.Replace(" ", "_") + ".png");
+                        webClient.Dispose();
+                    }
                 }
-                catch
+                catch(Exception ex)
                 {
-                    MessageBox.Show("Nie dodano miniaturki");
+                    MessageBox.Show("Nie dodano miniaturki" + ex);
                 }
             }
             if (tBox_nazwa.Text == "")

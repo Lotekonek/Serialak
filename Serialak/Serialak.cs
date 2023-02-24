@@ -148,7 +148,7 @@ public void Zaladuj(bool ended)
                 row.Cells[0] = imgcell;
                 try
                 {
-                    System.Drawing.Image myimage = System.Drawing.Image.FromFile(Imagepng + row.Cells[1].Value + ".png");
+                    System.Drawing.Image myimage = System.Drawing.Image.FromFile(Imagepng + row.Cells[1].Value.ToString().Replace(" ","_") + ".png");
                     var image = ResizeImage(myimage, new Size(150, 150));
                     row.Cells[0].Value = image;
                 }
