@@ -1,10 +1,13 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
+using Microsoft.Office.Interop.Excel;
+using Serialak.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
@@ -16,9 +19,12 @@ namespace Serialak
     {
         private readonly List<string> Losowanie = new List<string>();
         private readonly List<string> Spis = new List<string>();
+        private readonly List<string> Link = new List<string>();
         private readonly Random rnd = new Random();
         private static readonly string Seriale = AppDomain.CurrentDomain.BaseDirectory + @"Data\Seriale.xml";
+        private static readonly string Imagepng = AppDomain.CurrentDomain.BaseDirectory + @"\Data\Images\";
         private bool check = false;
+        private bool checkimg = false;
         private readonly DateTime thisDay = DateTime.Today;
         private readonly XDocument xml;
         private readonly iTextSharp.text.Font fontTinyItalic = FontFactory.GetFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1257, 18, iTextSharp.text.Font.BOLD);
@@ -37,8 +43,11 @@ namespace Serialak
                 xml.Save(Seriale);
             }
 
-            Zaladuj();
+            
+            Zaladuj(false);
         }
+
+
 
         private string UppercaseFirst(string str)
         {
@@ -47,7 +56,14 @@ namespace Serialak
             return char.ToUpper(str[0]) + str.Substring(1).ToLower();
         }
 
-        public void Zaladuj()
+        public static System.Drawing.Image ResizeImage(System.Drawing.Image imgToResize, Size size)
+        {
+            return new Bitmap(imgToResize, size);
+        }
+     
+        
+   
+public void Zaladuj(bool ended)
         {
             dane_seriale.Rows.Clear();
             XmlDocument doc = new XmlDocument();
@@ -55,21 +71,55 @@ namespace Serialak
             XmlNodeList node = doc.DocumentElement.SelectNodes("/Spis/Serial");
             foreach (XmlNode node2 in node)
             {
-                Spis.Add(node2.SelectSingleNode("Nazwa").InnerText);
-                Spis.Add(node2.SelectSingleNode("Aktualny_odcinek").InnerText);
-                Spis.Add(node2.SelectSingleNode("Aktualny_sezon").InnerText);
-                Spis.Add(node2.SelectSingleNode("Ilość_Odcinków").InnerText);
-                Spis.Add(node2.SelectSingleNode("Ilość_Sezonów").InnerText);
-                Spis.Add(node2.SelectSingleNode("Dzień_tygodnia").InnerText);
-                Spis.Add(node2.SelectSingleNode("Ostatnio_oglądany").InnerText);
-                Spis.Add(node2.SelectSingleNode("Link").InnerText);
-                Spis.Add(node2.SelectSingleNode("Status").InnerText);
-                dane_seriale.Rows.Add(Spis.ToArray());
-                Spis.Clear();
+                if (ended == false && cbox_ogladane.Checked == true)
+                {
+                    Spis.Add("");
+                    Spis.Add(node2.SelectSingleNode("Nazwa").InnerText);
+                    Spis.Add(node2.SelectSingleNode("Aktualny_odcinek").InnerText);
+                    Spis.Add(node2.SelectSingleNode("Aktualny_sezon").InnerText);
+                    Spis.Add(node2.SelectSingleNode("Ilość_Odcinków").InnerText);
+                    Spis.Add(node2.SelectSingleNode("Ilość_Sezonów").InnerText);
+                    Spis.Add(node2.SelectSingleNode("Dzień_tygodnia").InnerText);
+                    Spis.Add(node2.SelectSingleNode("Ostatnio_oglądany").InnerText);
+                    Spis.Add(node2.SelectSingleNode("Link").InnerText);
+                    Spis.Add(node2.SelectSingleNode("Status").InnerText);
+                    dane_seriale.Rows.Add(Spis.ToArray());
+                    Link.Add(node2.SelectSingleNode("Link").InnerText);
+                    Spis.Clear();
+                }
+                else
+                {
+                    if (node2.SelectSingleNode("Status").InnerText != "Skończone")
+                    {
+                        Spis.Add("");
+                        Spis.Add(node2.SelectSingleNode("Nazwa").InnerText);
+                        Spis.Add(node2.SelectSingleNode("Aktualny_odcinek").InnerText);
+                        Spis.Add(node2.SelectSingleNode("Aktualny_sezon").InnerText);
+                        Spis.Add(node2.SelectSingleNode("Ilość_Odcinków").InnerText);
+                        Spis.Add(node2.SelectSingleNode("Ilość_Sezonów").InnerText);
+                        Spis.Add(node2.SelectSingleNode("Dzień_tygodnia").InnerText);
+                        Spis.Add(node2.SelectSingleNode("Ostatnio_oglądany").InnerText);
+                        Spis.Add(node2.SelectSingleNode("Link").InnerText);
+                        Spis.Add(node2.SelectSingleNode("Status").InnerText);
+                        dane_seriale.Rows.Add(Spis.ToArray());
+                        Link.Add(node2.SelectSingleNode("Link").InnerText);
+                        Spis.Clear();
+                    }
+                }
+                
             }
+
             foreach (DataGridViewRow row in dane_seriale.Rows)
             {
-                if (row.Cells[8].Value.ToString() == "Skończone")
+                if (cBox_IMG.Checked)
+                {
+                    row.Height = 150;
+                }
+                else
+                {
+                    row.Height = 22;
+                }
+                if (row.Cells[9].Value.ToString() == "Skończone")
                 {
                     row.DefaultCellStyle.SelectionBackColor = Color.Green;
                     row.DefaultCellStyle.BackColor = Color.Green;
@@ -77,24 +127,35 @@ namespace Serialak
                 }
                 else
                 {
-                    row.Cells[8].Value = "Oglądane";
+                    row.Cells[9].Value = "Oglądane";
                 }
-                if (row.Cells[5].Value.ToString() == "")
+                if (row.Cells[6].Value.ToString() == "")
                 {
-                    row.Cells[5].Value = "Nie";
+                    row.Cells[6].Value = "Nie";
                 }
-                if (UppercaseFirst(thisDay.ToString("dddd")) == row.Cells[5].Value.ToString())
+                if (UppercaseFirst(thisDay.ToString("dddd")) == row.Cells[6].Value.ToString())
                 {
                     row.DefaultCellStyle.BackColor = Color.Aqua;
                     row.DefaultCellStyle.SelectionBackColor = Color.Aqua;
                 }
-                DataGridViewLinkCell linkCell = new DataGridViewLinkCell
+                DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
+                if (row.Cells[8].Value.ToString() != "Brak")
                 {
-                    Value = row.Cells[7].Value
-                };
-                if (row.Cells[7].Value.ToString() != "Brak")
+                    row.Cells[8] = linkCell;
+                    row.Cells[8].Value = "LINK";
+                }
+                DataGridViewImageCell imgcell = new DataGridViewImageCell();
+                row.Cells[0] = imgcell;
+                try
                 {
-                    row.Cells[7] = linkCell;
+                    System.Drawing.Image myimage = System.Drawing.Image.FromFile(Imagepng + row.Cells[1].Value + ".png");
+                    var image = ResizeImage(myimage, new Size(150, 150));
+                    row.Cells[0].Value = image;
+                }
+                catch {
+                    System.Drawing.Image myimage = Resources.no_image_icon_6;
+                    var image = ResizeImage(myimage, new Size(150, 150));
+                    row.Cells[0].Value = image;
                 }
             }
 
@@ -107,7 +168,7 @@ namespace Serialak
             using (Form ADD = new Dodawanie())
             {
                 if (ADD.ShowDialog() == DialogResult.OK)
-                    Zaladuj();
+                    Zaladuj(false);
             }
         }
 
@@ -118,7 +179,7 @@ namespace Serialak
                 using (Form delete = new Delete())
                 {
                     if (delete.ShowDialog() == DialogResult.OK)
-                        Zaladuj();
+                        Zaladuj(false);
                 }
             }
             else
@@ -131,7 +192,7 @@ namespace Serialak
         {
             try
             {
-                Zaladuj();
+                Zaladuj(false);
                 XmlDocument doc = new XmlDocument();
                 doc.Load(Seriale);
                 XmlNodeList node = doc.DocumentElement.SelectNodes("/Spis/Serial/Nazwa");
@@ -143,7 +204,7 @@ namespace Serialak
                 var wylosowane = Losowanie.ElementAt(x);
                 foreach (DataGridViewRow row in dane_seriale.Rows)
                 {
-                    if (row.Cells[0].Value.ToString() == wylosowane)
+                    if (row.Cells[1].Value.ToString() == wylosowane)
                     {
                         row.DefaultCellStyle.BackColor = Color.Yellow;
                         row.DefaultCellStyle.SelectionBackColor = Color.Yellow;
@@ -164,7 +225,7 @@ namespace Serialak
                 using (Form akt = new Update())
                 {
                     if (akt.ShowDialog() == DialogResult.OK)
-                        Zaladuj();
+                        Zaladuj(false);
                 }
             }
             else
@@ -181,7 +242,7 @@ namespace Serialak
 
                 if (dane_seriale.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewLinkCell)
                 {
-                    System.Diagnostics.Process.Start(dane_seriale.Rows[e.RowIndex].Cells[e.ColumnIndex].Value as string);
+                    System.Diagnostics.Process.Start(Link[e.RowIndex]);
                 }
             }
             catch (Exception ex)
@@ -194,56 +255,12 @@ namespace Serialak
         {
             if (!check)
             {
-                dane_seriale.Rows.Clear();
-                XmlDocument doc = new XmlDocument();
-                doc.Load(Seriale);
-                XmlNodeList node = doc.DocumentElement.SelectNodes("/Spis/Serial");
-                foreach (XmlNode node2 in node)
-                {
-                    if (node2.SelectSingleNode("Status").InnerText != "Skończone")
-                    {
-                        Spis.Add(node2.SelectSingleNode("Nazwa").InnerText);
-                        Spis.Add(node2.SelectSingleNode("Aktualny_odcinek").InnerText);
-                        Spis.Add(node2.SelectSingleNode("Aktualny_sezon").InnerText);
-                        Spis.Add(node2.SelectSingleNode("Ilość_Odcinków").InnerText);
-                        Spis.Add(node2.SelectSingleNode("Ilość_Sezonów").InnerText);
-                        Spis.Add(node2.SelectSingleNode("Dzień_tygodnia").InnerText);
-                        Spis.Add(node2.SelectSingleNode("Ostatnio_oglądany").InnerText);
-                        Spis.Add(node2.SelectSingleNode("Link").InnerText);
-                        Spis.Add(node2.SelectSingleNode("Status").InnerText);
-
-                        dane_seriale.Rows.Add(Spis.ToArray());
-                        Spis.Clear();
-                    }
-                }
-                foreach (DataGridViewRow row in dane_seriale.Rows)
-                {
-                    if (row.Cells[5].Value.ToString() == "")
-                    {
-                        row.Cells[5].Value = "Nie";
-                    }
-                    if (UppercaseFirst(thisDay.ToString("dddd")) == row.Cells[5].Value.ToString())
-                    {
-                        row.DefaultCellStyle.BackColor = Color.Aqua;
-                        row.DefaultCellStyle.SelectionBackColor = Color.Aqua;
-                    }
-                    DataGridViewLinkCell linkCell = new DataGridViewLinkCell
-                    {
-                        Value = row.Cells[7].Value
-                    };
-                    if (row.Cells[7].Value.ToString() != "Brak")
-                    {
-                        row.Cells[7] = linkCell;
-                    }
-
-                    dane_seriale.DefaultCellStyle.SelectionBackColor
-                    = dane_seriale.DefaultCellStyle.BackColor;
-                }
+                Zaladuj(false);
                 check = true;
             }
             else
             {
-                Zaladuj();
+                Zaladuj(true);
                 check = false;
             }
         }
@@ -258,14 +275,14 @@ namespace Serialak
                     csv.AppendLine("Nazwa\tAktualny odcinek\tAktualny sezon\tIlość odcinków\tIlość sezonów\tWychodzi\tOstatnio oglądany\tLink");
                     foreach (DataGridViewRow row in dane_seriale.Rows)
                     {
-                        var first = row.Cells[0].Value;
-                        var second = row.Cells[1].Value;
-                        var third = row.Cells[2].Value;
-                        var fourth = row.Cells[3].Value;
-                        var fifth = row.Cells[4].Value;
-                        var sixth = row.Cells[5].Value;
-                        var seventh = row.Cells[6].Value;
-                        var eighth = row.Cells[7].Value;
+                        var first = row.Cells[1].Value;
+                        var second = row.Cells[2].Value;
+                        var third = row.Cells[3].Value;
+                        var fourth = row.Cells[4].Value;
+                        var fifth = row.Cells[5].Value;
+                        var sixth = row.Cells[6].Value;
+                        var seventh = row.Cells[7].Value;
+                        var eighth = row.Cells[8].Value;
                         var newLine = string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}", first, second, third, fourth, fifth, sixth, seventh, eighth);
                         csv.AppendLine(newLine);
                     }
@@ -340,10 +357,10 @@ namespace Serialak
                             {
                                 foreach (DataGridViewCell cell in row.Cells)
                                 {
-                                    if (cell.ColumnIndex != 9)
+                                    if (cell.ColumnIndex != 10)
                                     {
                                         PdfPCell cell1 = new PdfPCell(new Phrase(cell.Value.ToString(), fontCell));
-                                        if (cell.Value.ToString() != "Brak" && cell.ColumnIndex == 7)
+                                        if (cell.Value.ToString() != "Brak" && cell.ColumnIndex == 8)
                                         {
                                             PdfPCell cell2 = new PdfPCell(new Phrase("Zawiera", fontCell));
                                             pdfTable.AddCell(cell2);
@@ -380,6 +397,8 @@ namespace Serialak
 
         private void Btn_end_Click(object sender, EventArgs e)
         {
+            cbox_ogladane.Checked = false;
+            cbox_ogladane.Enabled = false;
             if (dane_seriale.Rows.Count > 0)
             {
                 btn_end.Visible = false;
@@ -395,18 +414,20 @@ namespace Serialak
 
         private void Btn_approve_Click(object sender, EventArgs e)
         {
+            cbox_ogladane.Enabled = true;
             bool zmiana = false;
             lbl1.Visible = false;
             btn_end.Visible = true;
             btn_approve.Visible = false;
             dane_seriale.Columns["end"].Visible = false;
             XDocument xdoc = XDocument.Load(Seriale);
+ 
 
             try
             {
                 foreach (DataGridViewRow row in dane_seriale.Rows)
                 {
-                    var nazwa = row.Cells[0].Value as string;
+                    var nazwa = row.Cells[1].Value as string;
                     if (Convert.ToBoolean(row.Cells[end.Name].Value) == true)
                     {
                         var elStatus = xdoc.Descendants()?.
@@ -448,7 +469,7 @@ namespace Serialak
                     else
                     {
                         xdoc.Save(Seriale);
-                        Zaladuj();
+                        Zaladuj(false);
                         MessageBox.Show("Poprawnie zaktualizowano seriale");
                     }
                 }
@@ -524,7 +545,7 @@ namespace Serialak
                     {
                         File.Copy(opf.FileName, Seriale, true);
                         MessageBox.Show("Pomyślnie wczytano plik");
-                        Zaladuj();
+                        Zaladuj(false);
                     }
                 }
             }
@@ -551,13 +572,51 @@ namespace Serialak
                     {
                         File.Copy(opf.FileName, Seriale, true);
                         MessageBox.Show("Pomyślnie wczytano backup");
-                        Zaladuj();
+                        Zaladuj(false);
                     }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Błąd: " + ex, "Błąd");
+            }
+        }
+
+        private void Serialak_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.Ended = cbox_ogladane.Checked;
+            Properties.Settings.Default.IMG = cBox_IMG.Checked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void Serialak_Load(object sender, EventArgs e)
+        {
+
+            cbox_ogladane.Checked = Properties.Settings.Default.Ended;
+            cBox_IMG.Checked = Properties.Settings.Default.IMG;
+        }
+
+        private void CBox_IMG_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!checkimg)
+            {
+                dane_seriale.Columns[0].Visible = true;
+                dane_seriale.Columns[0].Width = 150;
+                foreach (DataGridViewRow row in dane_seriale.Rows) { 
+                row.Height = 150;
+                    }
+                checkimg = true;
+            }
+            else
+            {
+                dane_seriale.Columns[0].Visible = false;
+                foreach (DataGridViewRow row in dane_seriale.Rows)
+                {
+                    row.Height = 22;
+                }
+
+
+                checkimg = false;
             }
         }
     }

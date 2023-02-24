@@ -40,6 +40,11 @@
             this.ilosc_Sezony = new System.Windows.Forms.NumericUpDown();
             this.ilosc_odcinki = new System.Windows.Forms.NumericUpDown();
             this.Btn_dodaj = new System.Windows.Forms.Button();
+            this.cBox_IMG = new System.Windows.Forms.CheckBox();
+            this.tBox_IMG = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.IMAGE = new System.Windows.Forms.Button();
+            this.Loadfile = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.ilosc_Sezony)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ilosc_odcinki)).BeginInit();
             this.SuspendLayout();
@@ -183,7 +188,7 @@
             this.Btn_dodaj.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.Btn_dodaj.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Btn_dodaj.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Btn_dodaj.Location = new System.Drawing.Point(738, 396);
+            this.Btn_dodaj.Location = new System.Drawing.Point(766, 408);
             this.Btn_dodaj.Name = "Btn_dodaj";
             this.Btn_dodaj.Size = new System.Drawing.Size(300, 211);
             this.Btn_dodaj.TabIndex = 13;
@@ -191,12 +196,58 @@
             this.Btn_dodaj.UseVisualStyleBackColor = false;
             this.Btn_dodaj.Click += new System.EventHandler(this.Btn_dodaj_Click);
             // 
+            // cBox_IMG
+            // 
+            this.cBox_IMG.AutoSize = true;
+            this.cBox_IMG.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
+            this.cBox_IMG.Location = new System.Drawing.Point(738, 146);
+            this.cBox_IMG.Name = "cBox_IMG";
+            this.cBox_IMG.Size = new System.Drawing.Size(218, 30);
+            this.cBox_IMG.TabIndex = 14;
+            this.cBox_IMG.Text = "Dodaj miniatrukę";
+            this.cBox_IMG.UseVisualStyleBackColor = true;
+            this.cBox_IMG.CheckedChanged += new System.EventHandler(this.CBox_IMG_CheckedChanged);
+            // 
+            // tBox_IMG
+            // 
+            this.tBox_IMG.Location = new System.Drawing.Point(15, 518);
+            this.tBox_IMG.Name = "tBox_IMG";
+            this.tBox_IMG.Size = new System.Drawing.Size(629, 26);
+            this.tBox_IMG.TabIndex = 15;
+            this.tBox_IMG.Visible = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
+            this.label2.Location = new System.Drawing.Point(12, 469);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(122, 26);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "Miniaturka";
+            this.label2.Visible = false;
+            // 
+            // IMAGE
+            // 
+            this.IMAGE.Image = global::Serialak.Properties.Resources.icons8_file_folder_481;
+            this.IMAGE.Location = new System.Drawing.Point(650, 507);
+            this.IMAGE.Name = "IMAGE";
+            this.IMAGE.Size = new System.Drawing.Size(63, 49);
+            this.IMAGE.TabIndex = 17;
+            this.IMAGE.UseVisualStyleBackColor = true;
+            this.IMAGE.Visible = false;
+            this.IMAGE.Click += new System.EventHandler(this.IMAGE_Click);
+            // 
             // Dodawanie
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.ClientSize = new System.Drawing.Size(1078, 640);
+            this.Controls.Add(this.IMAGE);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.tBox_IMG);
+            this.Controls.Add(this.cBox_IMG);
             this.Controls.Add(this.Btn_dodaj);
             this.Controls.Add(this.ilosc_odcinki);
             this.Controls.Add(this.ilosc_Sezony);
@@ -236,5 +287,10 @@
         private System.Windows.Forms.NumericUpDown ilosc_Sezony;
         private System.Windows.Forms.NumericUpDown ilosc_odcinki;
         public System.Windows.Forms.Button Btn_dodaj;
+        private System.Windows.Forms.CheckBox cBox_IMG;
+        private System.Windows.Forms.TextBox tBox_IMG;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button IMAGE;
+        private System.Windows.Forms.OpenFileDialog Loadfile;
     }
 }

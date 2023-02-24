@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -9,18 +10,20 @@ namespace Serialak
         private readonly DateTime thisDay = DateTime.Today;
         private XDocument xml;
         private bool check = false;
+        private bool checkimg = false;
         private static readonly string Seriale = AppDomain.CurrentDomain.BaseDirectory + @"Data\Seriale.xml";
+        private static readonly string Image = AppDomain.CurrentDomain.BaseDirectory + @"\Data\Images\";
 
         public Dodawanie()
         {
             InitializeComponent();
             Serialak series = new Serialak();
-            series.Zaladuj();
+            series.Zaladuj(false);
         }
 
         private void Ch_box_CheckedChanged(object sender, EventArgs e)
         {
-            if (check == false)
+            if (!check)
             {
                 c_box.SelectedItem = "Poniedziałek";
                 lbl_dzien.Visible = true;
@@ -45,9 +48,24 @@ namespace Serialak
 
         private void Btn_dodaj_Click(object sender, EventArgs e)
         {
+            if (cBox_IMG.Checked)
+            {
+                if(!File.Exists(Image))
+                {
+                    Directory.CreateDirectory(Image);
+                }
+                try
+                {
+                    File.Copy(tBox_IMG.Text, Image + tBox_nazwa.Text.Replace(" ", "_") + ".png");
+                }
+                catch
+                {
+                    MessageBox.Show("Nie dodano miniaturki");
+                }
+            }
             if (tBox_nazwa.Text == "")
             {
-                MessageBox.Show("Wpisz nazwę", "Info");
+                MessageBox.Show("Wpisz nazwę", "Błąd");
                 return;
             }
             string sezon = ilosc_Sezony.Value.ToString();
@@ -59,14 +77,14 @@ namespace Serialak
                 && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
             if (!result)
             {
-                DialogResult dr = MessageBox.Show("Wykryto błędny link, czy chcesz go poprawić?",
+                DialogResult dr = MessageBox.Show("Nie wykryto linku, czy chcesz kontynuować?",
                       "Błędny link!!!", MessageBoxButtons.YesNo);
                 switch (dr)
                 {
-                    case DialogResult.Yes:
+                    case DialogResult.No:
                         return;
 
-                    case DialogResult.No:
+                    case DialogResult.Yes:
                         link = "";
                         break;
                 }
@@ -117,6 +135,49 @@ namespace Serialak
 
             Close();
             MessageBox.Show("Poprawnie wczytano serial");
+        }
+
+        private void IMAGE_Click(object sender, EventArgs e)
+        {
+            try {
+                using (OpenFileDialog opf = new OpenFileDialog())
+                {
+                    opf.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                    opf.Filter = "PNG files (*.png)|*.png";
+                    opf.FilterIndex = 2;
+                    opf.RestoreDirectory = true;
+                    opf.DefaultExt = "png";
+                    opf.Title = "Wczytaj plik";
+
+                    if (opf.ShowDialog() == DialogResult.OK)
+                    {
+                        tBox_IMG.Text = opf.FileName;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Błąd: " + ex, "Błąd");
+            }
+}
+
+        private void CBox_IMG_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!checkimg)
+            {
+                tBox_IMG.Visible = true;
+                label2.Visible = true;
+                IMAGE.Visible = true;
+                checkimg = true;
+            }
+            else
+            {
+                tBox_IMG.Visible = false;
+                label2.Visible = false;
+                IMAGE.Visible = false;
+                checkimg = false;
+                tBox_IMG.Text = "";
+            }
         }
     }
 }
