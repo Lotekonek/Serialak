@@ -43,8 +43,8 @@
             this.cBox_IMG = new System.Windows.Forms.CheckBox();
             this.tBox_IMG = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.IMAGE = new System.Windows.Forms.Button();
             this.Loadfile = new System.Windows.Forms.OpenFileDialog();
+            this.IMAGE = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ilosc_Sezony)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ilosc_odcinki)).BeginInit();
             this.SuspendLayout();
@@ -222,9 +222,9 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
             this.label2.Location = new System.Drawing.Point(12, 469);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(122, 26);
+            this.label2.Size = new System.Drawing.Size(360, 26);
             this.label2.TabIndex = 16;
-            this.label2.Text = "Miniaturka";
+            this.label2.Text = "Miniaturka (Link albo lokalizacja)";
             this.label2.Visible = false;
             // 
             // IMAGE
