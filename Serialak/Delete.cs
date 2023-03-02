@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
@@ -12,6 +13,7 @@ namespace Serialak
     {
         private readonly List<string> Spis = new List<string>();
         private static readonly string Seriale = AppDomain.CurrentDomain.BaseDirectory + @"Data\Seriale.xml";
+        private static readonly string Image = AppDomain.CurrentDomain.BaseDirectory + @"\Data\Images\";
 
         public Delete()
         {
@@ -55,6 +57,9 @@ namespace Serialak
                             .Where(f => f.Attribute("Name")?.Value == row.Cells[0].Value.ToString())
                             .Remove();
                         xDoc.Save(Seriale);
+                        File.Delete(Image + row.Cells[0].Value.ToString().Replace(" ", "_") + ".png");
+
+
                     }
                 }
             }
