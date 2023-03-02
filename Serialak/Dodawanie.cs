@@ -29,9 +29,7 @@ namespace Serialak
                 c_box.SelectedItem = "Poniedziałek";
                 lbl_dzien.Visible = true;
                 c_box.Visible = true;
-                lbl_O.Visible = false;
                 lbl_S.Visible = false;
-                ilosc_odcinki.Visible = false;
                 ilosc_Sezony.Visible = false;
                 check = true;
             }
@@ -39,9 +37,7 @@ namespace Serialak
             {
                 lbl_dzien.Visible = false;
                 c_box.Visible = false;
-                lbl_O.Visible = true;
                 lbl_S.Visible = true;
-                ilosc_odcinki.Visible = true;
                 ilosc_Sezony.Visible = true;
                 check = false;
             }
@@ -72,7 +68,7 @@ namespace Serialak
                 }
                 catch(Exception ex)
                 {
-                    MessageBox.Show("Nie dodano miniaturki" + ex);
+                    MessageBox.Show("Nie dodano miniaturki\n\t"  + ex);
                 }
             }
             if (tBox_nazwa.Text == "")
@@ -81,7 +77,6 @@ namespace Serialak
                 return;
             }
             string sezon = ilosc_Sezony.Value.ToString();
-            string odcinek = ilosc_odcinki.Value.ToString();
             string tyg = c_box.Text;
             string link = tBox_Link.Text;
 
@@ -105,7 +100,6 @@ namespace Serialak
             if (check == true)
             {
                 sezon = "";
-                odcinek = "";
             }
             else
             {
@@ -135,8 +129,7 @@ namespace Serialak
                             new XElement("Nazwa", tBox_nazwa.Text),
                             new XElement("Aktualny_odcinek", 1),
                             new XElement("Aktualny_sezon", 1),
-                            new XElement("Ilość_Odcinków", odcinek),
-                             new XElement("Ilość_Sezonów", sezon),
+                            new XElement("Ilość_Sezonów", sezon),
                             new XElement("Dzień_tygodnia", tyg),
                             new XElement("Ostatnio_oglądany", thisDay.ToString("M")),
                             new XElement("Link", link),

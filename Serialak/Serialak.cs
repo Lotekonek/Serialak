@@ -1,13 +1,11 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
-using Microsoft.Office.Interop.Excel;
 using Serialak.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
@@ -25,6 +23,7 @@ namespace Serialak
         private static readonly string Imagepng = AppDomain.CurrentDomain.BaseDirectory + @"\Data\Images\";
         private bool check = false;
         private bool checkimg = false;
+        private bool correct = false;
         private readonly DateTime thisDay = DateTime.Today;
         private readonly XDocument xml;
         private readonly iTextSharp.text.Font fontTinyItalic = FontFactory.GetFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1257, 18, iTextSharp.text.Font.BOLD);
@@ -33,6 +32,8 @@ namespace Serialak
         public Serialak()
         {
             InitializeComponent();
+            dane_seriale.DefaultCellStyle.Font = FontFam(14);
+            dane_seriale.AlternatingRowsDefaultCellStyle.Font = FontFam(14);
 
             if (!File.Exists(Seriale))
             {
@@ -43,11 +44,8 @@ namespace Serialak
                 xml.Save(Seriale);
             }
 
-            
             Zaladuj(false);
         }
-
-
 
         private string UppercaseFirst(string str)
         {
@@ -60,10 +58,8 @@ namespace Serialak
         {
             return new Bitmap(imgToResize, size);
         }
-     
-        
-   
-public void Zaladuj(bool ended)
+
+        public void Zaladuj(bool ended)
         {
             dane_seriale.Rows.Clear();
             XmlDocument doc = new XmlDocument();
@@ -77,7 +73,6 @@ public void Zaladuj(bool ended)
                     Spis.Add(node2.SelectSingleNode("Nazwa").InnerText);
                     Spis.Add(node2.SelectSingleNode("Aktualny_odcinek").InnerText);
                     Spis.Add(node2.SelectSingleNode("Aktualny_sezon").InnerText);
-                    Spis.Add(node2.SelectSingleNode("Ilość_Odcinków").InnerText);
                     Spis.Add(node2.SelectSingleNode("Ilość_Sezonów").InnerText);
                     Spis.Add(node2.SelectSingleNode("Dzień_tygodnia").InnerText);
                     Spis.Add(node2.SelectSingleNode("Ostatnio_oglądany").InnerText);
@@ -95,7 +90,6 @@ public void Zaladuj(bool ended)
                         Spis.Add(node2.SelectSingleNode("Nazwa").InnerText);
                         Spis.Add(node2.SelectSingleNode("Aktualny_odcinek").InnerText);
                         Spis.Add(node2.SelectSingleNode("Aktualny_sezon").InnerText);
-                        Spis.Add(node2.SelectSingleNode("Ilość_Odcinków").InnerText);
                         Spis.Add(node2.SelectSingleNode("Ilość_Sezonów").InnerText);
                         Spis.Add(node2.SelectSingleNode("Dzień_tygodnia").InnerText);
                         Spis.Add(node2.SelectSingleNode("Ostatnio_oglądany").InnerText);
@@ -106,7 +100,6 @@ public void Zaladuj(bool ended)
                         Spis.Clear();
                     }
                 }
-                
             }
 
             foreach (DataGridViewRow row in dane_seriale.Rows)
@@ -117,42 +110,48 @@ public void Zaladuj(bool ended)
                 }
                 else
                 {
-                    row.Height = 22;
+                    row.Height = 45;
                 }
-                if (row.Cells[9].Value.ToString() == "Skończone")
+                if (row.Cells[8].Value.ToString() == "Skończone")
                 {
-                    row.DefaultCellStyle.SelectionBackColor = Color.Green;
-                    row.DefaultCellStyle.BackColor = Color.Green;
-                    row.DefaultCellStyle.ForeColor = Color.Black;
+                    row.DefaultCellStyle.SelectionBackColor = Color.Indigo;
+                    row.DefaultCellStyle.BackColor = Color.Indigo;
+                    row.DefaultCellStyle.ForeColor = Color.White;
                 }
                 else
                 {
-                    row.Cells[9].Value = "Oglądane";
+                    row.Cells[8].Value = "Oglądane";
                 }
-                if (row.Cells[6].Value.ToString() == "")
+                if (row.Cells[5].Value.ToString() == "")
                 {
-                    row.Cells[6].Value = "Nie";
+                    row.Cells[5].Value = "Nie";
                 }
-                if (UppercaseFirst(thisDay.ToString("dddd")) == row.Cells[6].Value.ToString())
+                if (UppercaseFirst(thisDay.ToString("dddd")) == row.Cells[5].Value.ToString())
                 {
-                    row.DefaultCellStyle.BackColor = Color.Aqua;
-                    row.DefaultCellStyle.SelectionBackColor = Color.Aqua;
+                    row.DefaultCellStyle.BackColor = Color.MediumAquamarine;
+                    row.DefaultCellStyle.SelectionBackColor = Color.MediumAquamarine;
                 }
-                DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
-                if (row.Cells[8].Value.ToString() != "Brak")
+                DataGridViewLinkCell linkCell = new DataGridViewLinkCell
                 {
-                    row.Cells[8] = linkCell;
-                    row.Cells[8].Value = "LINK";
+                    LinkColor = Color.Green,
+                    TrackVisitedState = false,
+                    ActiveLinkColor = Color.GreenYellow
+                };
+                if (row.Cells[7].Value.ToString() != "Brak")
+                {
+                    row.Cells[7] = linkCell;
+                    row.Cells[7].Value = "LINK";
                 }
                 DataGridViewImageCell imgcell = new DataGridViewImageCell();
                 row.Cells[0] = imgcell;
                 try
                 {
-                    System.Drawing.Image myimage = System.Drawing.Image.FromFile(Imagepng + row.Cells[1].Value.ToString().Replace(" ","_") + ".png");
+                    System.Drawing.Image myimage = System.Drawing.Image.FromFile(Imagepng + row.Cells[1].Value.ToString().Replace(" ", "_") + ".png");
                     var image = ResizeImage(myimage, new Size(150, 150));
                     row.Cells[0].Value = image;
                 }
-                catch {
+                catch
+                {
                     System.Drawing.Image myimage = Resources.no_image_icon_6;
                     var image = ResizeImage(myimage, new Size(150, 150));
                     row.Cells[0].Value = image;
@@ -201,15 +200,31 @@ public void Zaladuj(bool ended)
                     Losowanie.Add(node2.InnerText);
                 }
                 int x = rnd.Next(Losowanie.Count());
+
                 var wylosowane = Losowanie.ElementAt(x);
-                foreach (DataGridViewRow row in dane_seriale.Rows)
+                do
                 {
-                    if (row.Cells[1].Value.ToString() == wylosowane)
+                    foreach (DataGridViewRow row in dane_seriale.Rows)
                     {
-                        row.DefaultCellStyle.BackColor = Color.Yellow;
-                        row.DefaultCellStyle.SelectionBackColor = Color.Yellow;
+                        if (row.Cells[1].Value.ToString() == wylosowane)
+                        {
+                            if (row.Cells[8].Value.ToString() != "Skończone")
+                            {
+                                row.DefaultCellStyle.BackColor = Color.YellowGreen;
+                                row.DefaultCellStyle.SelectionBackColor = Color.Yellow;
+                                correct = true;
+                            }
+                            else
+                            {
+                                x = rnd.Next(Losowanie.Count());
+
+                                wylosowane = Losowanie.ElementAt(x);
+                                correct = false;
+                            }
+                        }
                     }
-                }
+                } while (!correct);
+
                 Losowanie.Clear();
             }
             catch (Exception)
@@ -272,7 +287,7 @@ public void Zaladuj(bool ended)
                 if (dane_seriale.Rows.Count > 0)
                 {
                     var csv = new StringBuilder();
-                    csv.AppendLine("Nazwa\tAktualny odcinek\tAktualny sezon\tIlość odcinków\tIlość sezonów\tWychodzi\tOstatnio oglądany\tLink");
+                    csv.AppendLine("Nazwa\tAktualny odcinek\tAktualny sezon\tIlość sezonów\tWychodzi\tOstatnio oglądany\tLink");
                     foreach (DataGridViewRow row in dane_seriale.Rows)
                     {
                         var first = row.Cells[1].Value;
@@ -282,8 +297,7 @@ public void Zaladuj(bool ended)
                         var fifth = row.Cells[5].Value;
                         var sixth = row.Cells[6].Value;
                         var seventh = row.Cells[7].Value;
-                        var eighth = row.Cells[8].Value;
-                        var newLine = string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}", first, second, third, fourth, fifth, sixth, seventh, eighth);
+                        var newLine = string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}", first, second, third, fourth, fifth, sixth, seventh);
                         csv.AppendLine(newLine);
                     }
                     Save.InitialDirectory = @"C:\";
@@ -337,7 +351,7 @@ public void Zaladuj(bool ended)
                     {
                         try
                         {
-                            PdfPTable pdfTable = new PdfPTable(dane_seriale.ColumnCount - 1);
+                            PdfPTable pdfTable = new PdfPTable(dane_seriale.ColumnCount - 2);
                             pdfTable.DefaultCell.Padding = 3;
                             pdfTable.HorizontalAlignment = Element.ALIGN_LEFT;
                             pdfTable.DefaultCell.BorderWidth = 1;
@@ -345,7 +359,7 @@ public void Zaladuj(bool ended)
 
                             foreach (DataGridViewColumn column in dane_seriale.Columns)
                             {
-                                if (column.Name != "end")
+                                if (column.Name != "end" && column.Name != "obrazek")
                                 {
                                     PdfPCell cell = new PdfPCell(new Phrase(column.HeaderText, fontTinyItalic));
 
@@ -357,10 +371,10 @@ public void Zaladuj(bool ended)
                             {
                                 foreach (DataGridViewCell cell in row.Cells)
                                 {
-                                    if (cell.ColumnIndex != 10)
+                                    if (cell.ColumnIndex != 9 && cell.ColumnIndex != 0)
                                     {
                                         PdfPCell cell1 = new PdfPCell(new Phrase(cell.Value.ToString(), fontCell));
-                                        if (cell.Value.ToString() != "Brak" && cell.ColumnIndex == 8)
+                                        if (cell.Value.ToString() != "Brak" && cell.ColumnIndex == 7)
                                         {
                                             PdfPCell cell2 = new PdfPCell(new Phrase("Zawiera", fontCell));
                                             pdfTable.AddCell(cell2);
@@ -397,6 +411,7 @@ public void Zaladuj(bool ended)
 
         private void Btn_end_Click(object sender, EventArgs e)
         {
+            dane_seriale.CellClick += new DataGridViewCellEventHandler(Easy_click);
             cbox_ogladane.Checked = false;
             cbox_ogladane.Enabled = false;
             if (dane_seriale.Rows.Count > 0)
@@ -412,8 +427,31 @@ public void Zaladuj(bool ended)
             }
         }
 
+        protected System.Drawing.Font FontFam(int size)
+        {
+            FontFamily fontFamily = new FontFamily("Comic Sans MS");
+            System.Drawing.Font font = new System.Drawing.Font(
+               fontFamily,
+               size,
+               FontStyle.Bold);
+            return font;
+        }
+
+        private void Easy_click(object sender, DataGridViewCellEventArgs e)
+        {
+            if (Convert.ToBoolean(dane_seriale.CurrentRow.Cells[end.Name].Value) == false)
+            {
+                dane_seriale.CurrentRow.Cells[end.Name].Value = true;
+            }
+            else
+            {
+                dane_seriale.CurrentRow.Cells[end.Name].Value = false;
+            }
+        }
+
         private void Btn_approve_Click(object sender, EventArgs e)
         {
+            dane_seriale.CellClick -= new DataGridViewCellEventHandler(Easy_click);
             cbox_ogladane.Enabled = true;
             bool zmiana = false;
             lbl1.Visible = false;
@@ -421,7 +459,6 @@ public void Zaladuj(bool ended)
             btn_approve.Visible = false;
             dane_seriale.Columns["end"].Visible = false;
             XDocument xdoc = XDocument.Load(Seriale);
- 
 
             try
             {
@@ -437,13 +474,11 @@ public void Zaladuj(bool ended)
 
                         var elOdcinek = elStatus.Elements("Aktualny_odcinek").FirstOrDefault();
                         var elSezon = elStatus.Elements("Aktualny_sezon").FirstOrDefault();
-                        var elOdcineki = elStatus.Elements("Ilość_Odcinków").FirstOrDefault();
                         var elSezoni = elStatus.Elements("Ilość_Sezonów").FirstOrDefault();
                         var elEnded = elStatus.Elements("Status").FirstOrDefault();
                         var elTyg = elStatus.Elements("Dzień_tygodnia").FirstOrDefault();
-                        if (elOdcinek != null || elSezon != null || elEnded != null || elOdcineki != null || elSezoni != null || elTyg != null)
+                        if (elOdcinek != null || elSezon != null || elEnded != null || elSezoni != null || elTyg != null)
                         {
-                            elOdcineki.Value = elOdcinek.Value;
                             elSezoni.Value = elSezon.Value;
                             elOdcinek.Value = "";
                             elSezon.Value = "";
@@ -584,16 +619,15 @@ public void Zaladuj(bool ended)
 
         private void Serialak_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Properties.Settings.Default.Ended = cbox_ogladane.Checked;
-            Properties.Settings.Default.IMG = cBox_IMG.Checked;
-            Properties.Settings.Default.Save();
+            Settings.Default.Ended = cbox_ogladane.Checked;
+            Settings.Default.IMG = cBox_IMG.Checked;
+            Settings.Default.Save();
         }
 
         private void Serialak_Load(object sender, EventArgs e)
         {
-
-            cbox_ogladane.Checked = Properties.Settings.Default.Ended;
-            cBox_IMG.Checked = Properties.Settings.Default.IMG;
+            cbox_ogladane.Checked = Settings.Default.Ended;
+            cBox_IMG.Checked = Settings.Default.IMG;
         }
 
         private void CBox_IMG_CheckedChanged(object sender, EventArgs e)
@@ -602,9 +636,13 @@ public void Zaladuj(bool ended)
             {
                 dane_seriale.Columns[0].Visible = true;
                 dane_seriale.Columns[0].Width = 150;
-                foreach (DataGridViewRow row in dane_seriale.Rows) { 
-                row.Height = 150;
-                    }
+                foreach (DataGridViewRow row in dane_seriale.Rows)
+                {
+                    row.Height = 150;
+                }
+                dane_seriale.DefaultCellStyle.Font = FontFam(20);
+                dane_seriale.AlternatingRowsDefaultCellStyle.Font = FontFam(20);
+
                 checkimg = true;
             }
             else
@@ -612,9 +650,11 @@ public void Zaladuj(bool ended)
                 dane_seriale.Columns[0].Visible = false;
                 foreach (DataGridViewRow row in dane_seriale.Rows)
                 {
-                    row.Height = 22;
+                    row.Height = 45;
                 }
 
+                dane_seriale.DefaultCellStyle.Font = FontFam(14);
+                dane_seriale.AlternatingRowsDefaultCellStyle.Font = FontFam(14);
 
                 checkimg = false;
             }
