@@ -129,7 +129,7 @@ namespace Serialak
                             new XElement("Nazwa", tBox_nazwa.Text),
                             new XElement("Aktualny_odcinek", 1),
                             new XElement("Aktualny_sezon", 1),
-                            new XElement("Ilość_Sezonów", sezon),
+                            new XElement("Ilość_sezonów", sezon),
                             new XElement("Dzień_tygodnia", tyg),
                             new XElement("Ostatnio_oglądany", thisDay.ToString("M")),
                             new XElement("Link", link),

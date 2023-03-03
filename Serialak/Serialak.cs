@@ -73,7 +73,7 @@ namespace Serialak
                     Spis.Add(node2.SelectSingleNode("Nazwa").InnerText);
                     Spis.Add(node2.SelectSingleNode("Aktualny_odcinek").InnerText);
                     Spis.Add(node2.SelectSingleNode("Aktualny_sezon").InnerText);
-                    Spis.Add(node2.SelectSingleNode("Ilość_Sezonów").InnerText);
+                    Spis.Add(node2.SelectSingleNode("Ilość_sezonów").InnerText);
                     Spis.Add(node2.SelectSingleNode("Dzień_tygodnia").InnerText);
                     Spis.Add(node2.SelectSingleNode("Ostatnio_oglądany").InnerText);
                     Spis.Add(node2.SelectSingleNode("Link").InnerText);
@@ -90,7 +90,7 @@ namespace Serialak
                         Spis.Add(node2.SelectSingleNode("Nazwa").InnerText);
                         Spis.Add(node2.SelectSingleNode("Aktualny_odcinek").InnerText);
                         Spis.Add(node2.SelectSingleNode("Aktualny_sezon").InnerText);
-                        Spis.Add(node2.SelectSingleNode("Ilość_Sezonów").InnerText);
+                        Spis.Add(node2.SelectSingleNode("Ilość_sezonów").InnerText);
                         Spis.Add(node2.SelectSingleNode("Dzień_tygodnia").InnerText);
                         Spis.Add(node2.SelectSingleNode("Ostatnio_oglądany").InnerText);
                         Spis.Add(node2.SelectSingleNode("Link").InnerText);
@@ -476,7 +476,7 @@ namespace Serialak
 
                         var elOdcinek = elStatus.Elements("Aktualny_odcinek").FirstOrDefault();
                         var elSezon = elStatus.Elements("Aktualny_sezon").FirstOrDefault();
-                        var elSezoni = elStatus.Elements("Ilość_Sezonów").FirstOrDefault();
+                        var elSezoni = elStatus.Elements("Ilość_sezonów").FirstOrDefault();
                         var elEnded = elStatus.Elements("Status").FirstOrDefault();
                         var elTyg = elStatus.Elements("Dzień_tygodnia").FirstOrDefault();
                         if (elOdcinek != null || elSezon != null || elEnded != null || elSezoni != null || elTyg != null)

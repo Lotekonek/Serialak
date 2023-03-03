@@ -35,6 +35,21 @@
             this.n_sez = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.cBox = new System.Windows.Forms.ComboBox();
+            this.Cbox_IMG = new System.Windows.Forms.CheckBox();
+            this.Cbox_Link = new System.Windows.Forms.CheckBox();
+            this.Cbox_status = new System.Windows.Forms.CheckBox();
+            this.Tbox_IMG = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.Tbox_Link = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.Radio_end = new System.Windows.Forms.RadioButton();
+            this.Radio_watch = new System.Windows.Forms.RadioButton();
+            this.Loadfile = new System.Windows.Forms.OpenFileDialog();
+            this.button2 = new System.Windows.Forms.Button();
+            this.Check_out = new System.Windows.Forms.CheckBox();
+            this.c_box = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.n_odc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.n_sez)).BeginInit();
             this.SuspendLayout();
@@ -53,7 +68,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(326, 92);
+            this.label1.Location = new System.Drawing.Point(317, 92);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(162, 29);
             this.label1.TabIndex = 1;
@@ -63,9 +78,9 @@
             // 
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))));
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button1.Location = new System.Drawing.Point(36, 187);
+            this.button1.Location = new System.Drawing.Point(662, 450);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(452, 58);
+            this.button1.Size = new System.Drawing.Size(384, 58);
             this.button1.TabIndex = 2;
             this.button1.Text = "Aktualizuj";
             this.button1.UseVisualStyleBackColor = false;
@@ -127,12 +142,190 @@
             this.cBox.TabIndex = 6;
             this.cBox.SelectedIndexChanged += new System.EventHandler(this.CBox_SelectedIndexChanged);
             // 
+            // Cbox_IMG
+            // 
+            this.Cbox_IMG.AutoSize = true;
+            this.Cbox_IMG.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Cbox_IMG.Location = new System.Drawing.Point(669, 39);
+            this.Cbox_IMG.Name = "Cbox_IMG";
+            this.Cbox_IMG.Size = new System.Drawing.Size(239, 33);
+            this.Cbox_IMG.TabIndex = 7;
+            this.Cbox_IMG.Text = "Zmień miniaturkę";
+            this.Cbox_IMG.UseVisualStyleBackColor = true;
+            this.Cbox_IMG.CheckedChanged += new System.EventHandler(this.Cbox_IMG_CheckedChanged);
+            // 
+            // Cbox_Link
+            // 
+            this.Cbox_Link.AutoSize = true;
+            this.Cbox_Link.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Cbox_Link.Location = new System.Drawing.Point(669, 78);
+            this.Cbox_Link.Name = "Cbox_Link";
+            this.Cbox_Link.Size = new System.Drawing.Size(159, 33);
+            this.Cbox_Link.TabIndex = 8;
+            this.Cbox_Link.Text = "Zmień link";
+            this.Cbox_Link.UseVisualStyleBackColor = true;
+            this.Cbox_Link.CheckedChanged += new System.EventHandler(this.Cbox_Link_CheckedChanged);
+            // 
+            // Cbox_status
+            // 
+            this.Cbox_status.AutoSize = true;
+            this.Cbox_status.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Cbox_status.Location = new System.Drawing.Point(669, 117);
+            this.Cbox_status.Name = "Cbox_status";
+            this.Cbox_status.Size = new System.Drawing.Size(186, 33);
+            this.Cbox_status.TabIndex = 9;
+            this.Cbox_status.Text = "Zmień status";
+            this.Cbox_status.UseVisualStyleBackColor = true;
+            this.Cbox_status.CheckedChanged += new System.EventHandler(this.Cbox_status_CheckedChanged);
+            // 
+            // Tbox_IMG
+            // 
+            this.Tbox_IMG.Location = new System.Drawing.Point(36, 261);
+            this.Tbox_IMG.Name = "Tbox_IMG";
+            this.Tbox_IMG.Size = new System.Drawing.Size(452, 26);
+            this.Tbox_IMG.TabIndex = 10;
+            this.Tbox_IMG.Visible = false;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label3.Location = new System.Drawing.Point(31, 216);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(394, 29);
+            this.label3.TabIndex = 17;
+            this.label3.Text = "Miniaturka (Link albo lokalizacja)";
+            this.label3.Visible = false;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label4.Location = new System.Drawing.Point(31, 321);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(61, 29);
+            this.label4.TabIndex = 18;
+            this.label4.Text = "Link";
+            this.label4.Visible = false;
+            // 
+            // Tbox_Link
+            // 
+            this.Tbox_Link.Location = new System.Drawing.Point(36, 379);
+            this.Tbox_Link.Name = "Tbox_Link";
+            this.Tbox_Link.Size = new System.Drawing.Size(452, 26);
+            this.Tbox_Link.TabIndex = 19;
+            this.Tbox_Link.Visible = false;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label5.Location = new System.Drawing.Point(664, 216);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(85, 29);
+            this.label5.TabIndex = 20;
+            this.label5.Text = "Status";
+            this.label5.Visible = false;
+            // 
+            // Radio_end
+            // 
+            this.Radio_end.AutoSize = true;
+            this.Radio_end.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Radio_end.Location = new System.Drawing.Point(669, 266);
+            this.Radio_end.Name = "Radio_end";
+            this.Radio_end.Size = new System.Drawing.Size(166, 33);
+            this.Radio_end.TabIndex = 21;
+            this.Radio_end.TabStop = true;
+            this.Radio_end.Text = "Skończone";
+            this.Radio_end.UseVisualStyleBackColor = true;
+            this.Radio_end.Visible = false;
+            // 
+            // Radio_watch
+            // 
+            this.Radio_watch.AutoSize = true;
+            this.Radio_watch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Radio_watch.Location = new System.Drawing.Point(894, 266);
+            this.Radio_watch.Name = "Radio_watch";
+            this.Radio_watch.Size = new System.Drawing.Size(152, 33);
+            this.Radio_watch.TabIndex = 22;
+            this.Radio_watch.TabStop = true;
+            this.Radio_watch.Text = "Oglądane";
+            this.Radio_watch.UseVisualStyleBackColor = true;
+            this.Radio_watch.Visible = false;
+            // 
+            // button2
+            // 
+            this.button2.Image = global::Serialak.Properties.Resources.icons8_file_folder_481;
+            this.button2.Location = new System.Drawing.Point(494, 250);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(63, 49);
+            this.button2.TabIndex = 23;
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Visible = false;
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
+            // 
+            // Check_out
+            // 
+            this.Check_out.AutoSize = true;
+            this.Check_out.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Check_out.Location = new System.Drawing.Point(669, 156);
+            this.Check_out.Name = "Check_out";
+            this.Check_out.Size = new System.Drawing.Size(260, 33);
+            this.Check_out.TabIndex = 24;
+            this.Check_out.Text = "Aktualnie wychodzi";
+            this.Check_out.UseVisualStyleBackColor = true;
+            this.Check_out.CheckedChanged += new System.EventHandler(this.Check_out_CheckedChanged);
+            // 
+            // c_box
+            // 
+            this.c_box.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.c_box.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.c_box.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.c_box.Items.AddRange(new object[] {
+            "Poniedziałek",
+            "Wtorek",
+            "Środa",
+            "Czwartek",
+            "Piątek",
+            "Sobota",
+            "Niedziela"});
+            this.c_box.Location = new System.Drawing.Point(741, 365);
+            this.c_box.Name = "c_box";
+            this.c_box.Size = new System.Drawing.Size(224, 28);
+            this.c_box.TabIndex = 25;
+            this.c_box.Visible = false;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label6.Location = new System.Drawing.Point(790, 321);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(92, 29);
+            this.label6.TabIndex = 26;
+            this.label6.Text = "Kiedy?";
+            this.label6.Visible = false;
+            // 
             // Update
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSlateGray;
-            this.ClientSize = new System.Drawing.Size(526, 250);
+            this.ClientSize = new System.Drawing.Size(1058, 520);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.c_box);
+            this.Controls.Add(this.Check_out);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.Radio_watch);
+            this.Controls.Add(this.Radio_end);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.Tbox_Link);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.Tbox_IMG);
+            this.Controls.Add(this.Cbox_status);
+            this.Controls.Add(this.Cbox_Link);
+            this.Controls.Add(this.Cbox_IMG);
             this.Controls.Add(this.cBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.n_sez);
@@ -161,5 +354,20 @@
         private System.Windows.Forms.NumericUpDown n_sez;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cBox;
+        private System.Windows.Forms.CheckBox Cbox_IMG;
+        private System.Windows.Forms.CheckBox Cbox_Link;
+        private System.Windows.Forms.CheckBox Cbox_status;
+        private System.Windows.Forms.TextBox Tbox_IMG;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox Tbox_Link;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.RadioButton Radio_end;
+        private System.Windows.Forms.RadioButton Radio_watch;
+        private System.Windows.Forms.OpenFileDialog Loadfile;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.CheckBox Check_out;
+        private System.Windows.Forms.ComboBox c_box;
+        private System.Windows.Forms.Label label6;
     }
 }
