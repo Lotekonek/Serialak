@@ -41,6 +41,16 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Serialak));
             this.dane_seriale = new System.Windows.Forms.DataGridView();
+            this.obrazek = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nazwa = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.odc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sez = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ilosc_sez = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.when = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.last = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.linkcell = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.end = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Menu = new System.Windows.Forms.MenuStrip();
             this.Dodaj = new System.Windows.Forms.ToolStripMenuItem();
             this.Usuń = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,16 +71,6 @@
             this.btn_approve = new System.Windows.Forms.Button();
             this.Loadfile = new System.Windows.Forms.OpenFileDialog();
             this.cBox_IMG = new System.Windows.Forms.CheckBox();
-            this.obrazek = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nazwa = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.odc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sez = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ilosc_sez = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.when = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.last = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.linkcell = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.end = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dane_seriale)).BeginInit();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
@@ -136,6 +136,117 @@
             this.dane_seriale.Size = new System.Drawing.Size(2285, 1226);
             this.dane_seriale.TabIndex = 0;
             this.dane_seriale.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dane_seriale_CellContentClick);
+            // 
+            // obrazek
+            // 
+            this.obrazek.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.obrazek.HeaderText = "";
+            this.obrazek.MinimumWidth = 8;
+            this.obrazek.Name = "obrazek";
+            this.obrazek.ReadOnly = true;
+            this.obrazek.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.obrazek.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.obrazek.Visible = false;
+            // 
+            // Nazwa
+            // 
+            this.Nazwa.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.Nazwa.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Nazwa.HeaderText = "   Nazwa";
+            this.Nazwa.MinimumWidth = 8;
+            this.Nazwa.Name = "Nazwa";
+            this.Nazwa.ReadOnly = true;
+            this.Nazwa.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // odc
+            // 
+            this.odc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.odc.DefaultCellStyle = dataGridViewCellStyle4;
+            this.odc.FillWeight = 45F;
+            this.odc.HeaderText = "Aktualny odcinek";
+            this.odc.MinimumWidth = 8;
+            this.odc.Name = "odc";
+            this.odc.ReadOnly = true;
+            this.odc.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // sez
+            // 
+            this.sez.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.sez.DefaultCellStyle = dataGridViewCellStyle5;
+            this.sez.FillWeight = 45F;
+            this.sez.HeaderText = "Aktualny Sezon";
+            this.sez.MinimumWidth = 8;
+            this.sez.Name = "sez";
+            this.sez.ReadOnly = true;
+            this.sez.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // ilosc_sez
+            // 
+            this.ilosc_sez.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ilosc_sez.DefaultCellStyle = dataGridViewCellStyle6;
+            this.ilosc_sez.FillWeight = 25F;
+            this.ilosc_sez.HeaderText = "Sezony";
+            this.ilosc_sez.MinimumWidth = 8;
+            this.ilosc_sez.Name = "ilosc_sez";
+            this.ilosc_sez.ReadOnly = true;
+            this.ilosc_sez.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // when
+            // 
+            this.when.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.when.DefaultCellStyle = dataGridViewCellStyle7;
+            this.when.FillWeight = 40F;
+            this.when.HeaderText = "Wychodzi";
+            this.when.MinimumWidth = 8;
+            this.when.Name = "when";
+            this.when.ReadOnly = true;
+            this.when.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // last
+            // 
+            this.last.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.last.DefaultCellStyle = dataGridViewCellStyle8;
+            this.last.FillWeight = 50F;
+            this.last.HeaderText = "   Ostatnio oglądany";
+            this.last.MinimumWidth = 8;
+            this.last.Name = "last";
+            this.last.ReadOnly = true;
+            // 
+            // linkcell
+            // 
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.linkcell.DefaultCellStyle = dataGridViewCellStyle9;
+            this.linkcell.HeaderText = "Link";
+            this.linkcell.MinimumWidth = 8;
+            this.linkcell.Name = "linkcell";
+            this.linkcell.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.linkcell.Width = 150;
+            // 
+            // status
+            // 
+            this.status.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.status.HeaderText = "Status";
+            this.status.MinimumWidth = 8;
+            this.status.Name = "status";
+            this.status.ReadOnly = true;
+            this.status.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.status.Visible = false;
+            // 
+            // end
+            // 
+            this.end.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.end.FillWeight = 25F;
+            this.end.HeaderText = "Wybierz";
+            this.end.MinimumWidth = 8;
+            this.end.Name = "end";
+            this.end.Visible = false;
             // 
             // Menu
             // 
@@ -308,117 +419,6 @@
             this.cBox_IMG.Text = "Pokaż miniaturki";
             this.cBox_IMG.UseVisualStyleBackColor = false;
             this.cBox_IMG.CheckedChanged += new System.EventHandler(this.CBox_IMG_CheckedChanged);
-            // 
-            // obrazek
-            // 
-            this.obrazek.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.obrazek.HeaderText = "";
-            this.obrazek.MinimumWidth = 8;
-            this.obrazek.Name = "obrazek";
-            this.obrazek.ReadOnly = true;
-            this.obrazek.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.obrazek.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.obrazek.Visible = false;
-            // 
-            // Nazwa
-            // 
-            this.Nazwa.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Nazwa.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Nazwa.HeaderText = "   Nazwa";
-            this.Nazwa.MinimumWidth = 8;
-            this.Nazwa.Name = "Nazwa";
-            this.Nazwa.ReadOnly = true;
-            this.Nazwa.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // odc
-            // 
-            this.odc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.odc.DefaultCellStyle = dataGridViewCellStyle4;
-            this.odc.FillWeight = 45F;
-            this.odc.HeaderText = "Aktualny odcinek";
-            this.odc.MinimumWidth = 8;
-            this.odc.Name = "odc";
-            this.odc.ReadOnly = true;
-            this.odc.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // sez
-            // 
-            this.sez.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.sez.DefaultCellStyle = dataGridViewCellStyle5;
-            this.sez.FillWeight = 45F;
-            this.sez.HeaderText = "Aktualny Sezon";
-            this.sez.MinimumWidth = 8;
-            this.sez.Name = "sez";
-            this.sez.ReadOnly = true;
-            this.sez.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // ilosc_sez
-            // 
-            this.ilosc_sez.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ilosc_sez.DefaultCellStyle = dataGridViewCellStyle6;
-            this.ilosc_sez.FillWeight = 25F;
-            this.ilosc_sez.HeaderText = "Sezony";
-            this.ilosc_sez.MinimumWidth = 8;
-            this.ilosc_sez.Name = "ilosc_sez";
-            this.ilosc_sez.ReadOnly = true;
-            this.ilosc_sez.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // when
-            // 
-            this.when.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.when.DefaultCellStyle = dataGridViewCellStyle7;
-            this.when.FillWeight = 40F;
-            this.when.HeaderText = "Wychodzi";
-            this.when.MinimumWidth = 8;
-            this.when.Name = "when";
-            this.when.ReadOnly = true;
-            this.when.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // last
-            // 
-            this.last.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.last.DefaultCellStyle = dataGridViewCellStyle8;
-            this.last.FillWeight = 50F;
-            this.last.HeaderText = "   Ostatnio oglądany";
-            this.last.MinimumWidth = 8;
-            this.last.Name = "last";
-            this.last.ReadOnly = true;
-            // 
-            // linkcell
-            // 
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.linkcell.DefaultCellStyle = dataGridViewCellStyle9;
-            this.linkcell.HeaderText = "Link";
-            this.linkcell.MinimumWidth = 8;
-            this.linkcell.Name = "linkcell";
-            this.linkcell.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.linkcell.Width = 150;
-            // 
-            // status
-            // 
-            this.status.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.status.HeaderText = "Status";
-            this.status.MinimumWidth = 8;
-            this.status.Name = "status";
-            this.status.ReadOnly = true;
-            this.status.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.status.Visible = false;
-            // 
-            // end
-            // 
-            this.end.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.end.FillWeight = 25F;
-            this.end.HeaderText = "Wybierz";
-            this.end.MinimumWidth = 8;
-            this.end.Name = "end";
-            this.end.Visible = false;
             // 
             // Serialak
             // 

@@ -32,6 +32,8 @@ namespace Serialak
         public Serialak()
         {
             InitializeComponent();
+            this.Width = 1537;
+            this.Height = 862;
             dane_seriale.DefaultCellStyle.Font = FontFam(14);
             dane_seriale.AlternatingRowsDefaultCellStyle.Font = FontFam(14);
 
