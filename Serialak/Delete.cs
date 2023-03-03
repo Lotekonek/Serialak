@@ -58,8 +58,6 @@ namespace Serialak
                             .Remove();
                         xDoc.Save(Seriale);
                         File.Delete(Image + row.Cells[0].Value.ToString().Replace(" ", "_") + ".png");
-
-
                     }
                 }
             }

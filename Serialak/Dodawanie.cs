@@ -47,7 +47,7 @@ namespace Serialak
         {
             if (cBox_IMG.Checked)
             {
-                if(!File.Exists(Image))
+                if (!File.Exists(Image))
                 {
                     Directory.CreateDirectory(Image);
                 }
@@ -66,9 +66,9 @@ namespace Serialak
                         webClient.Dispose();
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Nie dodano miniaturki\n\t"  + ex);
+                    MessageBox.Show("Nie dodano miniaturki\n\t" + ex);
                 }
             }
             if (tBox_nazwa.Text == "")
@@ -144,7 +144,8 @@ namespace Serialak
 
         private void IMAGE_Click(object sender, EventArgs e)
         {
-            try {
+            try
+            {
                 using (OpenFileDialog opf = new OpenFileDialog())
                 {
                     opf.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
@@ -164,7 +165,7 @@ namespace Serialak
             {
                 MessageBox.Show("Błąd: " + ex, "Błąd");
             }
-}
+        }
 
         private void CBox_IMG_CheckedChanged(object sender, EventArgs e)
         {
