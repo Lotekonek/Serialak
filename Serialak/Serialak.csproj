@@ -57,6 +57,9 @@
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Logo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
@@ -382,13 +385,30 @@
     <Compile Include="Delete.Designer.cs">
       <DependentUpon>Delete.cs</DependentUpon>
     </Compile>
+    <Compile Include="Deletpro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Deletpro.Designer.cs">
+      <DependentUpon>Deletpro.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dodawanie.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dodawanie.designer.cs">
       <DependentUpon>Dodawanie.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExtensionMethodsHelpers.cs" />
+    <Compile Include="Profil.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Profil.Designer.cs">
+      <DependentUpon>Profil.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProfilAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProfilAdd.Designer.cs">
+      <DependentUpon>ProfilAdd.cs</DependentUpon>
+    </Compile>
     <Compile Include="Update.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -406,8 +426,17 @@
     <EmbeddedResource Include="Delete.resx">
       <DependentUpon>Delete.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Deletpro.resx">
+      <DependentUpon>Deletpro.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dodawanie.resx">
       <DependentUpon>Dodawanie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Profil.resx">
+      <DependentUpon>Profil.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProfilAdd.resx">
+      <DependentUpon>ProfilAdd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Serialak.resx">
       <DependentUpon>Serialak.cs</DependentUpon>
@@ -485,6 +514,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\no-image-icon-6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Logo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.6.6.4\build\Fody.targets" Condition="Exists('..\packages\Fody.6.6.4\build\Fody.targets')" />

@@ -19,34 +19,24 @@ namespace Serialak
         private readonly List<string> Spis = new List<string>();
         private readonly List<string> Link = new List<string>();
         private readonly Random rnd = new Random();
-        private static readonly string Seriale = AppDomain.CurrentDomain.BaseDirectory + @"Data\Seriale.xml";
+        private string Seriale;
         private static readonly string Imagepng = AppDomain.CurrentDomain.BaseDirectory + @"\Data\Images\";
         private bool check = false;
         private bool checkimg = false;
         private bool correct = false;
         private readonly DateTime thisDay = DateTime.Today;
-        private readonly XDocument xml;
         private readonly iTextSharp.text.Font fontTinyItalic = FontFactory.GetFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1257, 18, iTextSharp.text.Font.BOLD);
         private readonly iTextSharp.text.Font fontCell = FontFactory.GetFont(BaseFont.HELVETICA, BaseFont.CP1257, 15);
+        public static string Wybrany;
 
         public Serialak()
         {
+            
             InitializeComponent();
             this.Width = 1537;
             this.Height = 862;
             dane_seriale.DefaultCellStyle.Font = FontFam(14);
             dane_seriale.AlternatingRowsDefaultCellStyle.Font = FontFam(14);
-
-            if (!File.Exists(Seriale))
-            {
-                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + @"\Data");
-                xml = new XDocument(
-                   new XDeclaration("1.0", "utf-8", "true"),
-                   new XElement("Spis"));
-                xml.Save(Seriale);
-            }
-
-            Zaladuj(false);
         }
 
         private string UppercaseFirst(string str)
@@ -63,6 +53,7 @@ namespace Serialak
 
         public void Zaladuj(bool ended)
         {
+            
             dane_seriale.Rows.Clear();
             XmlDocument doc = new XmlDocument();
             doc.Load(Seriale);
@@ -164,6 +155,10 @@ namespace Serialak
 
             dane_seriale.DefaultCellStyle.SelectionBackColor
             = dane_seriale.DefaultCellStyle.BackColor;
+            string toBeSearched = "Seriale_";
+            string code = Seriale.Substring(Seriale.IndexOf(toBeSearched) + toBeSearched.Length);
+            string name = code.Remove(code.Length - 4);
+            Lbl_profil.Text = name;
         }
 
         private void Dodaj_Click(object sender, EventArgs e)
@@ -508,6 +503,8 @@ namespace Serialak
                     else
                     {
                         xdoc.Save(Seriale);
+
+
                         Zaladuj(false);
                         MessageBox.Show("Poprawnie zaktualizowano seriale");
                     }
@@ -630,8 +627,21 @@ namespace Serialak
 
         private void Serialak_Load(object sender, EventArgs e)
         {
-            cbox_ogladane.Checked = Settings.Default.Ended;
-            cBox_IMG.Checked = Settings.Default.IMG;
+                using (Profil profil = new Profil())
+                {
+                    if (profil.ShowDialog() == DialogResult.OK)
+                    {
+                        Seriale = Settings.Default.Nazwa;
+                        Zaladuj(false);
+                }
+                else
+                {
+                    MessageBox.Show("Nie znaleziono profilu!!");
+                    Application.Exit();
+                }
+                }
+                cbox_ogladane.Checked = Settings.Default.Ended;
+                cBox_IMG.Checked = Settings.Default.IMG;
         }
 
         private void CBox_IMG_CheckedChanged(object sender, EventArgs e)

@@ -71,6 +71,8 @@
             this.btn_approve = new System.Windows.Forms.Button();
             this.Loadfile = new System.Windows.Forms.OpenFileDialog();
             this.cBox_IMG = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.Lbl_profil = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dane_seriale)).BeginInit();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
@@ -420,12 +422,35 @@
             this.cBox_IMG.UseVisualStyleBackColor = false;
             this.cBox_IMG.CheckedChanged += new System.EventHandler(this.CBox_IMG_CheckedChanged);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.White;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label1.Location = new System.Drawing.Point(1117, 4);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(74, 25);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Profil: ";
+            // 
+            // Lbl_profil
+            // 
+            this.Lbl_profil.AutoSize = true;
+            this.Lbl_profil.BackColor = System.Drawing.Color.White;
+            this.Lbl_profil.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Lbl_profil.Location = new System.Drawing.Point(1186, 3);
+            this.Lbl_profil.Name = "Lbl_profil";
+            this.Lbl_profil.Size = new System.Drawing.Size(0, 25);
+            this.Lbl_profil.TabIndex = 10;
+            // 
             // Serialak
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(2275, 1260);
+            this.Controls.Add(this.Lbl_profil);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.cBox_IMG);
             this.Controls.Add(this.btn_approve);
             this.Controls.Add(this.lbl1);
@@ -484,6 +509,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn linkcell;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
         private System.Windows.Forms.DataGridViewCheckBoxColumn end;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label Lbl_profil;
     }
 }
 

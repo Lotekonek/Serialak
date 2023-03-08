@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serialak.Properties;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -14,7 +15,7 @@ namespace Serialak
     public partial class Update : Form
     {
         private string nazwa;
-        private static readonly string Series = AppDomain.CurrentDomain.BaseDirectory + @"Data\Seriale.xml";
+        private static readonly string Series = Settings.Default.Nazwa;
         private static readonly string Image = AppDomain.CurrentDomain.BaseDirectory + @"\Data\Images\";
         private readonly XDocument xdoc;
         private readonly List<string> Seriale = new List<string>();
@@ -23,6 +24,7 @@ namespace Serialak
         private bool checkLink = false;
         private bool checkStatus = false;
         private bool checkout = false;
+        private bool checksez = false;
 
         public Update()
         {
@@ -70,6 +72,10 @@ namespace Serialak
             var elTyg = elStatus.Elements("Dzień_tygodnia").FirstOrDefault();
             if (elOdcinek != null || elSezon != null || elLast != null || elEnded != null)
             {
+                if (cBox_sezony.Checked)
+                {
+                    elSezonil.Value = num_sez.Value.ToString();
+                }
                 if (Radio_end.Checked)
                 {
                     elEnded.Value = "Skończone";
@@ -153,6 +159,7 @@ namespace Serialak
             }
 
             xdoc.Save(Series);
+
             this.DialogResult = DialogResult.OK;
             MessageBox.Show("Poprawnie zaktualizowano serial");
             Close();
@@ -277,6 +284,23 @@ namespace Serialak
                 label6.Visible = false;
                 c_box.Visible = false;
                 checkout = false;
+            }
+        }
+
+        private void CBox_sezony_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!checksez)
+            {
+                label7.Visible = true;
+                num_sez.Visible = true;
+                checksez = true;
+
+            }
+            else
+            {
+                label7.Visible = false;
+                num_sez.Visible = false;
+                checksez = false;
             }
         }
     }

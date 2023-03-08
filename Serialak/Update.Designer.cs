@@ -50,8 +50,12 @@
             this.Check_out = new System.Windows.Forms.CheckBox();
             this.c_box = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.cBox_sezony = new System.Windows.Forms.CheckBox();
+            this.num_sez = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.n_odc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.n_sez)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_sez)).BeginInit();
             this.SuspendLayout();
             // 
             // lbl1
@@ -220,7 +224,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label5.Location = new System.Drawing.Point(664, 216);
+            this.label5.Location = new System.Drawing.Point(664, 270);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(85, 29);
             this.label5.TabIndex = 20;
@@ -231,7 +235,7 @@
             // 
             this.Radio_end.AutoSize = true;
             this.Radio_end.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Radio_end.Location = new System.Drawing.Point(669, 266);
+            this.Radio_end.Location = new System.Drawing.Point(669, 313);
             this.Radio_end.Name = "Radio_end";
             this.Radio_end.Size = new System.Drawing.Size(166, 33);
             this.Radio_end.TabIndex = 21;
@@ -244,7 +248,7 @@
             // 
             this.Radio_watch.AutoSize = true;
             this.Radio_watch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Radio_watch.Location = new System.Drawing.Point(894, 266);
+            this.Radio_watch.Location = new System.Drawing.Point(894, 313);
             this.Radio_watch.Name = "Radio_watch";
             this.Radio_watch.Size = new System.Drawing.Size(152, 33);
             this.Radio_watch.TabIndex = 22;
@@ -289,7 +293,7 @@
             "Piątek",
             "Sobota",
             "Niedziela"});
-            this.c_box.Location = new System.Drawing.Point(741, 365);
+            this.c_box.Location = new System.Drawing.Point(741, 397);
             this.c_box.Name = "c_box";
             this.c_box.Size = new System.Drawing.Size(224, 28);
             this.c_box.TabIndex = 25;
@@ -299,12 +303,54 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label6.Location = new System.Drawing.Point(790, 321);
+            this.label6.Location = new System.Drawing.Point(790, 349);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(92, 29);
             this.label6.TabIndex = 26;
             this.label6.Text = "Kiedy?";
             this.label6.Visible = false;
+            // 
+            // cBox_sezony
+            // 
+            this.cBox_sezony.AutoSize = true;
+            this.cBox_sezony.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.cBox_sezony.Location = new System.Drawing.Point(669, 195);
+            this.cBox_sezony.Name = "cBox_sezony";
+            this.cBox_sezony.Size = new System.Drawing.Size(283, 33);
+            this.cBox_sezony.TabIndex = 27;
+            this.cBox_sezony.Text = "Zmień ilość sezonów";
+            this.cBox_sezony.UseVisualStyleBackColor = true;
+            this.cBox_sezony.CheckedChanged += new System.EventHandler(this.CBox_sezony_CheckedChanged);
+            // 
+            // num_sez
+            // 
+            this.num_sez.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.num_sez.Location = new System.Drawing.Point(173, 463);
+            this.num_sez.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.num_sez.Name = "num_sez";
+            this.num_sez.Size = new System.Drawing.Size(180, 35);
+            this.num_sez.TabIndex = 28;
+            this.num_sez.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.num_sez.Visible = false;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label7.Location = new System.Drawing.Point(175, 421);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(178, 29);
+            this.label7.TabIndex = 29;
+            this.label7.Text = "Ilość sezonów";
+            this.label7.Visible = false;
             // 
             // Update
             // 
@@ -312,6 +358,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSlateGray;
             this.ClientSize = new System.Drawing.Size(1058, 520);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.num_sez);
+            this.Controls.Add(this.cBox_sezony);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.c_box);
             this.Controls.Add(this.Check_out);
@@ -340,6 +389,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             ((System.ComponentModel.ISupportInitialize)(this.n_odc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.n_sez)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_sez)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -369,5 +419,8 @@
         private System.Windows.Forms.CheckBox Check_out;
         private System.Windows.Forms.ComboBox c_box;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox cBox_sezony;
+        private System.Windows.Forms.NumericUpDown num_sez;
+        private System.Windows.Forms.Label label7;
     }
 }

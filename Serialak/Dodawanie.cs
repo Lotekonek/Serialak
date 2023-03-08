@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using Serialak.Properties;
+using System;
 using System.IO;
 using System.Net;
 using System.Windows.Forms;
@@ -12,14 +14,12 @@ namespace Serialak
         private XDocument xml;
         private bool check = false;
         private bool checkimg = false;
-        private static readonly string Seriale = AppDomain.CurrentDomain.BaseDirectory + @"Data\Seriale.xml";
+        private static readonly string Seriale = Settings.Default.Nazwa;
         private static readonly string Image = AppDomain.CurrentDomain.BaseDirectory + @"\Data\Images\";
 
         public Dodawanie()
         {
             InitializeComponent();
-            Serialak series = new Serialak();
-            series.Zaladuj(false);
         }
 
         private void Ch_box_CheckedChanged(object sender, EventArgs e)
@@ -47,7 +47,7 @@ namespace Serialak
         {
             if (cBox_IMG.Checked)
             {
-                if (!File.Exists(Image))
+                if (!Directory.Exists(Image))
                 {
                     Directory.CreateDirectory(Image);
                 }
@@ -135,6 +135,7 @@ namespace Serialak
                             new XElement("Link", link),
                             new XElement("Status")));
             xml.Save(Seriale);
+            
 
             this.DialogResult = DialogResult.OK;
 

@@ -46,5 +46,17 @@ namespace Serialak.Properties {
                 this["IMG"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Nazwa {
+            get {
+                return ((string)(this["Nazwa"]));
+            }
+            set {
+                this["Nazwa"] = value;
+            }
+        }
     }
 }
