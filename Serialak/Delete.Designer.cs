@@ -132,6 +132,7 @@
             this.ClientSize = new System.Drawing.Size(1146, 494);
             this.Controls.Add(this.dane_usuwanie);
             this.Controls.Add(this.btn_delete);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Delete";

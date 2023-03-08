@@ -118,8 +118,6 @@ namespace Serialak
                 using (Image myimage = Image.FromFile(img))
 
                 {
-                    MessageBox.Show(files[i].ToString());
-                    MessageBox.Show(buton[i].Text.ToString());
                     var image = ResizeImage(myimage, new Size(150, 150));
                     buton[i].Image = image;
                 }
