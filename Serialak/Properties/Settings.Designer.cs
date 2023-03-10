@@ -58,5 +58,17 @@ namespace Serialak.Properties {
                 this["Nazwa"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int Nr {
+            get {
+                return ((int)(this["Nr"]));
+            }
+            set {
+                this["Nr"] = value;
+            }
+        }
     }
 }

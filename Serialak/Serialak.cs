@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -530,7 +531,11 @@ namespace Serialak
                     if (Save.ShowDialog() == DialogResult.OK)
                     {
                         File.Copy(Seriale, Save.FileName, true);
+                       string startPath = Imagepng;
+                       string zipPath = Path.GetDirectoryName(Save.FileName) + @"\Images.zip";
+                        ZipFile.CreateFromDirectory(startPath, zipPath);
                         MessageBox.Show("Pomyślnie zapisano plik");
+                       
                     }
                 }
                 else
@@ -555,7 +560,9 @@ namespace Serialak
                     {
                         Directory.CreateDirectory(bak);
                     }
-                    File.Copy(Seriale, bak + "Seriale.bak", true);
+                    string startPath = AppDomain.CurrentDomain.BaseDirectory + @"\Data\";
+                    string zipPath = bak+"backup.zip";
+                    ZipFile.CreateFromDirectory(startPath, zipPath);
                     MessageBox.Show("Pomyślnie zrobiono backup");
                 }
             }

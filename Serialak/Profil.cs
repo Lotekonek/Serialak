@@ -12,7 +12,7 @@ namespace Serialak
     public partial class Profil : Form
     {
         private static readonly string Seriale = AppDomain.CurrentDomain.BaseDirectory + @"Data\";
-        private readonly List<string> Nazwy = new List<string>();
+        private List<string> files = new List<string>();
         private readonly Button[] buton = new Button[3];
         private readonly Label[] label = new Label[3];
         private int i = 0;
@@ -50,31 +50,18 @@ namespace Serialak
             this.Close();
         }
 
-        private List<string> Files()
-        {
-            var files = new DirectoryInfo(Seriale).GetFiles("*.xml")
-                                                  .OrderBy(f => f.LastWriteTime)
-                                                  .ToList();
-            foreach (var file in files)
-            {
-                string toBeSearched = "Seriale_";
-                string code = file.ToString().Substring(file.ToString().IndexOf(toBeSearched) + toBeSearched.Length);
-                string name = code.Remove(code.Length - 4);
-                Nazwy.Add(name);
-            }
-            return Nazwy;
-        }
 
         private void Ladowanie()
         {
-            var nazwy = Files();
-            var files = new DirectoryInfo(Seriale).GetFiles("*.xml")
-                                                  .OrderBy(f => f.LastWriteTime)
-                                                  .ToList();
-
-            var imgs = new DirectoryInfo(Seriale).GetFiles("*.png")
-                                                  .OrderBy(f => f.LastWriteTime)
-                                                  .ToList();
+            var profiles = Directory.GetDirectories(Seriale);
+            foreach (var profil in profiles)
+            {
+                var pliki = Directory.GetFiles(profil);
+                foreach (var p in pliki)
+                {
+                    files.Add(p);
+                }
+            }
 
             foreach (Label lbl in this.Controls.OfType<Label>())
             {
@@ -111,10 +98,12 @@ namespace Serialak
                         break;
                 }
             }
-            foreach (var file in files)
+            for (int i = 0; i < files.Count; i = i+2)
             {
-                buton[i].Tag =@"Data\" + file;
-                string img = Seriale + imgs[i];
+
+                buton[i].Tag = files[i + 1];
+                string img = files[i];
+                MessageBox.Show(files[i]);
                 using (Image myimage = Image.FromFile(img))
 
                 {
@@ -123,9 +112,13 @@ namespace Serialak
                 }
                 buton[i].Click += new EventHandler(BtnClick);
                 buton[i].Visible = true;
-                label[i].Text = Nazwy[i++];
+                string toBeSearched = "Seriale_";
+                string code = files[i].ToString().Substring(files[i].ToString().IndexOf(toBeSearched) + toBeSearched.Length);
+                string name = code.Remove(code.Length - 4);
+                label[i].Text = name;
             }
         }
+    
 
         private void Profil_Load(object sender, EventArgs e)
         {

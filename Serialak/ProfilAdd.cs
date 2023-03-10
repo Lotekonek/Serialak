@@ -11,6 +11,7 @@ namespace Serialak
     public partial class ProfilAdd : Form
     {
         private static readonly string Seriale = AppDomain.CurrentDomain.BaseDirectory + @"Data\";
+        private int nr = Settings.Default.Nr;
         private XDocument xml;
 
 
@@ -24,13 +25,14 @@ namespace Serialak
             
             if (tBox_Link.Text != "" && Tbox_name.Text != "")
             {
-                if (!File.Exists(Seriale +  "Seriale_" + Tbox_name.Text + ".xml"))
+                if (!File.Exists(Seriale + nr + Tbox_name.Text +  @"\Seriale_" + Tbox_name.Text + ".xml"))
                 {
-                    Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + @"\Data");
+                    Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + @"\Data\"+ nr + Tbox_name.Text);
+
                     xml = new XDocument(
                        new XDeclaration("1.0", "utf-8", "true"),
                        new XElement("Spis"));
-                    xml.Save(Seriale +  "Seriale_" + Tbox_name.Text.Replace(" ", "_") + ".xml");
+                    xml.Save(Seriale + nr + Tbox_name.Text +   @"\Seriale_" + Tbox_name.Text.Replace(" ", "_") + ".xml");
                 }
                 try
                 {
@@ -38,17 +40,17 @@ namespace Serialak
                 && (uriResult1.Scheme == Uri.UriSchemeHttp || uriResult1.Scheme == Uri.UriSchemeHttps);
                     if (!result1)
                     {
-                        File.Copy(tBox_Link.Text, Seriale +  "Seriale_" + Tbox_name.Text.Replace(" ", "_") + ".png");
+                        File.Copy(tBox_Link.Text, Seriale + nr + Tbox_name.Text + @"\Seriale_" + Tbox_name.Text.Replace(" ", "_") + ".png");
                     }
                     else
                     {
                         WebClient webClient = new WebClient();
-                        webClient.DownloadFile(uriResult1,Seriale + "Seriale_" + Tbox_name.Text.Replace(" ", "_") + ".png");
+                        webClient.DownloadFile(uriResult1,Seriale + nr + Tbox_name.Text + @"\Seriale_" + Tbox_name.Text.Replace(" ", "_") + ".png");
                         webClient.Dispose();
                     }
-                    var dt = File.GetLastWriteTime(Seriale + "Seriale_" + Tbox_name.Text.Replace(" ", "_") + ".xml");
-                    File.SetLastWriteTime(Seriale + "Seriale_" + Tbox_name.Text.Replace(" ", "_") + ".png", dt);
+                    Settings.Default.Nr++;
                     DialogResult = DialogResult.OK;
+                    Settings.Default.Save();
                 }
                 catch (Exception ex)
                 {
