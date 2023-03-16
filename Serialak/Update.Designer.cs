@@ -61,20 +61,20 @@
             // lbl1
             // 
             this.lbl1.AutoSize = true;
-            this.lbl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lbl1.Location = new System.Drawing.Point(31, 92);
+            this.lbl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lbl1.Location = new System.Drawing.Point(12, 92);
             this.lbl1.Name = "lbl1";
-            this.lbl1.Size = new System.Drawing.Size(185, 29);
+            this.lbl1.Size = new System.Drawing.Size(216, 32);
             this.lbl1.TabIndex = 0;
             this.lbl1.Text = "Który odcinek?";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
             this.label1.Location = new System.Drawing.Point(317, 92);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(162, 29);
+            this.label1.Size = new System.Drawing.Size(191, 32);
             this.label1.TabIndex = 1;
             this.label1.Text = "Który sezon?";
             // 
@@ -129,30 +129,31 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label2.Location = new System.Drawing.Point(175, 13);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.label2.Location = new System.Drawing.Point(167, 10);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(178, 29);
+            this.label2.Size = new System.Drawing.Size(206, 32);
             this.label2.TabIndex = 5;
             this.label2.Text = "Wybierz serial";
             // 
             // cBox
             // 
             this.cBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.cBox.FormattingEnabled = true;
             this.cBox.Location = new System.Drawing.Point(36, 45);
             this.cBox.Name = "cBox";
-            this.cBox.Size = new System.Drawing.Size(452, 28);
+            this.cBox.Size = new System.Drawing.Size(452, 40);
             this.cBox.TabIndex = 6;
             this.cBox.SelectedIndexChanged += new System.EventHandler(this.CBox_SelectedIndexChanged);
             // 
             // Cbox_IMG
             // 
             this.Cbox_IMG.AutoSize = true;
-            this.Cbox_IMG.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Cbox_IMG.Location = new System.Drawing.Point(669, 39);
+            this.Cbox_IMG.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.Cbox_IMG.Location = new System.Drawing.Point(669, 12);
             this.Cbox_IMG.Name = "Cbox_IMG";
-            this.Cbox_IMG.Size = new System.Drawing.Size(239, 33);
+            this.Cbox_IMG.Size = new System.Drawing.Size(274, 36);
             this.Cbox_IMG.TabIndex = 7;
             this.Cbox_IMG.Text = "Zmień miniaturkę";
             this.Cbox_IMG.UseVisualStyleBackColor = true;
@@ -161,10 +162,10 @@
             // Cbox_Link
             // 
             this.Cbox_Link.AutoSize = true;
-            this.Cbox_Link.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Cbox_Link.Location = new System.Drawing.Point(669, 78);
+            this.Cbox_Link.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.Cbox_Link.Location = new System.Drawing.Point(669, 54);
             this.Cbox_Link.Name = "Cbox_Link";
-            this.Cbox_Link.Size = new System.Drawing.Size(159, 33);
+            this.Cbox_Link.Size = new System.Drawing.Size(180, 36);
             this.Cbox_Link.TabIndex = 8;
             this.Cbox_Link.Text = "Zmień link";
             this.Cbox_Link.UseVisualStyleBackColor = true;
@@ -173,10 +174,10 @@
             // Cbox_status
             // 
             this.Cbox_status.AutoSize = true;
-            this.Cbox_status.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Cbox_status.Location = new System.Drawing.Point(669, 117);
+            this.Cbox_status.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.Cbox_status.Location = new System.Drawing.Point(670, 96);
             this.Cbox_status.Name = "Cbox_status";
-            this.Cbox_status.Size = new System.Drawing.Size(186, 33);
+            this.Cbox_status.Size = new System.Drawing.Size(214, 36);
             this.Cbox_status.TabIndex = 9;
             this.Cbox_status.Text = "Zmień status";
             this.Cbox_status.UseVisualStyleBackColor = true;
@@ -184,19 +185,20 @@
             // 
             // Tbox_IMG
             // 
-            this.Tbox_IMG.Location = new System.Drawing.Point(36, 261);
+            this.Tbox_IMG.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.Tbox_IMG.Location = new System.Drawing.Point(33, 240);
             this.Tbox_IMG.Name = "Tbox_IMG";
-            this.Tbox_IMG.Size = new System.Drawing.Size(452, 26);
+            this.Tbox_IMG.Size = new System.Drawing.Size(452, 39);
             this.Tbox_IMG.TabIndex = 10;
             this.Tbox_IMG.Visible = false;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label3.Location = new System.Drawing.Point(31, 216);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.label3.Location = new System.Drawing.Point(27, 196);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(394, 29);
+            this.label3.Size = new System.Drawing.Size(461, 32);
             this.label3.TabIndex = 17;
             this.label3.Text = "Miniaturka (Link albo lokalizacja)";
             this.label3.Visible = false;
@@ -204,29 +206,30 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label4.Location = new System.Drawing.Point(31, 321);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.label4.Location = new System.Drawing.Point(30, 296);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(61, 29);
+            this.label4.Size = new System.Drawing.Size(71, 32);
             this.label4.TabIndex = 18;
             this.label4.Text = "Link";
             this.label4.Visible = false;
             // 
             // Tbox_Link
             // 
-            this.Tbox_Link.Location = new System.Drawing.Point(36, 379);
+            this.Tbox_Link.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.Tbox_Link.Location = new System.Drawing.Point(36, 342);
             this.Tbox_Link.Name = "Tbox_Link";
-            this.Tbox_Link.Size = new System.Drawing.Size(452, 26);
+            this.Tbox_Link.Size = new System.Drawing.Size(452, 39);
             this.Tbox_Link.TabIndex = 19;
             this.Tbox_Link.Visible = false;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label5.Location = new System.Drawing.Point(664, 270);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.label5.Location = new System.Drawing.Point(663, 213);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(85, 29);
+            this.label5.Size = new System.Drawing.Size(101, 32);
             this.label5.TabIndex = 20;
             this.label5.Text = "Status";
             this.label5.Visible = false;
@@ -234,10 +237,10 @@
             // Radio_end
             // 
             this.Radio_end.AutoSize = true;
-            this.Radio_end.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Radio_end.Location = new System.Drawing.Point(669, 313);
+            this.Radio_end.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.Radio_end.Location = new System.Drawing.Point(669, 253);
             this.Radio_end.Name = "Radio_end";
-            this.Radio_end.Size = new System.Drawing.Size(166, 33);
+            this.Radio_end.Size = new System.Drawing.Size(189, 36);
             this.Radio_end.TabIndex = 21;
             this.Radio_end.TabStop = true;
             this.Radio_end.Text = "Skończone";
@@ -247,10 +250,10 @@
             // Radio_watch
             // 
             this.Radio_watch.AutoSize = true;
-            this.Radio_watch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Radio_watch.Location = new System.Drawing.Point(894, 313);
+            this.Radio_watch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.Radio_watch.Location = new System.Drawing.Point(894, 253);
             this.Radio_watch.Name = "Radio_watch";
-            this.Radio_watch.Size = new System.Drawing.Size(152, 33);
+            this.Radio_watch.Size = new System.Drawing.Size(172, 36);
             this.Radio_watch.TabIndex = 22;
             this.Radio_watch.TabStop = true;
             this.Radio_watch.Text = "Oglądane";
@@ -260,7 +263,7 @@
             // button2
             // 
             this.button2.Image = global::Serialak.Properties.Resources.icons8_file_folder_481;
-            this.button2.Location = new System.Drawing.Point(494, 250);
+            this.button2.Location = new System.Drawing.Point(491, 240);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(63, 49);
             this.button2.TabIndex = 23;
@@ -271,10 +274,10 @@
             // Check_out
             // 
             this.Check_out.AutoSize = true;
-            this.Check_out.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Check_out.Location = new System.Drawing.Point(669, 156);
+            this.Check_out.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.Check_out.Location = new System.Drawing.Point(669, 132);
             this.Check_out.Name = "Check_out";
-            this.Check_out.Size = new System.Drawing.Size(260, 33);
+            this.Check_out.Size = new System.Drawing.Size(301, 36);
             this.Check_out.TabIndex = 24;
             this.Check_out.Text = "Aktualnie wychodzi";
             this.Check_out.UseVisualStyleBackColor = true;
@@ -283,7 +286,7 @@
             // c_box
             // 
             this.c_box.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.c_box.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.c_box.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.c_box.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.c_box.Items.AddRange(new object[] {
             "Poniedziałek",
@@ -293,19 +296,19 @@
             "Piątek",
             "Sobota",
             "Niedziela"});
-            this.c_box.Location = new System.Drawing.Point(741, 397);
+            this.c_box.Location = new System.Drawing.Point(734, 342);
             this.c_box.Name = "c_box";
-            this.c_box.Size = new System.Drawing.Size(224, 28);
+            this.c_box.Size = new System.Drawing.Size(224, 40);
             this.c_box.TabIndex = 25;
             this.c_box.Visible = false;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label6.Location = new System.Drawing.Point(790, 349);
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.label6.Location = new System.Drawing.Point(791, 307);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(92, 29);
+            this.label6.Size = new System.Drawing.Size(108, 32);
             this.label6.TabIndex = 26;
             this.label6.Text = "Kiedy?";
             this.label6.Visible = false;
@@ -313,10 +316,10 @@
             // cBox_sezony
             // 
             this.cBox_sezony.AutoSize = true;
-            this.cBox_sezony.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.cBox_sezony.Location = new System.Drawing.Point(669, 195);
+            this.cBox_sezony.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.cBox_sezony.Location = new System.Drawing.Point(669, 174);
             this.cBox_sezony.Name = "cBox_sezony";
-            this.cBox_sezony.Size = new System.Drawing.Size(283, 33);
+            this.cBox_sezony.Size = new System.Drawing.Size(322, 36);
             this.cBox_sezony.TabIndex = 27;
             this.cBox_sezony.Text = "Zmień ilość sezonów";
             this.cBox_sezony.UseVisualStyleBackColor = true;
@@ -325,7 +328,7 @@
             // num_sez
             // 
             this.num_sez.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.num_sez.Location = new System.Drawing.Point(173, 463);
+            this.num_sez.Location = new System.Drawing.Point(173, 450);
             this.num_sez.Minimum = new decimal(new int[] {
             1,
             0,
@@ -344,10 +347,10 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label7.Location = new System.Drawing.Point(175, 421);
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.label7.Location = new System.Drawing.Point(169, 397);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(178, 29);
+            this.label7.Size = new System.Drawing.Size(204, 32);
             this.label7.TabIndex = 29;
             this.label7.Text = "Ilość sezonów";
             this.label7.Visible = false;

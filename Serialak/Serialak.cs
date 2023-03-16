@@ -688,6 +688,7 @@ namespace Serialak
                     {
                         Seriale =  Directory.GetFiles(Settings.Default.Nazwa,"*.xml")[0];
                         Zaladuj(false);
+
                 }
                 else
                 {
@@ -740,6 +741,7 @@ namespace Serialak
                     
                     Seriale = Directory.GetFiles(Settings.Default.Nazwa, "*.xml")[0];
                     Zaladuj(false);
+                    
                 }
                 else
                 {
@@ -747,6 +749,7 @@ namespace Serialak
                     Application.Exit();
                 }
             }
+
         }
     }
 }
