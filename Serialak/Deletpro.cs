@@ -1,5 +1,6 @@
 ﻿using Serialak.Properties;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
@@ -8,6 +9,8 @@ namespace Serialak
     public partial class Deletpro : Form
     {
         private static readonly string Seriale = AppDomain.CurrentDomain.BaseDirectory + @"Data\";
+        private readonly List<string> files = new List<string>();
+        private string[] profiles;
 
         public Deletpro()
         {
@@ -33,8 +36,8 @@ namespace Serialak
                 {
                     if (Convert.ToBoolean(row.Cells[choose.Name].Value) == true)
                     {
-                        File.Delete(Seriale  + "Seriale_" + row.Cells[0].Value.ToString().Replace(" ", "_") + ".png");
-                        File.Delete(Seriale  + "Seriale_" + row.Cells[0].Value.ToString().Replace(" ", "_") + ".xml");
+
+                        Directory.Delete(profiles[row.Index],true);
                     }
                 }
             }
@@ -43,15 +46,23 @@ namespace Serialak
             }
             finally
             {
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                DialogResult = DialogResult.OK;
+                Close();
             }
         }
 
         private void Deletpro_Load(object sender, EventArgs e)
         {
             dane_usuwanie.Rows.Clear();
-            var files = Directory.GetFiles(Seriale, "*.xml");
+            profiles = Directory.GetDirectories(Seriale);
+            foreach (var profil in profiles)
+            {
+                var pliki = Directory.GetFiles(profil,"*.xml");
+                foreach (var p in pliki)
+                {
+                    files.Add(p);
+                }
+            }
             foreach (var file in files)
             {
                 string toBeSearched = "Seriale_";

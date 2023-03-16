@@ -73,6 +73,7 @@
             this.cBox_IMG = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.Lbl_profil = new System.Windows.Forms.Label();
+            this.Btn_logout = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dane_seriale)).BeginInit();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
@@ -311,28 +312,28 @@
             // zapiszDoPlikuCSVToolStripMenuItem
             // 
             this.zapiszDoPlikuCSVToolStripMenuItem.Name = "zapiszDoPlikuCSVToolStripMenuItem";
-            this.zapiszDoPlikuCSVToolStripMenuItem.Size = new System.Drawing.Size(274, 34);
+            this.zapiszDoPlikuCSVToolStripMenuItem.Size = new System.Drawing.Size(271, 34);
             this.zapiszDoPlikuCSVToolStripMenuItem.Text = "Zapisz do pliku CSV";
             this.zapiszDoPlikuCSVToolStripMenuItem.Click += new System.EventHandler(this.CSVToolStripMenuItem_Click);
             // 
             // zapisDoPlikuPDFToolStripMenuItem
             // 
             this.zapisDoPlikuPDFToolStripMenuItem.Name = "zapisDoPlikuPDFToolStripMenuItem";
-            this.zapisDoPlikuPDFToolStripMenuItem.Size = new System.Drawing.Size(274, 34);
+            this.zapisDoPlikuPDFToolStripMenuItem.Size = new System.Drawing.Size(271, 34);
             this.zapisDoPlikuPDFToolStripMenuItem.Text = "Zapis do pliku PDF";
             this.zapisDoPlikuPDFToolStripMenuItem.Click += new System.EventHandler(this.PDFToolStripMenuItem_Click);
             // 
             // zapiszDoPlikuXMLToolStripMenuItem
             // 
             this.zapiszDoPlikuXMLToolStripMenuItem.Name = "zapiszDoPlikuXMLToolStripMenuItem";
-            this.zapiszDoPlikuXMLToolStripMenuItem.Size = new System.Drawing.Size(274, 34);
-            this.zapiszDoPlikuXMLToolStripMenuItem.Text = "Zapisz do pliku XML";
+            this.zapiszDoPlikuXMLToolStripMenuItem.Size = new System.Drawing.Size(271, 34);
+            this.zapiszDoPlikuXMLToolStripMenuItem.Text = "Zapisz profil";
             this.zapiszDoPlikuXMLToolStripMenuItem.Click += new System.EventHandler(this.ZapiszDoPlikuXMLToolStripMenuItem_Click);
             // 
             // zapiszBackupToolStripMenuItem
             // 
             this.zapiszBackupToolStripMenuItem.Name = "zapiszBackupToolStripMenuItem";
-            this.zapiszBackupToolStripMenuItem.Size = new System.Drawing.Size(274, 34);
+            this.zapiszBackupToolStripMenuItem.Size = new System.Drawing.Size(271, 34);
             this.zapiszBackupToolStripMenuItem.Text = "Stwórz backup";
             this.zapiszBackupToolStripMenuItem.Click += new System.EventHandler(this.ZapiszBackupToolStripMenuItem_Click);
             // 
@@ -348,14 +349,14 @@
             // wczytajZPlikuXMLToolStripMenuItem1
             // 
             this.wczytajZPlikuXMLToolStripMenuItem1.Name = "wczytajZPlikuXMLToolStripMenuItem1";
-            this.wczytajZPlikuXMLToolStripMenuItem1.Size = new System.Drawing.Size(270, 34);
-            this.wczytajZPlikuXMLToolStripMenuItem1.Text = "Wczytaj z pliku XML";
+            this.wczytajZPlikuXMLToolStripMenuItem1.Size = new System.Drawing.Size(237, 34);
+            this.wczytajZPlikuXMLToolStripMenuItem1.Text = "Wczytaj profil";
             this.wczytajZPlikuXMLToolStripMenuItem1.Click += new System.EventHandler(this.WczytajZPlikuXMLToolStripMenuItem1_Click);
             // 
             // WczytajbackupToolStripMenuItem
             // 
             this.WczytajbackupToolStripMenuItem.Name = "WczytajbackupToolStripMenuItem";
-            this.WczytajbackupToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.WczytajbackupToolStripMenuItem.Size = new System.Drawing.Size(237, 34);
             this.WczytajbackupToolStripMenuItem.Text = "Wczytaj backup";
             this.WczytajbackupToolStripMenuItem.Click += new System.EventHandler(this.WczytajbackupToolStripMenuItem_Click);
             // 
@@ -443,12 +444,23 @@
             this.Lbl_profil.Size = new System.Drawing.Size(0, 25);
             this.Lbl_profil.TabIndex = 10;
             // 
+            // Btn_logout
+            // 
+            this.Btn_logout.Location = new System.Drawing.Point(1537, 3);
+            this.Btn_logout.Name = "Btn_logout";
+            this.Btn_logout.Size = new System.Drawing.Size(130, 33);
+            this.Btn_logout.TabIndex = 11;
+            this.Btn_logout.Text = "Wyloguj";
+            this.Btn_logout.UseVisualStyleBackColor = true;
+            this.Btn_logout.Click += new System.EventHandler(this.Btn_logout_Click);
+            // 
             // Serialak
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(2275, 1260);
+            this.Controls.Add(this.Btn_logout);
             this.Controls.Add(this.Lbl_profil);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cBox_IMG);
@@ -511,6 +523,7 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn end;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label Lbl_profil;
+        private System.Windows.Forms.Button Btn_logout;
     }
 }
 

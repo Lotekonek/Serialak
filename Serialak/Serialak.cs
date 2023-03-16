@@ -1,6 +1,8 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
+using iTextSharp.text.pdf.qrcode;
 using Serialak.Properties;
+using Syncfusion.Pdf.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -19,9 +21,10 @@ namespace Serialak
         private readonly List<string> Losowanie = new List<string>();
         private readonly List<string> Spis = new List<string>();
         private readonly List<string> Link = new List<string>();
+        private readonly List<string> pliki = new List<string>();
         private readonly Random rnd = new Random();
         private string Seriale;
-        private static readonly string Imagepng = AppDomain.CurrentDomain.BaseDirectory + @"\Data\Images\";
+        private static readonly string Imagepng = Settings.Default.Nazwa + @"\Images\";
         private bool check = false;
         private bool checkimg = false;
         private bool correct = false;
@@ -34,8 +37,8 @@ namespace Serialak
         {
             
             InitializeComponent();
-            this.Width = 1537;
-            this.Height = 862;
+            Width = 1537;
+            Height = 862;
             dane_seriale.DefaultCellStyle.Font = FontFam(14);
             dane_seriale.AlternatingRowsDefaultCellStyle.Font = FontFam(14);
         }
@@ -108,8 +111,8 @@ namespace Serialak
                 }
                 if (row.Cells[8].Value.ToString() == "Skończone")
                 {
-                    row.DefaultCellStyle.SelectionBackColor = Color.Indigo;
-                    row.DefaultCellStyle.BackColor = Color.Indigo;
+                    row.DefaultCellStyle.SelectionBackColor = Color.Teal;
+                    row.DefaultCellStyle.BackColor = Color.Teal;
                     row.DefaultCellStyle.ForeColor = Color.White;
                 }
                 else
@@ -159,7 +162,9 @@ namespace Serialak
             string toBeSearched = "Seriale_";
             string code = Seriale.Substring(Seriale.IndexOf(toBeSearched) + toBeSearched.Length);
             string name = code.Remove(code.Length - 4);
+            Lbl_profil.UseMnemonic = false;
             Lbl_profil.Text = name;
+            dane_seriale.ClearSelection();
         }
 
         private void Dodaj_Click(object sender, EventArgs e)
@@ -210,8 +215,8 @@ namespace Serialak
                         {
                             if (row.Cells[8].Value.ToString() != "Skończone")
                             {
-                                row.DefaultCellStyle.BackColor = Color.YellowGreen;
-                                row.DefaultCellStyle.SelectionBackColor = Color.Yellow;
+                                row.DefaultCellStyle.BackColor = Color.DarkSeaGreen;
+                                row.DefaultCellStyle.SelectionBackColor = Color.DarkSeaGreen;
                                 correct = true;
                             }
                             else
@@ -380,7 +385,9 @@ namespace Serialak
                                             pdfTable.AddCell(cell2);
                                         }
                                         else
+                                        {
                                             pdfTable.AddCell(cell1);
+                                        }
                                     }
                                 }
                             }
@@ -436,7 +443,6 @@ namespace Serialak
                FontStyle.Bold);
             return font;
         }
-
         private void Easy_click(object sender, DataGridViewCellEventArgs e)
         {
             if (Convert.ToBoolean(dane_seriale.CurrentRow.Cells[end.Name].Value) == false)
@@ -520,20 +526,27 @@ namespace Serialak
                 if (dane_seriale.Rows.Count > 0)
                 {
                     Save.InitialDirectory = Seriale;
-                    Save.FileName = "Seriale.xml";
+                    Save.FileName = "Seriale.rar";
                     Save.FilterIndex = 0;
                     Save.Title = "Zapisz plik";
                     Save.CheckFileExists = false;
                     Save.CheckPathExists = true;
-                    Save.DefaultExt = "xml";
-                    Save.Filter = "XML files (*.xml)|*.xml";
+                    Save.DefaultExt = "rar";
+                    Save.Filter = "RAR files (*.rar)|*.rar";
 
                     if (Save.ShowDialog() == DialogResult.OK)
                     {
-                        File.Copy(Seriale, Save.FileName, true);
-                       string startPath = Imagepng;
-                       string zipPath = Path.GetDirectoryName(Save.FileName) + @"\Images.zip";
-                        ZipFile.CreateFromDirectory(startPath, zipPath);
+                       string startPath = Settings.Default.Nazwa;
+                       string zipPath = Save.FileName;
+                        try
+                        {
+                            ZipFile.CreateFromDirectory(startPath, zipPath);
+                        }
+                        catch
+                        {
+                            File.Delete(zipPath);
+                            ZipFile.CreateFromDirectory(startPath, zipPath);
+                        }
                         MessageBox.Show("Pomyślnie zapisano plik");
                        
                     }
@@ -578,23 +591,58 @@ namespace Serialak
             {
                 using (OpenFileDialog opf = new OpenFileDialog())
                 {
-                    opf.Filter = "XML files (*.xml)|*.xml";
+                    opf.Filter = "RAR files (*.rar)|*.rar";
                     opf.FilterIndex = 2;
                     opf.RestoreDirectory = true;
-                    opf.DefaultExt = "xml";
+                    opf.DefaultExt = "rar";
                     opf.Title = "Wczytaj plik";
 
-                    if (opf.ShowDialog() == DialogResult.OK)
+                    if (opf.ShowDialog() == DialogResult.OK )
                     {
-                        File.Copy(opf.FileName, Seriale, true);
+                        if(!Directory.Exists(Settings.Default.Nazwa + @"\Images\"))
+                        {
+                            Directory.CreateDirectory(Settings.Default.Nazwa + @"\Images\");
+                        }
+                        pliki.Add(Directory.GetFiles(Settings.Default.Nazwa,"*.xml")[0]);
+                        File.Delete(Directory.GetFiles(Settings.Default.Nazwa, "*.xml")[0]);
+                        
+                        var files = Directory.GetFiles(Settings.Default.Nazwa + @"\Images\", "*.png");
+                        foreach (var f in files)
+                        {
+                            File.Delete(f);
+                        }
+                        ZipFile.ExtractToDirectory(opf.FileName, Settings.Default.Nazwa);
+                        files = Directory.GetFiles(Settings.Default.Nazwa,"*.xml");
+                        var i = 0;
+                        foreach (var f in files)
+                        {
+                            MessageBox.Show(f);
+                            FileInfo fi = new FileInfo(f);
+                            fi.MoveTo(pliki[i++]);
+                        }
+                        files = Directory.GetFiles(Settings.Default.Nazwa, "*.png");
+                       foreach (var f in files)
+                        {
+                            string name = f.Remove(f.Length - 4)+".xml";
+                            if(name != Seriale)
+                            {
+                                File.Delete(f);
+                            }
+
+                        }
+
                         MessageBox.Show("Pomyślnie wczytano plik");
                         Zaladuj(false);
                     }
+                    else
+                    {
+                        MessageBox.Show("Za dużo profili");
+                    }
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show("Błąd: " + ex, "Błąd");
+                MessageBox.Show("Nie udało się wczytać profilu","Błąd");
             }
         }
 
@@ -638,7 +686,7 @@ namespace Serialak
                 {
                     if (profil.ShowDialog() == DialogResult.OK)
                     {
-                        Seriale = Settings.Default.Nazwa;
+                        Seriale =  Directory.GetFiles(Settings.Default.Nazwa,"*.xml")[0];
                         Zaladuj(false);
                 }
                 else
@@ -678,6 +726,26 @@ namespace Serialak
                 dane_seriale.AlternatingRowsDefaultCellStyle.Font = FontFam(14);
 
                 checkimg = false;
+            }
+        }
+
+        private void Btn_logout_Click(object sender, EventArgs e)
+        {
+            dane_seriale.Rows.Clear();
+            Lbl_profil.Text = "";
+            using (Profil profil = new Profil())
+            {
+                if (profil.ShowDialog() == DialogResult.OK)
+                {
+                    
+                    Seriale = Directory.GetFiles(Settings.Default.Nazwa, "*.xml")[0];
+                    Zaladuj(false);
+                }
+                else
+                {
+                    MessageBox.Show("Nie znaleziono profilu!!");
+                    Application.Exit();
+                }
             }
         }
     }

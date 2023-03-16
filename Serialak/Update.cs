@@ -15,8 +15,8 @@ namespace Serialak
     public partial class Update : Form
     {
         private string nazwa;
-        private static readonly string Series = Settings.Default.Nazwa;
-        private static readonly string Image = AppDomain.CurrentDomain.BaseDirectory + @"\Data\Images\";
+        private static readonly string Series = Directory.GetFiles(Settings.Default.Nazwa, "*.xml")[0];
+        private static readonly string Image = Settings.Default.Nazwa + @"\Images\";
         private readonly XDocument xdoc;
         private readonly List<string> Seriale = new List<string>();
         private readonly DateTime thisDay = DateTime.Today;
@@ -104,7 +104,7 @@ namespace Serialak
                             webClient.DownloadFile(uriResult1, Image + nazwa.Replace(" ", "_") + ".png");
                             webClient.Dispose();
                         }
-                    }
+                   }
                     catch
                     {
                         MessageBox.Show("Nie zaktualizowano miniaturki");
@@ -160,7 +160,7 @@ namespace Serialak
 
             xdoc.Save(Series);
 
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
             MessageBox.Show("Poprawnie zaktualizowano serial");
             Close();
         }
@@ -252,7 +252,6 @@ namespace Serialak
             {
                 using (OpenFileDialog opf = new OpenFileDialog())
                 {
-                    opf.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
                     opf.Filter = "PNG files (*.png)|*.png";
                     opf.FilterIndex = 2;
                     opf.RestoreDirectory = true;

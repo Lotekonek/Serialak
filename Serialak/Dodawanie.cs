@@ -1,8 +1,10 @@
 ﻿using Microsoft.Office.Interop.Excel;
 using Serialak.Properties;
 using System;
+using System.Diagnostics.Metrics;
 using System.IO;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -14,8 +16,8 @@ namespace Serialak
         private XDocument xml;
         private bool check = false;
         private bool checkimg = false;
-        private static readonly string Seriale = Settings.Default.Nazwa;
-        private static readonly string Image = AppDomain.CurrentDomain.BaseDirectory + @"\Data\Images\";
+        private static readonly string Seriale = Directory.GetFiles(Settings.Default.Nazwa, "*.xml")[0];
+        private static readonly string Image = Settings.Default.Nazwa + @"\Images\";
 
         public Dodawanie()
         {
@@ -45,6 +47,13 @@ namespace Serialak
 
         private void Btn_dodaj_Click(object sender, EventArgs e)
         {
+
+            var regx = new Regex("[^a-zA-Z0-9_. ]");
+            if (regx.IsMatch(tBox_nazwa.Text))
+            {
+                MessageBox.Show("Wykryto znaki specjalne");
+                return;
+            }
             if (cBox_IMG.Checked)
             {
                 if (!Directory.Exists(Image))
@@ -66,9 +75,9 @@ namespace Serialak
                         webClient.Dispose();
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
-                    MessageBox.Show("Nie dodano miniaturki\n\t" + ex);
+                    MessageBox.Show("Nie dodano miniaturki)");
                 }
             }
             if (tBox_nazwa.Text == "")
@@ -137,7 +146,7 @@ namespace Serialak
             xml.Save(Seriale);
             
 
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
 
             Close();
             MessageBox.Show("Poprawnie wczytano serial");
@@ -149,7 +158,6 @@ namespace Serialak
             {
                 using (OpenFileDialog opf = new OpenFileDialog())
                 {
-                    opf.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
                     opf.Filter = "PNG files (*.png)|*.png";
                     opf.FilterIndex = 2;
                     opf.RestoreDirectory = true;

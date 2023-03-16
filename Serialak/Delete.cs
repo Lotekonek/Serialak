@@ -13,8 +13,8 @@ namespace Serialak
     public partial class Delete : Form
     {
         private readonly List<string> Spis = new List<string>();
-        private static readonly string Seriale = Settings.Default.Nazwa;
-        private static readonly string Image = AppDomain.CurrentDomain.BaseDirectory + @"\Data\Images\";
+        private static readonly string Seriale = Directory.GetFiles(Settings.Default.Nazwa, "*.xml")[0];
+        private static readonly string Image = Settings.Default.Nazwa + @"\Images\";
 
         public Delete()
         {
@@ -69,8 +69,8 @@ namespace Serialak
             }
             finally
             {
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                DialogResult = DialogResult.OK;
+                Close();
             }
         }
 
