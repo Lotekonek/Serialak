@@ -1,10 +1,9 @@
-﻿using iTextSharp.text.pdf.parser;
-using Serialak.Properties;
-using System;
+﻿using System;
 using System.IO;
 using System.Net;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using Serialak.Properties;
 
 namespace Serialak
 {
@@ -14,7 +13,6 @@ namespace Serialak
         private readonly int nr = Settings.Default.Nr;
         private XDocument xml;
 
-
         public ProfilAdd()
         {
             InitializeComponent();
@@ -22,18 +20,17 @@ namespace Serialak
 
         private void Btn_Add_Click(object sender, EventArgs e)
         {
-            
             if (tBox_Link.Text != "" && Tbox_name.Text != "")
             {
                 Tbox_name.Text = Tbox_name.Text.Replace(" ", "_");
-                if (!File.Exists(Seriale + nr + Tbox_name +  @"\Seriale_" + Tbox_name.Text + ".xml"))
+                if (!File.Exists(Seriale + nr + Tbox_name + @"\Seriale_" + Tbox_name.Text + ".xml"))
                 {
-                    Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + @"\Data\"+ nr + Tbox_name.Text.Replace(" ","_"));
+                    Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + @"\Data\" + nr + Tbox_name.Text.Replace(" ", "_"));
 
                     xml = new XDocument(
                        new XDeclaration("1.0", "utf-8", "true"),
                        new XElement("Spis"));
-                    xml.Save(Seriale + nr + Tbox_name.Text +   @"\Seriale_" + Tbox_name.Text + ".xml");
+                    xml.Save(Seriale + nr + Tbox_name.Text + @"\Seriale_" + Tbox_name.Text + ".xml");
                 }
                 try
                 {
@@ -46,7 +43,7 @@ namespace Serialak
                     else
                     {
                         WebClient webClient = new WebClient();
-                        webClient.DownloadFile(uriResult1,Seriale + nr + Tbox_name.Text + @"\Seriale_" + Tbox_name.Text + ".png");
+                        webClient.DownloadFile(uriResult1, Seriale + nr + Tbox_name.Text + @"\Seriale_" + Tbox_name.Text + ".png");
                         webClient.Dispose();
                     }
                     Settings.Default.Nr++;
@@ -62,7 +59,6 @@ namespace Serialak
             {
                 MessageBox.Show("Wypełnij wszystkie pola");
             }
-
         }
 
         private void IMAGE_Click(object sender, EventArgs e)

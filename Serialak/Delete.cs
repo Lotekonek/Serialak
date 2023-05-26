@@ -1,5 +1,4 @@
-﻿using Serialak.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -7,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
+using Serialak.Properties;
 
 namespace Serialak
 {
@@ -59,12 +59,11 @@ namespace Serialak
                             .Remove();
                         xDoc.Save(Seriale);
 
-
                         File.Delete(Image + row.Cells[0].Value.ToString().Replace(" ", "_") + ".png");
                     }
                 }
             }
-            catch 
+            catch
             {
             }
             finally

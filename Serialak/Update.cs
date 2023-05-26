@@ -1,5 +1,4 @@
-﻿using Serialak.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -8,7 +7,7 @@ using System.Net;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
-using static System.Windows.Forms.LinkLabel;
+using Serialak.Properties;
 
 namespace Serialak
 {
@@ -79,10 +78,17 @@ namespace Serialak
                 if (Radio_end.Checked)
                 {
                     elEnded.Value = "Skończone";
+                    elLast.Value = thisDay.ToString("M");
+                    elSezonil.Value = elSezon.Value.ToString();
+                    elTyg.Value = "";
+                    elOdcinek.Value = "";
+                    elSezon.Value = "";
                 }
                 else
                 {
                     elEnded.Value = "";
+                    elOdcinek.Value = n_odc.Value.ToString();
+                    elSezon.Value = n_sez.Value.ToString();
                 }
                 if (Cbox_IMG.Checked)
                 {
@@ -104,7 +110,7 @@ namespace Serialak
                             webClient.DownloadFile(uriResult1, Image + nazwa.Replace(" ", "_") + ".png");
                             webClient.Dispose();
                         }
-                   }
+                    }
                     catch
                     {
                         MessageBox.Show("Nie zaktualizowano miniaturki");
@@ -115,14 +121,13 @@ namespace Serialak
                 {
                     elSezonil.Value = "";
                     elTyg.Value = c_box.Text;
-                    if(elEnded.Value == "Skończone")
+                    if (elEnded.Value == "Skończone")
                     {
                         elEnded.Value = "";
                     }
                 }
                 if (Cbox_Link.Checked)
                 {
-                    
                     bool result = Uri.TryCreate(Tbox_Link.Text, UriKind.Absolute, out Uri uriResult)
                 && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
                     if (!result)
@@ -145,17 +150,17 @@ namespace Serialak
                     }
                 }
 
-                if (elEnded.Value != "Skończone")
-                {
-                    elSezon.Value = n_sez.Value.ToString();
-                    elOdcinek.Value = n_odc.Value.ToString();
-                    elLast.Value = thisDay.ToString("M");
-                }
-                else
-                {
-                    MessageBox.Show("Musisz zmienić status serialu");
-                    return;
-                }
+                //if (elEnded.Value != "Skończone")
+                //{
+                //    elSezon.Value = n_sez.Value.ToString();
+                //    elOdcinek.Value = n_odc.Value.ToString();
+                //    
+                //}
+                //else
+                //{
+                //    MessageBox.Show("Musisz zmienić status serialu");
+                //    return;
+                //}
             }
 
             xdoc.Save(Series);
@@ -181,11 +186,16 @@ namespace Serialak
             var elSezon = elStatus.Elements("Aktualny_sezon").FirstOrDefault();
 
             if (elSezon != null || elOdcinek != null || elEnded != null)
-            {   if (elEnded.Value != "Skończone")
+            {
+                if (elEnded.Value != "Skończone")
                 {
-                    Radio_watch.Checked = true;
-                    n_odc.Value = (decimal)elOdcinek;
-                    n_sez.Value = (decimal)elSezon;
+                    try
+                    {
+                        Radio_watch.Checked = true;
+                        n_odc.Value = (decimal)elOdcinek;
+                        n_sez.Value = (decimal)elSezon;
+                    }
+                    catch { }
                 }
                 else
                 {
@@ -208,7 +218,7 @@ namespace Serialak
                 label3.Visible = false;
                 Tbox_IMG.Visible = false;
                 checkIMG = false;
-                button2.Visible = false;    
+                button2.Visible = false;
             }
         }
 
@@ -293,7 +303,6 @@ namespace Serialak
                 label7.Visible = true;
                 num_sez.Visible = true;
                 checksez = true;
-
             }
             else
             {

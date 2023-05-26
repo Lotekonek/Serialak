@@ -1,12 +1,10 @@
-﻿using Microsoft.Office.Interop.Excel;
-using Serialak.Properties;
-using System;
-using System.Diagnostics.Metrics;
+﻿using System;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using Serialak.Properties;
 
 namespace Serialak
 {
@@ -47,7 +45,6 @@ namespace Serialak
 
         private void Btn_dodaj_Click(object sender, EventArgs e)
         {
-
             var regx = new Regex("[^a-zA-Z0-9_. ]");
             if (regx.IsMatch(tBox_nazwa.Text))
             {
@@ -144,7 +141,6 @@ namespace Serialak
                             new XElement("Link", link),
                             new XElement("Status")));
             xml.Save(Seriale);
-            
 
             DialogResult = DialogResult.OK;
 

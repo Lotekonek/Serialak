@@ -1,9 +1,4 @@
-﻿using iTextSharp.text;
-using iTextSharp.text.pdf;
-using iTextSharp.text.pdf.qrcode;
-using Serialak.Properties;
-using Syncfusion.Pdf.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -13,6 +8,9 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using Serialak.Properties;
 
 namespace Serialak
 {
@@ -35,7 +33,6 @@ namespace Serialak
 
         public Serialak()
         {
-            
             InitializeComponent();
             Width = 1537;
             Height = 862;
@@ -57,7 +54,6 @@ namespace Serialak
 
         public void Zaladuj(bool ended)
         {
-            
             dane_seriale.Rows.Clear();
             XmlDocument doc = new XmlDocument();
             doc.Load(Seriale);
@@ -416,23 +412,6 @@ namespace Serialak
             }
         }
 
-        private void Btn_end_Click(object sender, EventArgs e)
-        {
-            dane_seriale.CellClick += new DataGridViewCellEventHandler(Easy_click);
-            cbox_ogladane.Checked = false;
-            cbox_ogladane.Enabled = false;
-            if (dane_seriale.Rows.Count > 0)
-            {
-                btn_end.Visible = false;
-                btn_approve.Visible = true;
-                dane_seriale.Columns["end"].Visible = true;
-                lbl1.Visible = true;
-            }
-            else
-            {
-                MessageBox.Show("Brak seriali do zakończenia", "Błąd!");
-            }
-        }
 
         protected System.Drawing.Font FontFam(int size)
         {
@@ -442,81 +421,6 @@ namespace Serialak
                size,
                FontStyle.Bold);
             return font;
-        }
-        private void Easy_click(object sender, DataGridViewCellEventArgs e)
-        {
-            if (Convert.ToBoolean(dane_seriale.CurrentRow.Cells[end.Name].Value) == false)
-            {
-                dane_seriale.CurrentRow.Cells[end.Name].Value = true;
-            }
-            else
-            {
-                dane_seriale.CurrentRow.Cells[end.Name].Value = false;
-            }
-        }
-
-        private void Btn_approve_Click(object sender, EventArgs e)
-        {
-            dane_seriale.CellClick -= new DataGridViewCellEventHandler(Easy_click);
-            cbox_ogladane.Enabled = true;
-            bool zmiana = false;
-            lbl1.Visible = false;
-            btn_end.Visible = true;
-            btn_approve.Visible = false;
-            dane_seriale.Columns["end"].Visible = false;
-            XDocument xdoc = XDocument.Load(Seriale);
-
-            try
-            {
-                foreach (DataGridViewRow row in dane_seriale.Rows)
-                {
-                    var nazwa = row.Cells[1].Value as string;
-                    if (Convert.ToBoolean(row.Cells[end.Name].Value) == true)
-                    {
-                        var elStatus = xdoc.Descendants()?.
-                        Elements("Nazwa")?.
-                        Where(x => x.Value == nazwa)?.
-                        Ancestors("Serial");
-
-                        var elOdcinek = elStatus.Elements("Aktualny_odcinek").FirstOrDefault();
-                        var elSezon = elStatus.Elements("Aktualny_sezon").FirstOrDefault();
-                        var elSezoni = elStatus.Elements("Ilość_sezonów").FirstOrDefault();
-                        var elEnded = elStatus.Elements("Status").FirstOrDefault();
-                        var elTyg = elStatus.Elements("Dzień_tygodnia").FirstOrDefault();
-                        if (elOdcinek != null || elSezon != null || elEnded != null || elSezoni != null || elTyg != null)
-                        {
-                            elSezoni.Value = elSezon.Value;
-                            elOdcinek.Value = "";
-                            elSezon.Value = "";
-                            elEnded.Value = "Skończone";
-                            elTyg.Value = "";
-                            zmiana = true;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Błąd: " + ex);
-            }
-            finally
-            {
-                if (zmiana)
-                {
-                    if (dane_seriale.Rows.Count <= 0)
-                    {
-                        MessageBox.Show("Nie wybrano żadnego serialu!!!", "Błąd");
-                    }
-                    else
-                    {
-                        xdoc.Save(Seriale);
-
-
-                        Zaladuj(false);
-                        MessageBox.Show("Poprawnie zaktualizowano seriale");
-                    }
-                }
-            }
         }
 
         private void ZapiszDoPlikuXMLToolStripMenuItem_Click(object sender, EventArgs e)
@@ -536,8 +440,8 @@ namespace Serialak
 
                     if (Save.ShowDialog() == DialogResult.OK)
                     {
-                       string startPath = Settings.Default.Nazwa;
-                       string zipPath = Save.FileName;
+                        string startPath = Settings.Default.Nazwa;
+                        string zipPath = Save.FileName;
                         try
                         {
                             ZipFile.CreateFromDirectory(startPath, zipPath);
@@ -548,7 +452,6 @@ namespace Serialak
                             ZipFile.CreateFromDirectory(startPath, zipPath);
                         }
                         MessageBox.Show("Pomyślnie zapisano plik");
-                       
                     }
                 }
                 else
@@ -574,7 +477,7 @@ namespace Serialak
                         Directory.CreateDirectory(bak);
                     }
                     string startPath = AppDomain.CurrentDomain.BaseDirectory + @"\Data\";
-                    string zipPath = bak+"backup.zip";
+                    string zipPath = bak + "backup.zip";
                     ZipFile.CreateFromDirectory(startPath, zipPath);
                     MessageBox.Show("Pomyślnie zrobiono backup");
                 }
@@ -597,22 +500,22 @@ namespace Serialak
                     opf.DefaultExt = "rar";
                     opf.Title = "Wczytaj plik";
 
-                    if (opf.ShowDialog() == DialogResult.OK )
+                    if (opf.ShowDialog() == DialogResult.OK)
                     {
-                        if(!Directory.Exists(Settings.Default.Nazwa + @"\Images\"))
+                        if (!Directory.Exists(Settings.Default.Nazwa + @"\Images\"))
                         {
                             Directory.CreateDirectory(Settings.Default.Nazwa + @"\Images\");
                         }
-                        pliki.Add(Directory.GetFiles(Settings.Default.Nazwa,"*.xml")[0]);
+                        pliki.Add(Directory.GetFiles(Settings.Default.Nazwa, "*.xml")[0]);
                         File.Delete(Directory.GetFiles(Settings.Default.Nazwa, "*.xml")[0]);
-                        
+
                         var files = Directory.GetFiles(Settings.Default.Nazwa + @"\Images\", "*.png");
                         foreach (var f in files)
                         {
                             File.Delete(f);
                         }
                         ZipFile.ExtractToDirectory(opf.FileName, Settings.Default.Nazwa);
-                        files = Directory.GetFiles(Settings.Default.Nazwa,"*.xml");
+                        files = Directory.GetFiles(Settings.Default.Nazwa, "*.xml");
                         var i = 0;
                         foreach (var f in files)
                         {
@@ -621,14 +524,13 @@ namespace Serialak
                             fi.MoveTo(pliki[i++]);
                         }
                         files = Directory.GetFiles(Settings.Default.Nazwa, "*.png");
-                       foreach (var f in files)
+                        foreach (var f in files)
                         {
-                            string name = f.Remove(f.Length - 4)+".xml";
-                            if(name != Seriale)
+                            string name = f.Remove(f.Length - 4) + ".xml";
+                            if (name != Seriale)
                             {
                                 File.Delete(f);
                             }
-
                         }
 
                         MessageBox.Show("Pomyślnie wczytano plik");
@@ -642,7 +544,7 @@ namespace Serialak
             }
             catch
             {
-                MessageBox.Show("Nie udało się wczytać profilu","Błąd");
+                MessageBox.Show("Nie udało się wczytać profilu", "Błąd");
             }
         }
 
@@ -682,22 +584,21 @@ namespace Serialak
 
         private void Serialak_Load(object sender, EventArgs e)
         {
-                using (Profil profil = new Profil())
+            using (Profil profil = new Profil())
+            {
+                if (profil.ShowDialog() == DialogResult.OK)
                 {
-                    if (profil.ShowDialog() == DialogResult.OK)
-                    {
-                        Seriale =  Directory.GetFiles(Settings.Default.Nazwa,"*.xml")[0];
-                        Zaladuj(false);
-
+                    Seriale = Directory.GetFiles(Settings.Default.Nazwa, "*.xml")[0];
+                    Zaladuj(false);
                 }
                 else
                 {
                     MessageBox.Show("Nie znaleziono profilu!!");
                     Application.Exit();
                 }
-                }
-                cbox_ogladane.Checked = Settings.Default.Ended;
-                cBox_IMG.Checked = Settings.Default.IMG;
+            }
+            cbox_ogladane.Checked = Settings.Default.Ended;
+            cBox_IMG.Checked = Settings.Default.IMG;
         }
 
         private void CBox_IMG_CheckedChanged(object sender, EventArgs e)
@@ -738,10 +639,8 @@ namespace Serialak
             {
                 if (profil.ShowDialog() == DialogResult.OK)
                 {
-                    
                     Seriale = Directory.GetFiles(Settings.Default.Nazwa, "*.xml")[0];
                     Zaladuj(false);
-                    
                 }
                 else
                 {
@@ -749,7 +648,6 @@ namespace Serialak
                     Application.Exit();
                 }
             }
-
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Serialak.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
@@ -36,8 +35,7 @@ namespace Serialak
                 {
                     if (Convert.ToBoolean(row.Cells[choose.Name].Value) == true)
                     {
-
-                        Directory.Delete(profiles[row.Index],true);
+                        Directory.Delete(profiles[row.Index], true);
                     }
                 }
             }
@@ -57,7 +55,7 @@ namespace Serialak
             profiles = Directory.GetDirectories(Seriale);
             foreach (var profil in profiles)
             {
-                var pliki = Directory.GetFiles(profil,"*.xml");
+                var pliki = Directory.GetFiles(profil, "*.xml");
                 foreach (var p in pliki)
                 {
                     files.Add(p);

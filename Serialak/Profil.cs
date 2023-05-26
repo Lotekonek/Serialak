@@ -1,11 +1,10 @@
-﻿using Serialak.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using Serialak.Properties;
 
 namespace Serialak
 {
@@ -16,12 +15,12 @@ namespace Serialak
         private readonly Button[] buton = new Button[3];
         private readonly Label[] label = new Label[3];
         private string[] profiles;
-        private int x=0;
+        private int x = 0;
 
         public Profil()
         {
             InitializeComponent();
-            
+
             if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + @"Data\"))
             {
                 Directory.CreateDirectory(Seriale);
@@ -52,7 +51,6 @@ namespace Serialak
             DialogResult = DialogResult.OK;
             Close();
         }
-
 
         private void Ladowanie()
         {
@@ -104,7 +102,6 @@ namespace Serialak
             }
             for (int i = 0; i < files.Count; i += 2)
             {
-
                 buton[x].Tag = x;
                 string img = files[i];
                 using (Image myimage = Image.FromFile(img))
@@ -121,11 +118,10 @@ namespace Serialak
                 label[x++].Text = name;
             }
         }
-    
 
         private void Profil_Load(object sender, EventArgs e)
         {
-            Settings.Default.Nr = Directory.GetDirectories(Seriale).Length+1;
+            Settings.Default.Nr = Directory.GetDirectories(Seriale).Length + 1;
             if (Directory.GetDirectories(Seriale).Length > 2)
             {
                 button1.Visible = false;
