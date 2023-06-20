@@ -2,9 +2,18 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Drive.v3;
+using Google.Apis.Drive.v3.Data;
+using Google.Apis.Services;
+using RestSharp.Extensions;
 using Serialak.Properties;
+using static System.Net.WebRequestMethods;
 
 namespace Serialak
 {
@@ -13,9 +22,10 @@ namespace Serialak
         private static readonly string Seriale = AppDomain.CurrentDomain.BaseDirectory + @"Data\";
         private readonly List<string> files = new List<string>();
         private readonly Button[] buton = new Button[3];
-        private readonly Label[] label = new Label[3];
+        private readonly System.Windows.Forms.Label[] label = new System.Windows.Forms.Label[3];
         private string[] profiles;
         private int x = 0;
+
 
         public Profil()
         {
@@ -64,7 +74,7 @@ namespace Serialak
                 }
             }
 
-            foreach (Label lbl in Controls.OfType<Label>())
+            foreach (System.Windows.Forms.Label lbl in Controls.OfType<System.Windows.Forms.Label>())
             {
                 lbl.UseMnemonic = false;
                 switch (lbl.TabIndex)
@@ -121,6 +131,9 @@ namespace Serialak
 
         private void Profil_Load(object sender, EventArgs e)
         {
+            
+           
+
             Settings.Default.Nr = Directory.GetDirectories(Seriale).Length + 1;
             if (Directory.GetDirectories(Seriale).Length > 2)
             {
@@ -139,5 +152,9 @@ namespace Serialak
                 }
             }
         }
+
+
+        
+        
     }
 }

@@ -41,6 +41,15 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Serialak));
             this.dane_seriale = new System.Windows.Forms.DataGridView();
+            this.obrazek = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nazwa = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.odc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sez = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ilosc_sez = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.when = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.last = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.linkcell = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Menu = new System.Windows.Forms.MenuStrip();
             this.Dodaj = new System.Windows.Forms.ToolStripMenuItem();
             this.Usuń = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,15 +70,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.Lbl_profil = new System.Windows.Forms.Label();
             this.Btn_logout = new System.Windows.Forms.Button();
-            this.obrazek = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nazwa = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.odc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sez = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ilosc_sez = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.when = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.last = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.linkcell = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dane_seriale)).BeginInit();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
@@ -134,176 +134,6 @@
             this.dane_seriale.Size = new System.Drawing.Size(2285, 1226);
             this.dane_seriale.TabIndex = 0;
             this.dane_seriale.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dane_seriale_CellContentClick);
-            // 
-            // Menu
-            // 
-            this.Menu.BackColor = System.Drawing.Color.White;
-            this.Menu.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Menu.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
-            this.Menu.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Dodaj,
-            this.Usuń,
-            this.Aktualizuj,
-            this.Losuj,
-            this.zapiszDoPlikuToolStripMenuItem,
-            this.wczytajToolStripMenuItem});
-            this.Menu.Location = new System.Drawing.Point(0, 0);
-            this.Menu.Name = "Menu";
-            this.Menu.Size = new System.Drawing.Size(2275, 33);
-            this.Menu.TabIndex = 2;
-            this.Menu.Text = "menuStrip1";
-            // 
-            // Dodaj
-            // 
-            this.Dodaj.Name = "Dodaj";
-            this.Dodaj.Size = new System.Drawing.Size(76, 29);
-            this.Dodaj.Text = "Dodaj";
-            this.Dodaj.Click += new System.EventHandler(this.Dodaj_Click);
-            // 
-            // Usuń
-            // 
-            this.Usuń.Name = "Usuń";
-            this.Usuń.Size = new System.Drawing.Size(68, 29);
-            this.Usuń.Text = "Usuń";
-            this.Usuń.Click += new System.EventHandler(this.Usuń_Click);
-            // 
-            // Aktualizuj
-            // 
-            this.Aktualizuj.Name = "Aktualizuj";
-            this.Aktualizuj.Size = new System.Drawing.Size(104, 29);
-            this.Aktualizuj.Text = "Aktualizuj";
-            this.Aktualizuj.Click += new System.EventHandler(this.Aktualizuj_Click);
-            // 
-            // Losuj
-            // 
-            this.Losuj.Name = "Losuj";
-            this.Losuj.Size = new System.Drawing.Size(69, 29);
-            this.Losuj.Text = "Losuj";
-            this.Losuj.Click += new System.EventHandler(this.Losuj_Click);
-            // 
-            // zapiszDoPlikuToolStripMenuItem
-            // 
-            this.zapiszDoPlikuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.zapiszDoPlikuCSVToolStripMenuItem,
-            this.zapisDoPlikuPDFToolStripMenuItem,
-            this.zapiszDoPlikuXMLToolStripMenuItem,
-            this.zapiszBackupToolStripMenuItem});
-            this.zapiszDoPlikuToolStripMenuItem.Name = "zapiszDoPlikuToolStripMenuItem";
-            this.zapiszDoPlikuToolStripMenuItem.Size = new System.Drawing.Size(148, 29);
-            this.zapiszDoPlikuToolStripMenuItem.Text = "Zapisz do pliku";
-            // 
-            // zapiszDoPlikuCSVToolStripMenuItem
-            // 
-            this.zapiszDoPlikuCSVToolStripMenuItem.Name = "zapiszDoPlikuCSVToolStripMenuItem";
-            this.zapiszDoPlikuCSVToolStripMenuItem.Size = new System.Drawing.Size(271, 34);
-            this.zapiszDoPlikuCSVToolStripMenuItem.Text = "Zapisz do pliku CSV";
-            this.zapiszDoPlikuCSVToolStripMenuItem.Click += new System.EventHandler(this.CSVToolStripMenuItem_Click);
-            // 
-            // zapisDoPlikuPDFToolStripMenuItem
-            // 
-            this.zapisDoPlikuPDFToolStripMenuItem.Name = "zapisDoPlikuPDFToolStripMenuItem";
-            this.zapisDoPlikuPDFToolStripMenuItem.Size = new System.Drawing.Size(271, 34);
-            this.zapisDoPlikuPDFToolStripMenuItem.Text = "Zapis do pliku PDF";
-            this.zapisDoPlikuPDFToolStripMenuItem.Click += new System.EventHandler(this.PDFToolStripMenuItem_Click);
-            // 
-            // zapiszDoPlikuXMLToolStripMenuItem
-            // 
-            this.zapiszDoPlikuXMLToolStripMenuItem.Name = "zapiszDoPlikuXMLToolStripMenuItem";
-            this.zapiszDoPlikuXMLToolStripMenuItem.Size = new System.Drawing.Size(271, 34);
-            this.zapiszDoPlikuXMLToolStripMenuItem.Text = "Zapisz profil";
-            this.zapiszDoPlikuXMLToolStripMenuItem.Click += new System.EventHandler(this.ZapiszDoPlikuXMLToolStripMenuItem_Click);
-            // 
-            // zapiszBackupToolStripMenuItem
-            // 
-            this.zapiszBackupToolStripMenuItem.Name = "zapiszBackupToolStripMenuItem";
-            this.zapiszBackupToolStripMenuItem.Size = new System.Drawing.Size(271, 34);
-            this.zapiszBackupToolStripMenuItem.Text = "Stwórz backup";
-            this.zapiszBackupToolStripMenuItem.Click += new System.EventHandler(this.ZapiszBackupToolStripMenuItem_Click);
-            // 
-            // wczytajToolStripMenuItem
-            // 
-            this.wczytajToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.wczytajZPlikuXMLToolStripMenuItem1,
-            this.WczytajbackupToolStripMenuItem});
-            this.wczytajToolStripMenuItem.Name = "wczytajToolStripMenuItem";
-            this.wczytajToolStripMenuItem.Size = new System.Drawing.Size(144, 29);
-            this.wczytajToolStripMenuItem.Text = "Wczytaj z pliku";
-            // 
-            // wczytajZPlikuXMLToolStripMenuItem1
-            // 
-            this.wczytajZPlikuXMLToolStripMenuItem1.Name = "wczytajZPlikuXMLToolStripMenuItem1";
-            this.wczytajZPlikuXMLToolStripMenuItem1.Size = new System.Drawing.Size(237, 34);
-            this.wczytajZPlikuXMLToolStripMenuItem1.Text = "Wczytaj profil";
-            this.wczytajZPlikuXMLToolStripMenuItem1.Click += new System.EventHandler(this.WczytajZPlikuXMLToolStripMenuItem1_Click);
-            // 
-            // WczytajbackupToolStripMenuItem
-            // 
-            this.WczytajbackupToolStripMenuItem.Name = "WczytajbackupToolStripMenuItem";
-            this.WczytajbackupToolStripMenuItem.Size = new System.Drawing.Size(237, 34);
-            this.WczytajbackupToolStripMenuItem.Text = "Wczytaj backup";
-            this.WczytajbackupToolStripMenuItem.Click += new System.EventHandler(this.WczytajbackupToolStripMenuItem_Click);
-            // 
-            // cbox_ogladane
-            // 
-            this.cbox_ogladane.AutoSize = true;
-            this.cbox_ogladane.BackColor = System.Drawing.Color.White;
-            this.cbox_ogladane.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.cbox_ogladane.Location = new System.Drawing.Point(632, 3);
-            this.cbox_ogladane.Name = "cbox_ogladane";
-            this.cbox_ogladane.Size = new System.Drawing.Size(246, 29);
-            this.cbox_ogladane.TabIndex = 4;
-            this.cbox_ogladane.Text = "Pokaż obejrzane seriale";
-            this.cbox_ogladane.UseVisualStyleBackColor = false;
-            this.cbox_ogladane.CheckedChanged += new System.EventHandler(this.Cbox_ogladane_CheckedChanged);
-            // 
-            // Loadfile
-            // 
-            this.Loadfile.FileName = "openFileDialog1";
-            // 
-            // cBox_IMG
-            // 
-            this.cBox_IMG.AutoSize = true;
-            this.cBox_IMG.BackColor = System.Drawing.Color.White;
-            this.cBox_IMG.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.cBox_IMG.Location = new System.Drawing.Point(896, 3);
-            this.cBox_IMG.Name = "cBox_IMG";
-            this.cBox_IMG.Size = new System.Drawing.Size(180, 29);
-            this.cBox_IMG.TabIndex = 8;
-            this.cBox_IMG.Text = "Pokaż miniaturki";
-            this.cBox_IMG.UseVisualStyleBackColor = false;
-            this.cBox_IMG.CheckedChanged += new System.EventHandler(this.CBox_IMG_CheckedChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.White;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(1725, 4);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(74, 25);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "Profil: ";
-            // 
-            // Lbl_profil
-            // 
-            this.Lbl_profil.AutoSize = true;
-            this.Lbl_profil.BackColor = System.Drawing.Color.White;
-            this.Lbl_profil.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Lbl_profil.Location = new System.Drawing.Point(1799, 4);
-            this.Lbl_profil.Name = "Lbl_profil";
-            this.Lbl_profil.Size = new System.Drawing.Size(0, 25);
-            this.Lbl_profil.TabIndex = 10;
-            // 
-            // Btn_logout
-            // 
-            this.Btn_logout.Location = new System.Drawing.Point(2149, -2);
-            this.Btn_logout.Name = "Btn_logout";
-            this.Btn_logout.Size = new System.Drawing.Size(130, 35);
-            this.Btn_logout.TabIndex = 11;
-            this.Btn_logout.Text = "Wyloguj";
-            this.Btn_logout.UseVisualStyleBackColor = true;
-            this.Btn_logout.Click += new System.EventHandler(this.Btn_logout_Click);
             // 
             // obrazek
             // 
@@ -406,6 +236,176 @@
             this.status.ReadOnly = true;
             this.status.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.status.Visible = false;
+            // 
+            // Menu
+            // 
+            this.Menu.BackColor = System.Drawing.Color.White;
+            this.Menu.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Menu.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
+            this.Menu.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Dodaj,
+            this.Usuń,
+            this.Aktualizuj,
+            this.Losuj,
+            this.zapiszDoPlikuToolStripMenuItem,
+            this.wczytajToolStripMenuItem});
+            this.Menu.Location = new System.Drawing.Point(0, 0);
+            this.Menu.Name = "Menu";
+            this.Menu.Size = new System.Drawing.Size(2275, 36);
+            this.Menu.TabIndex = 2;
+            this.Menu.Text = "menuStrip1";
+            // 
+            // Dodaj
+            // 
+            this.Dodaj.Name = "Dodaj";
+            this.Dodaj.Size = new System.Drawing.Size(76, 32);
+            this.Dodaj.Text = "Dodaj";
+            this.Dodaj.Click += new System.EventHandler(this.Dodaj_Click);
+            // 
+            // Usuń
+            // 
+            this.Usuń.Name = "Usuń";
+            this.Usuń.Size = new System.Drawing.Size(68, 32);
+            this.Usuń.Text = "Usuń";
+            this.Usuń.Click += new System.EventHandler(this.Usuń_Click);
+            // 
+            // Aktualizuj
+            // 
+            this.Aktualizuj.Name = "Aktualizuj";
+            this.Aktualizuj.Size = new System.Drawing.Size(104, 32);
+            this.Aktualizuj.Text = "Aktualizuj";
+            this.Aktualizuj.Click += new System.EventHandler(this.Aktualizuj_Click);
+            // 
+            // Losuj
+            // 
+            this.Losuj.Name = "Losuj";
+            this.Losuj.Size = new System.Drawing.Size(69, 32);
+            this.Losuj.Text = "Losuj";
+            this.Losuj.Click += new System.EventHandler(this.Losuj_Click);
+            // 
+            // zapiszDoPlikuToolStripMenuItem
+            // 
+            this.zapiszDoPlikuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.zapiszDoPlikuCSVToolStripMenuItem,
+            this.zapisDoPlikuPDFToolStripMenuItem,
+            this.zapiszDoPlikuXMLToolStripMenuItem,
+            this.zapiszBackupToolStripMenuItem});
+            this.zapiszDoPlikuToolStripMenuItem.Name = "zapiszDoPlikuToolStripMenuItem";
+            this.zapiszDoPlikuToolStripMenuItem.Size = new System.Drawing.Size(148, 32);
+            this.zapiszDoPlikuToolStripMenuItem.Text = "Zapisz do pliku";
+            // 
+            // zapiszDoPlikuCSVToolStripMenuItem
+            // 
+            this.zapiszDoPlikuCSVToolStripMenuItem.Name = "zapiszDoPlikuCSVToolStripMenuItem";
+            this.zapiszDoPlikuCSVToolStripMenuItem.Size = new System.Drawing.Size(271, 34);
+            this.zapiszDoPlikuCSVToolStripMenuItem.Text = "Zapisz do pliku CSV";
+            this.zapiszDoPlikuCSVToolStripMenuItem.Click += new System.EventHandler(this.CSVToolStripMenuItem_Click);
+            // 
+            // zapisDoPlikuPDFToolStripMenuItem
+            // 
+            this.zapisDoPlikuPDFToolStripMenuItem.Name = "zapisDoPlikuPDFToolStripMenuItem";
+            this.zapisDoPlikuPDFToolStripMenuItem.Size = new System.Drawing.Size(271, 34);
+            this.zapisDoPlikuPDFToolStripMenuItem.Text = "Zapis do pliku PDF";
+            this.zapisDoPlikuPDFToolStripMenuItem.Click += new System.EventHandler(this.PDFToolStripMenuItem_Click);
+            // 
+            // zapiszDoPlikuXMLToolStripMenuItem
+            // 
+            this.zapiszDoPlikuXMLToolStripMenuItem.Name = "zapiszDoPlikuXMLToolStripMenuItem";
+            this.zapiszDoPlikuXMLToolStripMenuItem.Size = new System.Drawing.Size(271, 34);
+            this.zapiszDoPlikuXMLToolStripMenuItem.Text = "Zapisz profil";
+            this.zapiszDoPlikuXMLToolStripMenuItem.Click += new System.EventHandler(this.ZapiszDoPlikuXMLToolStripMenuItem_Click);
+            // 
+            // zapiszBackupToolStripMenuItem
+            // 
+            this.zapiszBackupToolStripMenuItem.Name = "zapiszBackupToolStripMenuItem";
+            this.zapiszBackupToolStripMenuItem.Size = new System.Drawing.Size(271, 34);
+            this.zapiszBackupToolStripMenuItem.Text = "Stwórz backup";
+            this.zapiszBackupToolStripMenuItem.Click += new System.EventHandler(this.ZapiszBackupToolStripMenuItem_Click);
+            // 
+            // wczytajToolStripMenuItem
+            // 
+            this.wczytajToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.wczytajZPlikuXMLToolStripMenuItem1,
+            this.WczytajbackupToolStripMenuItem});
+            this.wczytajToolStripMenuItem.Name = "wczytajToolStripMenuItem";
+            this.wczytajToolStripMenuItem.Size = new System.Drawing.Size(144, 32);
+            this.wczytajToolStripMenuItem.Text = "Wczytaj z pliku";
+            // 
+            // wczytajZPlikuXMLToolStripMenuItem1
+            // 
+            this.wczytajZPlikuXMLToolStripMenuItem1.Name = "wczytajZPlikuXMLToolStripMenuItem1";
+            this.wczytajZPlikuXMLToolStripMenuItem1.Size = new System.Drawing.Size(237, 34);
+            this.wczytajZPlikuXMLToolStripMenuItem1.Text = "Wczytaj profil";
+            this.wczytajZPlikuXMLToolStripMenuItem1.Click += new System.EventHandler(this.WczytajZPlikuXMLToolStripMenuItem1_Click);
+            // 
+            // WczytajbackupToolStripMenuItem
+            // 
+            this.WczytajbackupToolStripMenuItem.Name = "WczytajbackupToolStripMenuItem";
+            this.WczytajbackupToolStripMenuItem.Size = new System.Drawing.Size(237, 34);
+            this.WczytajbackupToolStripMenuItem.Text = "Wczytaj backup";
+            this.WczytajbackupToolStripMenuItem.Click += new System.EventHandler(this.WczytajbackupToolStripMenuItem_Click);
+            // 
+            // cbox_ogladane
+            // 
+            this.cbox_ogladane.AutoSize = true;
+            this.cbox_ogladane.BackColor = System.Drawing.Color.White;
+            this.cbox_ogladane.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.cbox_ogladane.Location = new System.Drawing.Point(632, 3);
+            this.cbox_ogladane.Name = "cbox_ogladane";
+            this.cbox_ogladane.Size = new System.Drawing.Size(246, 29);
+            this.cbox_ogladane.TabIndex = 4;
+            this.cbox_ogladane.Text = "Pokaż obejrzane seriale";
+            this.cbox_ogladane.UseVisualStyleBackColor = false;
+            this.cbox_ogladane.CheckedChanged += new System.EventHandler(this.Cbox_ogladane_CheckedChanged);
+            // 
+            // Loadfile
+            // 
+            this.Loadfile.FileName = "openFileDialog1";
+            // 
+            // cBox_IMG
+            // 
+            this.cBox_IMG.AutoSize = true;
+            this.cBox_IMG.BackColor = System.Drawing.Color.White;
+            this.cBox_IMG.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.cBox_IMG.Location = new System.Drawing.Point(896, 3);
+            this.cBox_IMG.Name = "cBox_IMG";
+            this.cBox_IMG.Size = new System.Drawing.Size(180, 29);
+            this.cBox_IMG.TabIndex = 8;
+            this.cBox_IMG.Text = "Pokaż miniaturki";
+            this.cBox_IMG.UseVisualStyleBackColor = false;
+            this.cBox_IMG.CheckedChanged += new System.EventHandler(this.CBox_IMG_CheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.White;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label1.Location = new System.Drawing.Point(1725, 4);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(74, 25);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Profil: ";
+            // 
+            // Lbl_profil
+            // 
+            this.Lbl_profil.AutoSize = true;
+            this.Lbl_profil.BackColor = System.Drawing.Color.White;
+            this.Lbl_profil.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Lbl_profil.Location = new System.Drawing.Point(1799, 4);
+            this.Lbl_profil.Name = "Lbl_profil";
+            this.Lbl_profil.Size = new System.Drawing.Size(0, 25);
+            this.Lbl_profil.TabIndex = 10;
+            // 
+            // Btn_logout
+            // 
+            this.Btn_logout.Location = new System.Drawing.Point(2149, -2);
+            this.Btn_logout.Name = "Btn_logout";
+            this.Btn_logout.Size = new System.Drawing.Size(130, 35);
+            this.Btn_logout.TabIndex = 11;
+            this.Btn_logout.Text = "Wyloguj";
+            this.Btn_logout.UseVisualStyleBackColor = true;
+            this.Btn_logout.Click += new System.EventHandler(this.Btn_logout_Click);
             // 
             // Serialak
             // 

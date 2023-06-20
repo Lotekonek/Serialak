@@ -57,7 +57,14 @@ namespace Serialak
             }
             else
             {
-                MessageBox.Show("Wypełnij wszystkie pola");
+                if (Tbox_name.Text == "")
+                {
+                    MessageBox.Show("Podaj nazwę profilu");
+                }
+                else
+                {
+                    MessageBox.Show("Dodaj awatar");
+                }
             }
         }
 

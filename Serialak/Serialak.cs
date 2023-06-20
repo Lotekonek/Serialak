@@ -4,12 +4,21 @@ using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web.Services.Description;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Drive.v3;
+using Google.Apis.Services;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using iTextSharp.xmp.impl.xpath;
+using Org.BouncyCastle.Asn1.Ocsp;
 using Serialak.Properties;
 
 namespace Serialak
@@ -30,6 +39,14 @@ namespace Serialak
         private readonly iTextSharp.text.Font fontTinyItalic = FontFactory.GetFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1257, 18, iTextSharp.text.Font.BOLD);
         private readonly iTextSharp.text.Font fontCell = FontFactory.GetFont(BaseFont.HELVETICA, BaseFont.CP1257, 15);
         public static string Wybrany;
+
+        private const string UploadFileName = "Kopia.rar";
+        private const string DirectoryId = "1CghG8xIM4kLoabsIsA-FhBLXSPDkFkrB";
+        
+        private readonly string PathToServiceAccountKeyFile = AppDomain.CurrentDomain.BaseDirectory + @"\Key.json";
+
+        private static string fileid;
+        private bool error = true;
 
         public Serialak()
         {
@@ -550,6 +567,7 @@ namespace Serialak
 
         private void WczytajbackupToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            
             try
             {
                 using (OpenFileDialog opf = new OpenFileDialog())
@@ -577,6 +595,11 @@ namespace Serialak
 
         private void Serialak_FormClosing(object sender, FormClosingEventArgs e)
         {
+            File.Delete(AppDomain.CurrentDomain.BaseDirectory + @"\Kopia.rar");
+            ZipFile.CreateFromDirectory(AppDomain.CurrentDomain.BaseDirectory + @"\Data", AppDomain.CurrentDomain.BaseDirectory+@"\Kopia.rar");
+            Task listenerTask = Task.Run(() => ToReadAsync());
+            listenerTask.Wait();
+            File.Delete(AppDomain.CurrentDomain.BaseDirectory + @"\Kopia.rar");
             Settings.Default.Ended = cbox_ogladane.Checked;
             Settings.Default.IMG = cBox_IMG.Checked;
             Settings.Default.Save();
@@ -584,6 +607,9 @@ namespace Serialak
 
         private void Serialak_Load(object sender, EventArgs e)
         {
+            Task listenerTaskOpen = Task.Run(() => ToReadAsyncOpen());
+            listenerTaskOpen.Wait();
+
             using (Profil profil = new Profil())
             {
                 if (profil.ShowDialog() == DialogResult.OK)
@@ -647,6 +673,103 @@ namespace Serialak
                     MessageBox.Show("Nie znaleziono profilu!!");
                     Application.Exit();
                 }
+            }
+        }
+
+        private async Task ToReadAsyncOpen()
+        {
+            var credential = GoogleCredential.FromFile(PathToServiceAccountKeyFile).CreateScoped(new[] { DriveService.ScopeConstants.Drive });
+
+            var service = new DriveService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential
+            });
+
+            var request = service.Files.List();
+            request.Q = "parents in '1CghG8xIM4kLoabsIsA-FhBLXSPDkFkrB'";
+            var response = await request.ExecuteAsync();
+            
+            foreach (var driveFiles in response.Files)
+            {
+
+                error = false;
+                
+                fileid = driveFiles.Id;
+            }
+            if (error == true)
+            {
+                MessageBox.Show("Nie znaleziono zapisanych profili");
+            }
+            else
+            {
+
+                if (response.Files.Count() > 0)
+                {
+
+
+                    var downloadFile = response.Files.FirstOrDefault();
+                    var getRequest = service.Files.Get(downloadFile.Id);
+                    var fileStream = new FileStream(downloadFile.Name, FileMode.Create, FileAccess.Write);
+                    await getRequest.DownloadAsync(fileStream);
+
+                    getRequest.Fields = "parents";
+                    var file = getRequest.Execute();
+                    var previousParents = string.Join(",", file.Parents);
+                    var updateRequest =
+                        service.Files.Update(new Google.Apis.Drive.v3.Data.File(),
+                            fileid);
+                    updateRequest.Fields = "id, parents";
+                    updateRequest.RemoveParents = previousParents;
+                    updateRequest.Execute();
+                    fileStream.Close();
+                }
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                service.Dispose();
+
+                if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\Data"))
+                {
+                    Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + @"\Data");
+                }
+                DirectoryInfo di = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory + @"\Data");
+
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in di.GetDirectories())
+                {
+                    dir.Delete(true);
+                }
+                ZipFile.ExtractToDirectory(AppDomain.CurrentDomain.BaseDirectory + @"\Kopia.rar", AppDomain.CurrentDomain.BaseDirectory + @"\Data");
+            }
+
+        }
+        private async Task ToReadAsync()
+        {
+
+            var credential = GoogleCredential.FromFile(PathToServiceAccountKeyFile).CreateScoped(DriveService.ScopeConstants.Drive);
+            var service = new DriveService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential
+            });
+            var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+            {
+                Name = UploadFileName,
+                Parents = new List<string>() { DirectoryId }
+            };
+
+            string uploadedFileId;
+             using (var fsSource = new FileStream(UploadFileName, FileMode.Open, FileAccess.Read))
+            {
+                var request = service.Files.Create(fileMetadata, fsSource, "*/*");
+                var results = await request.UploadAsync(CancellationToken.None);
+
+                if (results.Status == Google.Apis.Upload.UploadStatus.Failed)
+                {
+                    MessageBox.Show("Error");
+                }
+                uploadedFileId = request.ResponseBody?.Id;
             }
         }
     }
